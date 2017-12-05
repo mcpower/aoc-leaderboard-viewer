@@ -14118,12 +14118,8 @@ var _user$project$View_Axis$axis = F4(
 
 var _user$project$View_Date$parseDate = function (date) {
 	return {
-		day: A3(
-			_elm_lang$core$String$pad,
-			2,
-			_elm_lang$core$Native_Utils.chr('0'),
-			_elm_lang$core$Basics$toString(
-				_elm_lang$core$Date$day(date))),
+		day: _elm_lang$core$Basics$toString(
+			_elm_lang$core$Date$day(date)),
 		hour: A3(
 			_elm_lang$core$String$pad,
 			2,
@@ -14166,7 +14162,7 @@ var _user$project$View_Date$formatDateForHint = function (dateFloat) {
 	return _elm_lang$html$Html$text(
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			'Solved on day ',
+			'Solved on Dec ',
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				day,

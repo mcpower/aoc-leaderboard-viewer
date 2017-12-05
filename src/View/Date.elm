@@ -6,7 +6,7 @@ import Html as H exposing (Html)
 
 parseDate : Date -> { day : String, hour : String, minute : String }
 parseDate date =
-    { day = date |> Date.day |> toString |> String.pad 2 '0'
+    { day = date |> Date.day |> toString
     , hour = date |> Date.hour |> toString |> String.pad 2 '0'
     , minute = date |> Date.minute |> toString |> String.pad 2 '0'
     }
@@ -27,5 +27,5 @@ formatDateForHint dateFloat =
         { day, hour, minute } =
             parseDate (Date.fromTime dateFloat)
     in
-        ("Solved on day " ++ day ++ ", " ++ hour ++ ":" ++ minute)
+        ("Solved on Dec " ++ day ++ ", " ++ hour ++ ":" ++ minute)
             |> H.text
