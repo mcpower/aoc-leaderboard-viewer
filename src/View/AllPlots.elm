@@ -44,5 +44,5 @@ justAllPlots hover data =
             [ HA.class "plots" ]
             (List.map2 (onePlot hover maxDate maxDayStar)
                 (colorsList (List.length data))
-                data
+                (data |> List.sortBy (.localScore >> negate))
             )

@@ -46,7 +46,7 @@ customizations member maxDate maxDayStar hover =
     { defaultSeriesPlotCustomizations
         | hintContainer = P.flyingHintContainer P.normalHintContainerInner hover
         , height = 200
-        , junk = \summary -> [ P.junk (title (View.name member) member.stars) (startOfAoC + day / 8) maxDayStar ]
+        , junk = \summary -> [ P.junk (title member) (startOfAoC + day / 8) maxDayStar ]
         , grid =
             { horizontal = P.decentGrid
             , vertical =
@@ -80,11 +80,11 @@ customizations member maxDate maxDayStar hover =
     }
 
 
-title : String -> Int -> Svg msg
-title memberName stars =
+title : Member -> Svg msg
+title member =
     P.viewLabel
         (Text.italic :: Text.attributes)
-        (memberName ++ " (stars: " ++ toString stars ++ ")")
+        (View.name member ++ " (stars: " ++ toString member.stars ++ ", local score: " ++ toString member.localScore ++ ")")
 
 
 makeSeries : Maybe Point -> String -> Member -> Series Member Msg

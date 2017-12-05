@@ -14448,22 +14448,27 @@ var _user$project$View_OnePlot$makeSeries = F3(
 			toDataPoints: A2(_user$project$View_OnePlot$makeDataPoints, hover, color)
 		};
 	});
-var _user$project$View_OnePlot$title = F2(
-	function (memberName, stars) {
-		return A2(
-			_terezka$elm_plot$Plot$viewLabel,
-			{ctor: '::', _0: _user$project$View_TextStyle$italic, _1: _user$project$View_TextStyle$attributes},
+var _user$project$View_OnePlot$title = function (member) {
+	return A2(
+		_terezka$elm_plot$Plot$viewLabel,
+		{ctor: '::', _0: _user$project$View_TextStyle$italic, _1: _user$project$View_TextStyle$attributes},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_user$project$View_Name$name(member),
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				memberName,
+				' (stars: ',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					' (stars: ',
+					_elm_lang$core$Basics$toString(member.stars),
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(stars),
-						')'))));
-	});
+						', local score: ',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Basics$toString(member.localScore),
+							')'))))));
+};
 var _user$project$View_OnePlot$customizations = F4(
 	function (member, maxDate, maxDayStar, hover) {
 		return _elm_lang$core$Native_Utils.update(
@@ -14476,10 +14481,7 @@ var _user$project$View_OnePlot$customizations = F4(
 						ctor: '::',
 						_0: A3(
 							_terezka$elm_plot$Plot$junk,
-							A2(
-								_user$project$View_OnePlot$title,
-								_user$project$View_Name$name(member),
-								member.stars),
+							_user$project$View_OnePlot$title(member),
 							_user$project$Day$startOfAoC + (_user$project$Day$day / 8),
 							maxDayStar),
 						_1: {ctor: '[]'}
@@ -14591,10 +14593,18 @@ var _user$project$View_AllPlots$justAllPlots = F2(
 				A3(_user$project$View_OnePlot$onePlot, hover, maxDate, maxDayStar),
 				_user$project$Colors$colorsList(
 					_elm_lang$core$List$length(data)),
-				data));
+				A2(
+					_elm_lang$core$List$sortBy,
+					function (_p4) {
+						return _elm_lang$core$Basics$negate(
+							function (_) {
+								return _.localScore;
+							}(_p4));
+					},
+					data)));
 	});
-var _user$project$View_AllPlots$allPlots = function (_p4) {
-	var _p5 = _p4;
+var _user$project$View_AllPlots$allPlots = function (_p5) {
+	var _p6 = _p5;
 	return A2(
 		_elm_lang$core$Result$withDefault,
 		_elm_lang$html$Html$text('Incorrect data!'),
@@ -14603,8 +14613,8 @@ var _user$project$View_AllPlots$allPlots = function (_p4) {
 			_elm_lang$core$Debug$log('JSON decoding error'),
 			A2(
 				_elm_lang$core$Result$map,
-				_user$project$View_AllPlots$justAllPlots(_p5.hover),
-				_p5.data)));
+				_user$project$View_AllPlots$justAllPlots(_p6.hover),
+				_p6.data)));
 };
 
 var _user$project$View$view = function (model) {
