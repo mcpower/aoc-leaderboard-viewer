@@ -27,6 +27,7 @@ import View.DayStar
         , dayStarFromFloat
         , formatDayStar
         )
+import View.Name as View
 
 
 onePlot : Maybe Point -> Float -> Float -> String -> Member -> Html Msg
@@ -41,11 +42,11 @@ onePlot hover maxDate maxDayStar color member =
 
 
 customizations : Member -> Float -> Float -> Maybe Point -> PlotCustomizations Msg
-customizations { name, stars } maxDate maxDayStar hover =
+customizations member maxDate maxDayStar hover =
     { defaultSeriesPlotCustomizations
         | hintContainer = P.flyingHintContainer P.normalHintContainerInner hover
         , height = 200
-        , junk = \summary -> [ P.junk (title name stars) (startOfAoC + day / 8) maxDayStar ]
+        , junk = \summary -> [ P.junk (title (View.name member) member.stars) (startOfAoC + day / 8) maxDayStar ]
         , grid =
             { horizontal = P.decentGrid
             , vertical =
@@ -95,8 +96,8 @@ makeSeries hover color member =
 
 
 makeDataPoints : Maybe Point -> String -> Member -> List (DataPoint Msg)
-makeDataPoints hover color { name, completionTimes } =
-    completionTimes
+makeDataPoints hover color member =
+    member.completionTimes
         |> List.map
             (\( day, star, date ) ->
                 let
@@ -108,7 +109,7 @@ makeDataPoints hover color { name, completionTimes } =
                 in
                     dot
                         hover
-                        name
+                        (View.name member)
                         color
                         ( x, y )
             )

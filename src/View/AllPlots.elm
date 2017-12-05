@@ -15,6 +15,7 @@ allPlots : Model -> Html Msg
 allPlots { data, hover } =
     data
         |> Result.map (justAllPlots hover)
+        |> Result.mapError (Debug.log "JSON decoding error")
         |> Result.withDefault (H.text "Incorrect data!")
 
 

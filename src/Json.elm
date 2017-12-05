@@ -14,8 +14,9 @@ dataDecoder =
 
 memberDecoder : Decoder Member
 memberDecoder =
-    JD.map5 Member
-        (JD.field "name" JD.string)
+    JD.map6 Member
+        (JD.field "name" (JD.maybe JD.string))
+        (JD.field "id" JD.string)
         (JD.field "local_score" JD.int)
         (JD.field "global_score" JD.int)
         (JD.field "stars" JD.int)

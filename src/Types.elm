@@ -21,7 +21,8 @@ type alias Data =
 
 
 type alias Member =
-    { name : String
+    { name : Maybe String
+    , id : String
     , localScore : Int
     , globalScore : Int
     , stars : Int

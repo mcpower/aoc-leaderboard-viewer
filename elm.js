@@ -13969,9 +13969,9 @@ var _user$project$Types$Model = F3(
 	function (a, b, c) {
 		return {json: a, data: b, hover: c};
 	});
-var _user$project$Types$Member = F5(
-	function (a, b, c, d, e) {
-		return {name: a, localScore: b, globalScore: c, stars: d, completionTimes: e};
+var _user$project$Types$Member = F6(
+	function (a, b, c, d, e, f) {
+		return {name: a, id: b, localScore: c, globalScore: d, stars: e, completionTimes: f};
 	});
 var _user$project$Types$Hover = function (a) {
 	return {ctor: 'Hover', _0: a};
@@ -14008,10 +14008,14 @@ var _user$project$Json$completionTimesDecoder = A2(
 	_elm_lang$core$Json_Decode$keyValuePairs(
 		_elm_lang$core$Json_Decode$keyValuePairs(
 			A2(_elm_lang$core$Json_Decode$field, 'get_star_ts', _elm_community$json_extra$Json_Decode_Extra$date))));
-var _user$project$Json$memberDecoder = A6(
-	_elm_lang$core$Json_Decode$map5,
+var _user$project$Json$memberDecoder = A7(
+	_elm_lang$core$Json_Decode$map6,
 	_user$project$Types$Member,
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'name',
+		_elm_lang$core$Json_Decode$maybe(_elm_lang$core$Json_Decode$string)),
+	A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'local_score', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'global_score', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'stars', _elm_lang$core$Json_Decode$int),
@@ -14395,23 +14399,29 @@ var _user$project$View_Dot$dot = F4(
 		};
 	});
 
+var _user$project$View_Name$name = function (member) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		A2(_elm_lang$core$Basics_ops['++'], 'Anonymous #', member.id),
+		member.name);
+};
+
 var _user$project$View_OnePlot$makeDataPoints = F3(
-	function (hover, color, _p0) {
-		var _p1 = _p0;
+	function (hover, color, member) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (_p2) {
-				var _p3 = _p2;
-				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p3._0, _p3._1);
-				var x = _elm_lang$core$Date$toTime(_p3._2);
+			function (_p0) {
+				var _p1 = _p0;
+				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p1._0, _p1._1);
+				var x = _elm_lang$core$Date$toTime(_p1._2);
 				return A4(
 					_user$project$View_Dot$dot,
 					hover,
-					_p1.name,
+					_user$project$View_Name$name(member),
 					color,
 					{ctor: '_Tuple2', _0: x, _1: y});
 			},
-			_p1.completionTimes);
+			member.completionTimes);
 	});
 var _user$project$View_OnePlot$makeSeries = F3(
 	function (hover, color, member) {
@@ -14422,9 +14432,9 @@ var _user$project$View_OnePlot$makeSeries = F3(
 				function (_) {
 					return _.y;
 				},
-				function (_p4) {
+				function (_p2) {
 					return _user$project$View_DayStar$formatDayStar(
-						_user$project$View_DayStar$dayStarFromFloat(_p4));
+						_user$project$View_DayStar$dayStarFromFloat(_p2));
 				},
 				A2(_terezka$elm_plot$Plot$interval, 0, 0.5)),
 			interpolation: A2(
@@ -14455,8 +14465,7 @@ var _user$project$View_OnePlot$title = F2(
 						')'))));
 	});
 var _user$project$View_OnePlot$customizations = F4(
-	function (_p5, maxDate, maxDayStar, hover) {
-		var _p6 = _p5;
+	function (member, maxDate, maxDayStar, hover) {
 		return _elm_lang$core$Native_Utils.update(
 			_terezka$elm_plot$Plot$defaultSeriesPlotCustomizations,
 			{
@@ -14467,7 +14476,10 @@ var _user$project$View_OnePlot$customizations = F4(
 						ctor: '::',
 						_0: A3(
 							_terezka$elm_plot$Plot$junk,
-							A2(_user$project$View_OnePlot$title, _p6.name, _p6.stars),
+							A2(
+								_user$project$View_OnePlot$title,
+								_user$project$View_Name$name(member),
+								member.stars),
 							_user$project$Day$startOfAoC + (_user$project$Day$day / 8),
 							maxDayStar),
 						_1: {ctor: '[]'}
@@ -14498,9 +14510,9 @@ var _user$project$View_OnePlot$customizations = F4(
 					function (_) {
 						return _.x;
 					},
-					function (_p7) {
+					function (_p3) {
 						return _user$project$View_Date$formatDate(
-							_elm_lang$core$Date$fromTime(_p7));
+							_elm_lang$core$Date$fromTime(_p3));
 					},
 					_elm_lang$core$Basics$always(
 						_user$project$Day$findTicks(maxDate))),
@@ -14587,9 +14599,12 @@ var _user$project$View_AllPlots$allPlots = function (_p4) {
 		_elm_lang$core$Result$withDefault,
 		_elm_lang$html$Html$text('Incorrect data!'),
 		A2(
-			_elm_lang$core$Result$map,
-			_user$project$View_AllPlots$justAllPlots(_p5.hover),
-			_p5.data));
+			_elm_lang$core$Result$mapError,
+			_elm_lang$core$Debug$log('JSON decoding error'),
+			A2(
+				_elm_lang$core$Result$map,
+				_user$project$View_AllPlots$justAllPlots(_p5.hover),
+				_p5.data)));
 };
 
 var _user$project$View$view = function (model) {
