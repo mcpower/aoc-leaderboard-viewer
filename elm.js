@@ -14626,8 +14626,27 @@ var _user$project$View$view = function (model) {
 							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Go to your private leaderboard URL + \".json\" and copy the result here!'),
-								_1: {ctor: '[]'}
+								_0: _elm_lang$html$Html$text('Go to some of your '),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('https://adventofcode.com/2017/leaderboard/private'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('private leaderboard'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(' URL + \".json\" and copy the result here!'),
+										_1: {ctor: '[]'}
+									}
+								}
 							}),
 						_1: {
 							ctor: '::',
@@ -14635,7 +14654,7 @@ var _user$project$View$view = function (model) {
 								_elm_lang$html$Html$textarea,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$placeholder('Your private leaderboard JSON file here!'),
+									_0: _elm_lang$html$Html_Attributes$placeholder('Paste https://adventofcode.com/2017/leaderboard/private/view/<LEADERBOARD-ID>.json here'),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Attributes$value(model.json),

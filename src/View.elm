@@ -14,9 +14,13 @@ view model =
         [ H.div
             [ HA.id "top" ]
             [ H.h1 [] [ H.text "AoC private leaderboard viewer" ]
-            , H.div [] [ H.text "Go to your private leaderboard URL + \".json\" and copy the result here!" ]
+            , H.div []
+                [ H.text "Go to some of your "
+                , H.a [ HA.href "https://adventofcode.com/2017/leaderboard/private" ] [ H.text "private leaderboard" ]
+                , H.text " URL + \".json\" and copy the result here!"
+                ]
             , H.textarea
-                [ HA.placeholder "Your private leaderboard JSON file here!"
+                [ HA.placeholder "Paste https://adventofcode.com/2017/leaderboard/private/view/<LEADERBOARD-ID>.json here"
                 , HA.value model.json
                 , HE.onInput SetJson
                 ]
