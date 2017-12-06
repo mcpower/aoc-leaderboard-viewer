@@ -14230,7 +14230,11 @@ var _user$project$View_Hint$hint = F3(
 	function (name, dayStarFloat, solutionDate) {
 		return A2(
 			_elm_lang$html$Html$div,
-			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('hint'),
+				_1: {ctor: '[]'}
+			},
 			{
 				ctor: '::',
 				_0: A2(
