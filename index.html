@@ -48,7 +48,6 @@
     var time = +new Date();
     var storedSnapshot = localStorage.getItem(storageKey);
     var startingSnapshot = storedSnapshot ? JSON.parse(storedSnapshot) : null;
-    console.log(startingSnapshot);
 
     var app = Elm.Main.fullscreen({
         currentTime: time,
@@ -56,7 +55,6 @@
     });
 
     app.ports.saveSnapshot.subscribe(function(snapshot){
-        console.log(snapshot);
         localStorage.setItem(storageKey, JSON.stringify(snapshot));
     });
   </script>
