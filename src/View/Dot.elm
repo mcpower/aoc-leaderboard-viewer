@@ -1,4 +1,4 @@
-module View.Dot exposing (dot)
+module View.Dot exposing (dot, invisibleDot)
 
 import Plot as P
     exposing
@@ -23,6 +23,19 @@ dot hover memberName color ( x, y ) awardedPoints =
     , xTick = hover |> Maybe.andThen (flashyTick x .x)
     , yTick = hover |> Maybe.andThen (flashyTick y .y)
     , hint = onHovering (hint memberName y x awardedPoints) hover x
+    , x = x
+    , y = y
+    }
+
+
+invisibleDot : Maybe Point -> ( Float, Float ) -> DataPoint Msg
+invisibleDot hover ( x, y ) =
+    { view = Nothing
+    , xLine = hover |> Maybe.andThen (flashyLine x y)
+    , yLine = hover |> Maybe.andThen (flashyLine x y)
+    , xTick = Nothing
+    , yTick = Nothing
+    , hint = Nothing
     , x = x
     , y = y
     }

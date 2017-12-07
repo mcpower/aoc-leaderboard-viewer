@@ -17053,14 +17053,13 @@ var _user$project$View_Dot$flashyTick = F3(
 			correctValue) ? _elm_lang$core$Maybe$Just(
 			_terezka$elm_plot$Plot$simpleTick(correctValue)) : _elm_lang$core$Maybe$Nothing;
 	});
-var _user$project$View_Dot$dot = F5(
-	function (hover, memberName, color, _p0, awardedPoints) {
+var _user$project$View_Dot$invisibleDot = F2(
+	function (hover, _p0) {
 		var _p1 = _p0;
 		var _p3 = _p1._1;
 		var _p2 = _p1._0;
 		return {
-			view: _elm_lang$core$Maybe$Just(
-				A4(_user$project$View_Dot$square, memberName, color, _p2, _p3)),
+			view: _elm_lang$core$Maybe$Nothing,
 			xLine: A2(
 				_elm_lang$core$Maybe$andThen,
 				A2(_user$project$View_Dot$flashyLine, _p2, _p3),
@@ -17069,11 +17068,34 @@ var _user$project$View_Dot$dot = F5(
 				_elm_lang$core$Maybe$andThen,
 				A2(_user$project$View_Dot$flashyLine, _p2, _p3),
 				hover),
+			xTick: _elm_lang$core$Maybe$Nothing,
+			yTick: _elm_lang$core$Maybe$Nothing,
+			hint: _elm_lang$core$Maybe$Nothing,
+			x: _p2,
+			y: _p3
+		};
+	});
+var _user$project$View_Dot$dot = F5(
+	function (hover, memberName, color, _p4, awardedPoints) {
+		var _p5 = _p4;
+		var _p7 = _p5._1;
+		var _p6 = _p5._0;
+		return {
+			view: _elm_lang$core$Maybe$Just(
+				A4(_user$project$View_Dot$square, memberName, color, _p6, _p7)),
+			xLine: A2(
+				_elm_lang$core$Maybe$andThen,
+				A2(_user$project$View_Dot$flashyLine, _p6, _p7),
+				hover),
+			yLine: A2(
+				_elm_lang$core$Maybe$andThen,
+				A2(_user$project$View_Dot$flashyLine, _p6, _p7),
+				hover),
 			xTick: A2(
 				_elm_lang$core$Maybe$andThen,
 				A2(
 					_user$project$View_Dot$flashyTick,
-					_p2,
+					_p6,
 					function (_) {
 						return _.x;
 					}),
@@ -17082,18 +17104,18 @@ var _user$project$View_Dot$dot = F5(
 				_elm_lang$core$Maybe$andThen,
 				A2(
 					_user$project$View_Dot$flashyTick,
-					_p3,
+					_p7,
 					function (_) {
 						return _.y;
 					}),
 				hover),
 			hint: A3(
 				_user$project$View_Dot$onHovering,
-				A4(_user$project$View_Hint$hint, memberName, _p3, _p2, awardedPoints),
+				A4(_user$project$View_Hint$hint, memberName, _p7, _p6, awardedPoints),
 				hover,
-				_p2),
-			x: _p2,
-			y: _p3
+				_p6),
+			x: _p6,
+			y: _p7
 		};
 	});
 
@@ -17104,36 +17126,61 @@ var _user$project$View_Name$name = function (member) {
 		member.name);
 };
 
+var _user$project$View_OnePlot$makeInvisibleDataPoints = F3(
+	function (hover, data, member) {
+		return A2(
+			_elm_lang$core$List$map,
+			function (_p0) {
+				var _p1 = _p0;
+				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p1._0, _p1._1);
+				var x = _p1._2;
+				return A2(
+					_user$project$View_Dot$invisibleDot,
+					hover,
+					{ctor: '_Tuple2', _0: x, _1: y});
+			},
+			A2(
+				_elm_lang$core$List$concatMap,
+				function (_) {
+					return _.completionTimes;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (m) {
+						return !_elm_lang$core$Native_Utils.eq(m.id, member.id);
+					},
+					data)));
+	});
 var _user$project$View_OnePlot$points = function (data) {
 	return A2(
 		_elm_lang$core$Dict$map,
 		F2(
-			function (_p0, list) {
+			function (_p2, list) {
 				return A2(
 					_elm_lang$core$List$map,
-					function (_p1) {
-						var _p2 = _p1;
-						return {ctor: '_Tuple2', _0: _p2._0, _1: _p2._3};
+					function (_p3) {
+						var _p4 = _p3;
+						return {ctor: '_Tuple2', _0: _p4._0, _1: _p4._3};
 					},
 					list);
 			}),
 		A2(
 			_elm_community$dict_extra$Dict_Extra$groupBy,
-			function (_p3) {
-				var _p4 = _p3;
-				return {ctor: '_Tuple2', _0: _p4._1, _1: _p4._2};
+			function (_p5) {
+				var _p6 = _p5;
+				return {ctor: '_Tuple2', _0: _p6._1, _1: _p6._2};
 			},
 			A2(
 				_elm_lang$core$List$concatMap,
-				function (_p5) {
-					var _p6 = _p5;
+				function (_p7) {
+					var _p8 = _p7;
 					return A2(
 						_elm_lang$core$List$map,
-						function (_p7) {
-							var _p8 = _p7;
-							return {ctor: '_Tuple4', _0: _p6._0, _1: _p8._0, _2: _p8._1, _3: _p8._2};
+						function (_p9) {
+							var _p10 = _p9;
+							return {ctor: '_Tuple4', _0: _p8._0, _1: _p10._0, _2: _p10._1, _3: _p10._2};
 						},
-						_p6._1);
+						_p8._1);
 				},
 				A2(
 					_elm_lang$core$List$map,
@@ -17147,28 +17194,28 @@ var _user$project$View_OnePlot$points = function (data) {
 					data))));
 };
 var _user$project$View_OnePlot$getPointFor = F3(
-	function (data, _p9, wantedName) {
-		var _p10 = _p9;
+	function (data, _p11, wantedName) {
+		var _p12 = _p11;
 		var maxSolutionPoints = _elm_lang$core$List$length(data);
 		var allSolutions = A2(
 			_elm_lang$core$Maybe$withDefault,
 			{ctor: '[]'},
 			A2(
 				_elm_lang$core$Dict$get,
-				{ctor: '_Tuple2', _0: _p10._0, _1: _p10._1},
+				{ctor: '_Tuple2', _0: _p12._0, _1: _p12._1},
 				_user$project$View_OnePlot$points(data)));
 		return A2(
 			_elm_lang$core$Maybe$map,
-			function (_p11) {
-				var _p12 = _p11;
-				return maxSolutionPoints - _p12._0;
+			function (_p13) {
+				var _p14 = _p13;
+				return maxSolutionPoints - _p14._0;
 			},
 			_elm_lang$core$List$head(
 				A2(
 					_elm_lang$core$List$filter,
-					function (_p13) {
-						var _p14 = _p13;
-						return _elm_lang$core$Native_Utils.eq(_p14._1._0, wantedName);
+					function (_p15) {
+						var _p16 = _p15;
+						return _elm_lang$core$Native_Utils.eq(_p16._1._0, wantedName);
 					},
 					A2(
 						_elm_lang$core$List$indexedMap,
@@ -17182,13 +17229,13 @@ var _user$project$View_OnePlot$makeDataPoints = F4(
 	function (hover, color, data, member) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (_p15) {
-				var _p16 = _p15;
-				var _p18 = _p16._1;
-				var _p17 = _p16._0;
+			function (_p17) {
+				var _p18 = _p17;
+				var _p20 = _p18._1;
+				var _p19 = _p18._0;
 				var name = _user$project$View_Name$name(member);
-				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p17, _p18);
-				var x = _p16._2;
+				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p19, _p20);
+				var x = _p18._2;
 				return A5(
 					_user$project$View_Dot$dot,
 					hover,
@@ -17198,10 +17245,28 @@ var _user$project$View_OnePlot$makeDataPoints = F4(
 					A3(
 						_user$project$View_OnePlot$getPointFor,
 						data,
-						{ctor: '_Tuple2', _0: _p17, _1: _p18},
+						{ctor: '_Tuple2', _0: _p19, _1: _p20},
 						name));
 			},
 			member.completionTimes);
+	});
+var _user$project$View_OnePlot$makeInvisibleSeries = F3(
+	function (hover, data, member) {
+		return {
+			axis: A4(
+				_user$project$View_Axis$axis,
+				hover,
+				function (_) {
+					return _.y;
+				},
+				function (_p21) {
+					return _user$project$View_DayStar$formatDayStar(
+						_user$project$View_DayStar$dayStarFromFloat(_p21));
+				},
+				A2(_terezka$elm_plot$Plot$interval, 0, 0.5)),
+			interpolation: _terezka$elm_plot$Plot$None,
+			toDataPoints: A2(_user$project$View_OnePlot$makeInvisibleDataPoints, hover, data)
+		};
 	});
 var _user$project$View_OnePlot$makeSeries = F4(
 	function (hover, color, data, member) {
@@ -17212,9 +17277,9 @@ var _user$project$View_OnePlot$makeSeries = F4(
 				function (_) {
 					return _.y;
 				},
-				function (_p19) {
+				function (_p22) {
 					return _user$project$View_DayStar$formatDayStar(
-						_user$project$View_DayStar$dayStarFromFloat(_p19));
+						_user$project$View_DayStar$dayStarFromFloat(_p22));
 				},
 				A2(_terezka$elm_plot$Plot$interval, 0, 0.5)),
 			interpolation: A2(
@@ -17292,9 +17357,9 @@ var _user$project$View_OnePlot$customizations = F4(
 					function (_) {
 						return _.x;
 					},
-					function (_p20) {
+					function (_p23) {
 						return _user$project$View_Date$formatDate(
-							_elm_lang$core$Date$fromTime(_p20));
+							_elm_lang$core$Date$fromTime(_p23));
 					},
 					_elm_lang$core$Basics$always(
 						_user$project$Day$findTicks(maxDate))),
@@ -17322,7 +17387,11 @@ var _user$project$View_OnePlot$onePlot = F6(
 					{
 						ctor: '::',
 						_0: A4(_user$project$View_OnePlot$makeSeries, hover, color, data, member),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$View_OnePlot$makeInvisibleSeries, hover, data, member),
+							_1: {ctor: '[]'}
+						}
 					},
 					member),
 				_1: {ctor: '[]'}
@@ -17600,37 +17669,52 @@ var _user$project$View$view = function (model) {
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('plot-area'),
+						_0: _elm_lang$html$Html_Attributes$class('note'),
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
-						_0: _user$project$Example$shouldShow(model) ? A2(
-							_elm_lang$html$Html$div,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('example-data-note'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$em,
-									{ctor: '[]'},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text('↓↓↓ This is just example data, paste your own URL and cookie.'),
-										_1: {ctor: '[]'}
-									}),
-								_1: {ctor: '[]'}
-							}) : _elm_lang$html$Html$text(''),
-						_1: {
-							ctor: '::',
-							_0: _user$project$View_AllPlots$allPlots(model),
-							_1: {ctor: '[]'}
-						}
+						_0: _elm_lang$html$Html$text('WARNING: clicking the \"Fetch!\" button sends your session cookie to my CORS proxy. I promise not to use it in any way, but... yeah, not ideal.'),
+						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('plot-area'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _user$project$Example$shouldShow(model) ? A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('example-data-note'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$em,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('↓↓↓ This is just example data, paste your own URL and cookie.'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}) : _elm_lang$html$Html$text(''),
+							_1: {
+								ctor: '::',
+								_0: _user$project$View_AllPlots$allPlots(model),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };

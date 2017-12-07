@@ -70,6 +70,10 @@ view model =
                 ]
             ]
         , H.div
+            [ HA.class "note" ]
+            [ H.text "WARNING: clicking the \"Fetch!\" button sends your session cookie to my CORS proxy. I promise not to use it in any way, but... yeah, not ideal."
+            ]
+        , H.div
             [ HA.class "plot-area" ]
             [ if Example.shouldShow model then
                 H.div [ HA.class "example-data-note" ] [ H.em [] [ H.text "↓↓↓ This is just example data, paste your own URL and cookie." ] ]

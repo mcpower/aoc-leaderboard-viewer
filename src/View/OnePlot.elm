@@ -22,7 +22,7 @@ import Plot as P
         )
 import Types exposing (..)
 import View.Axis exposing (axis)
-import View.Dot exposing (dot)
+import View.Dot exposing (dot, invisibleDot)
 import View.Date exposing (formatDate)
 import View.DayStar
     exposing
@@ -39,7 +39,9 @@ onePlot hover maxDate maxDayStar data color member =
         [ HA.class "plot" ]
         [ P.viewSeriesCustom
             (customizations member maxDate maxDayStar hover)
-            [ makeSeries hover color data member ]
+            [ makeSeries hover color data member
+            , makeInvisibleSeries hover data member
+            ]
             member
         ]
 
@@ -98,6 +100,14 @@ makeSeries hover color data member =
     }
 
 
+makeInvisibleSeries : Maybe Point -> Data -> Member -> Series Member Msg
+makeInvisibleSeries hover data member =
+    { axis = axis hover .y (dayStarFromFloat >> formatDayStar) (P.interval 0 0.5)
+    , interpolation = None
+    , toDataPoints = makeInvisibleDataPoints hover data
+    }
+
+
 points : Data -> Dict ( Day, Star ) (List ( String, Time ))
 points data =
     data
@@ -135,6 +145,26 @@ getPointFor data ( day, star ) wantedName =
             |> List.head
             -- first one gets (length) points, second (length - 1), ...
             |> Maybe.map (\( i, ( name, date ) ) -> maxSolutionPoints - i)
+
+
+makeInvisibleDataPoints : Maybe Point -> Data -> Member -> List (DataPoint Msg)
+makeInvisibleDataPoints hover data member =
+    data
+        |> List.filter (\m -> m.id /= member.id)
+        |> List.concatMap .completionTimes
+        |> List.map
+            (\( day, star, time ) ->
+                let
+                    x =
+                        time
+
+                    y =
+                        dayStarToFloat day star
+                in
+                    invisibleDot
+                        hover
+                        ( x, y )
+            )
 
 
 makeDataPoints : Maybe Point -> String -> Data -> Member -> List (DataPoint Msg)
