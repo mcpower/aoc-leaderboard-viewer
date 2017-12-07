@@ -42,7 +42,7 @@ justAllPlots hover data =
     in
         H.div
             [ HA.class "plots" ]
-            (List.map2 (onePlot hover maxDate maxDayStar)
+            (List.map2 (onePlot hover maxDate maxDayStar data)
                 (colorsList (List.length data))
                 (data |> List.sortBy (.localScore >> negate))
             )

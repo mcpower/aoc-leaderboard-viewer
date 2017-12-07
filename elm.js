@@ -5886,6 +5886,352 @@ var _debois$elm_dom$DOM$Rectangle = F4(
 		return {top: a, left: b, width: c, height: d};
 	});
 
+var _elm_lang$core$Set$foldr = F3(
+	function (f, b, _p0) {
+		var _p1 = _p0;
+		return A3(
+			_elm_lang$core$Dict$foldr,
+			F3(
+				function (k, _p2, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p1._0);
+	});
+var _elm_lang$core$Set$foldl = F3(
+	function (f, b, _p3) {
+		var _p4 = _p3;
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, _p5, b) {
+					return A2(f, k, b);
+				}),
+			b,
+			_p4._0);
+	});
+var _elm_lang$core$Set$toList = function (_p6) {
+	var _p7 = _p6;
+	return _elm_lang$core$Dict$keys(_p7._0);
+};
+var _elm_lang$core$Set$size = function (_p8) {
+	var _p9 = _p8;
+	return _elm_lang$core$Dict$size(_p9._0);
+};
+var _elm_lang$core$Set$member = F2(
+	function (k, _p10) {
+		var _p11 = _p10;
+		return A2(_elm_lang$core$Dict$member, k, _p11._0);
+	});
+var _elm_lang$core$Set$isEmpty = function (_p12) {
+	var _p13 = _p12;
+	return _elm_lang$core$Dict$isEmpty(_p13._0);
+};
+var _elm_lang$core$Set$Set_elm_builtin = function (a) {
+	return {ctor: 'Set_elm_builtin', _0: a};
+};
+var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
+var _elm_lang$core$Set$singleton = function (k) {
+	return _elm_lang$core$Set$Set_elm_builtin(
+		A2(
+			_elm_lang$core$Dict$singleton,
+			k,
+			{ctor: '_Tuple0'}));
+};
+var _elm_lang$core$Set$insert = F2(
+	function (k, _p14) {
+		var _p15 = _p14;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A3(
+				_elm_lang$core$Dict$insert,
+				k,
+				{ctor: '_Tuple0'},
+				_p15._0));
+	});
+var _elm_lang$core$Set$fromList = function (xs) {
+	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
+};
+var _elm_lang$core$Set$map = F2(
+	function (f, s) {
+		return _elm_lang$core$Set$fromList(
+			A2(
+				_elm_lang$core$List$map,
+				f,
+				_elm_lang$core$Set$toList(s)));
+	});
+var _elm_lang$core$Set$remove = F2(
+	function (k, _p16) {
+		var _p17 = _p16;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$remove, k, _p17._0));
+	});
+var _elm_lang$core$Set$union = F2(
+	function (_p19, _p18) {
+		var _p20 = _p19;
+		var _p21 = _p18;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
+	});
+var _elm_lang$core$Set$intersect = F2(
+	function (_p23, _p22) {
+		var _p24 = _p23;
+		var _p25 = _p22;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
+	});
+var _elm_lang$core$Set$diff = F2(
+	function (_p27, _p26) {
+		var _p28 = _p27;
+		var _p29 = _p26;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
+	});
+var _elm_lang$core$Set$filter = F2(
+	function (p, _p30) {
+		var _p31 = _p30;
+		return _elm_lang$core$Set$Set_elm_builtin(
+			A2(
+				_elm_lang$core$Dict$filter,
+				F2(
+					function (k, _p32) {
+						return p(k);
+					}),
+				_p31._0));
+	});
+var _elm_lang$core$Set$partition = F2(
+	function (p, _p33) {
+		var _p34 = _p33;
+		var _p35 = A2(
+			_elm_lang$core$Dict$partition,
+			F2(
+				function (k, _p36) {
+					return p(k);
+				}),
+			_p34._0);
+		var p1 = _p35._0;
+		var p2 = _p35._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
+			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
+		};
+	});
+
+var _elm_community$dict_extra$Dict_Extra$find = F2(
+	function (predicate, dict) {
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, v, acc) {
+					var _p0 = acc;
+					if (_p0.ctor === 'Just') {
+						return acc;
+					} else {
+						return A2(predicate, k, v) ? _elm_lang$core$Maybe$Just(
+							{ctor: '_Tuple2', _0: k, _1: v}) : _elm_lang$core$Maybe$Nothing;
+					}
+				}),
+			_elm_lang$core$Maybe$Nothing,
+			dict);
+	});
+var _elm_community$dict_extra$Dict_Extra$invert = function (dict) {
+	return A3(
+		_elm_lang$core$Dict$foldl,
+		F3(
+			function (k, v, acc) {
+				return A3(_elm_lang$core$Dict$insert, v, k, acc);
+			}),
+		_elm_lang$core$Dict$empty,
+		dict);
+};
+var _elm_community$dict_extra$Dict_Extra$filterMap = F2(
+	function (f, dict) {
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, v, acc) {
+					var _p1 = A2(f, k, v);
+					if (_p1.ctor === 'Just') {
+						return A3(_elm_lang$core$Dict$insert, k, _p1._0, acc);
+					} else {
+						return acc;
+					}
+				}),
+			_elm_lang$core$Dict$empty,
+			dict);
+	});
+var _elm_community$dict_extra$Dict_Extra$mapKeys = F2(
+	function (keyMapper, dict) {
+		return A3(
+			_elm_lang$core$Dict$foldl,
+			F3(
+				function (k, v, acc) {
+					return A3(
+						_elm_lang$core$Dict$insert,
+						keyMapper(k),
+						v,
+						acc);
+				}),
+			_elm_lang$core$Dict$empty,
+			dict);
+	});
+var _elm_community$dict_extra$Dict_Extra$keepOnly = F2(
+	function (set, dict) {
+		return A3(
+			_elm_lang$core$Set$foldl,
+			F2(
+				function (k, acc) {
+					return A2(
+						_elm_lang$core$Maybe$withDefault,
+						acc,
+						A2(
+							_elm_lang$core$Maybe$map,
+							function (v) {
+								return A3(_elm_lang$core$Dict$insert, k, v, acc);
+							},
+							A2(_elm_lang$core$Dict$get, k, dict)));
+				}),
+			_elm_lang$core$Dict$empty,
+			set);
+	});
+var _elm_community$dict_extra$Dict_Extra$insertDedupe = F4(
+	function (combine, key, value, dict) {
+		var $with = function (mbValue) {
+			var _p2 = mbValue;
+			if (_p2.ctor === 'Just') {
+				return _elm_lang$core$Maybe$Just(
+					A2(combine, _p2._0, value));
+			} else {
+				return _elm_lang$core$Maybe$Just(value);
+			}
+		};
+		return A3(_elm_lang$core$Dict$update, key, $with, dict);
+	});
+var _elm_community$dict_extra$Dict_Extra$removeMany = F2(
+	function (set, dict) {
+		return A3(_elm_lang$core$Set$foldl, _elm_lang$core$Dict$remove, dict, set);
+	});
+var _elm_community$dict_extra$Dict_Extra$removeWhen = F2(
+	function (pred, dict) {
+		return A2(
+			_elm_lang$core$Dict$filter,
+			F2(
+				function (k, v) {
+					return !A2(pred, k, v);
+				}),
+			dict);
+	});
+var _elm_community$dict_extra$Dict_Extra$fromListDedupeBy = F3(
+	function (combine, keyfn, xs) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, acc) {
+					return A4(
+						_elm_community$dict_extra$Dict_Extra$insertDedupe,
+						combine,
+						keyfn(x),
+						x,
+						acc);
+				}),
+			_elm_lang$core$Dict$empty,
+			xs);
+	});
+var _elm_community$dict_extra$Dict_Extra$fromListDedupe = F2(
+	function (combine, xs) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (_p3, acc) {
+					var _p4 = _p3;
+					return A4(_elm_community$dict_extra$Dict_Extra$insertDedupe, combine, _p4._0, _p4._1, acc);
+				}),
+			_elm_lang$core$Dict$empty,
+			xs);
+	});
+var _elm_community$dict_extra$Dict_Extra$fromListBy = F2(
+	function (keyfn, xs) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, acc) {
+					return A3(
+						_elm_lang$core$Dict$insert,
+						keyfn(x),
+						x,
+						acc);
+				}),
+			_elm_lang$core$Dict$empty,
+			xs);
+	});
+var _elm_community$dict_extra$Dict_Extra$filterGroupBy = F2(
+	function (keyfn, list) {
+		return A3(
+			_elm_lang$core$List$foldr,
+			F2(
+				function (x, acc) {
+					var _p5 = keyfn(x);
+					if (_p5.ctor === 'Just') {
+						return A3(
+							_elm_lang$core$Dict$update,
+							_p5._0,
+							function (_p6) {
+								return _elm_lang$core$Maybe$Just(
+									A2(
+										_elm_lang$core$Maybe$withDefault,
+										{
+											ctor: '::',
+											_0: x,
+											_1: {ctor: '[]'}
+										},
+										A2(
+											_elm_lang$core$Maybe$map,
+											F2(
+												function (x, y) {
+													return {ctor: '::', _0: x, _1: y};
+												})(x),
+											_p6)));
+							},
+							acc);
+					} else {
+						return acc;
+					}
+				}),
+			_elm_lang$core$Dict$empty,
+			list);
+	});
+var _elm_community$dict_extra$Dict_Extra$groupBy = F2(
+	function (keyfn, list) {
+		return A3(
+			_elm_lang$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A3(
+						_elm_lang$core$Dict$update,
+						keyfn(x),
+						function (_p7) {
+							return _elm_lang$core$Maybe$Just(
+								A2(
+									_elm_lang$core$Maybe$withDefault,
+									{
+										ctor: '::',
+										_0: x,
+										_1: {ctor: '[]'}
+									},
+									A2(
+										_elm_lang$core$Maybe$map,
+										F2(
+											function (x, y) {
+												return {ctor: '::', _0: x, _1: y};
+											})(x),
+										_p7)));
+						},
+						acc);
+				}),
+			_elm_lang$core$Dict$empty,
+			list);
+	});
+
 //import Result //
 
 var _elm_lang$core$Native_Date = function() {
@@ -6363,137 +6709,6 @@ var _elm_lang$core$Date$Apr = {ctor: 'Apr'};
 var _elm_lang$core$Date$Mar = {ctor: 'Mar'};
 var _elm_lang$core$Date$Feb = {ctor: 'Feb'};
 var _elm_lang$core$Date$Jan = {ctor: 'Jan'};
-
-var _elm_lang$core$Set$foldr = F3(
-	function (f, b, _p0) {
-		var _p1 = _p0;
-		return A3(
-			_elm_lang$core$Dict$foldr,
-			F3(
-				function (k, _p2, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p1._0);
-	});
-var _elm_lang$core$Set$foldl = F3(
-	function (f, b, _p3) {
-		var _p4 = _p3;
-		return A3(
-			_elm_lang$core$Dict$foldl,
-			F3(
-				function (k, _p5, b) {
-					return A2(f, k, b);
-				}),
-			b,
-			_p4._0);
-	});
-var _elm_lang$core$Set$toList = function (_p6) {
-	var _p7 = _p6;
-	return _elm_lang$core$Dict$keys(_p7._0);
-};
-var _elm_lang$core$Set$size = function (_p8) {
-	var _p9 = _p8;
-	return _elm_lang$core$Dict$size(_p9._0);
-};
-var _elm_lang$core$Set$member = F2(
-	function (k, _p10) {
-		var _p11 = _p10;
-		return A2(_elm_lang$core$Dict$member, k, _p11._0);
-	});
-var _elm_lang$core$Set$isEmpty = function (_p12) {
-	var _p13 = _p12;
-	return _elm_lang$core$Dict$isEmpty(_p13._0);
-};
-var _elm_lang$core$Set$Set_elm_builtin = function (a) {
-	return {ctor: 'Set_elm_builtin', _0: a};
-};
-var _elm_lang$core$Set$empty = _elm_lang$core$Set$Set_elm_builtin(_elm_lang$core$Dict$empty);
-var _elm_lang$core$Set$singleton = function (k) {
-	return _elm_lang$core$Set$Set_elm_builtin(
-		A2(
-			_elm_lang$core$Dict$singleton,
-			k,
-			{ctor: '_Tuple0'}));
-};
-var _elm_lang$core$Set$insert = F2(
-	function (k, _p14) {
-		var _p15 = _p14;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A3(
-				_elm_lang$core$Dict$insert,
-				k,
-				{ctor: '_Tuple0'},
-				_p15._0));
-	});
-var _elm_lang$core$Set$fromList = function (xs) {
-	return A3(_elm_lang$core$List$foldl, _elm_lang$core$Set$insert, _elm_lang$core$Set$empty, xs);
-};
-var _elm_lang$core$Set$map = F2(
-	function (f, s) {
-		return _elm_lang$core$Set$fromList(
-			A2(
-				_elm_lang$core$List$map,
-				f,
-				_elm_lang$core$Set$toList(s)));
-	});
-var _elm_lang$core$Set$remove = F2(
-	function (k, _p16) {
-		var _p17 = _p16;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$remove, k, _p17._0));
-	});
-var _elm_lang$core$Set$union = F2(
-	function (_p19, _p18) {
-		var _p20 = _p19;
-		var _p21 = _p18;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$union, _p20._0, _p21._0));
-	});
-var _elm_lang$core$Set$intersect = F2(
-	function (_p23, _p22) {
-		var _p24 = _p23;
-		var _p25 = _p22;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$intersect, _p24._0, _p25._0));
-	});
-var _elm_lang$core$Set$diff = F2(
-	function (_p27, _p26) {
-		var _p28 = _p27;
-		var _p29 = _p26;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(_elm_lang$core$Dict$diff, _p28._0, _p29._0));
-	});
-var _elm_lang$core$Set$filter = F2(
-	function (p, _p30) {
-		var _p31 = _p30;
-		return _elm_lang$core$Set$Set_elm_builtin(
-			A2(
-				_elm_lang$core$Dict$filter,
-				F2(
-					function (k, _p32) {
-						return p(k);
-					}),
-				_p31._0));
-	});
-var _elm_lang$core$Set$partition = F2(
-	function (p, _p33) {
-		var _p34 = _p33;
-		var _p35 = A2(
-			_elm_lang$core$Dict$partition,
-			F2(
-				function (k, _p36) {
-					return p(k);
-				}),
-			_p34._0);
-		var p1 = _p35._0;
-		var p2 = _p35._1;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Set$Set_elm_builtin(p1),
-			_1: _elm_lang$core$Set$Set_elm_builtin(p2)
-		};
-	});
 
 var _elm_community$json_extra$Json_Decode_Extra$combine = A2(
 	_elm_lang$core$List$foldr,
@@ -14048,7 +14263,7 @@ var _user$project$Update$update = F2(
 				{hover: _p0._0});
 		}
 	});
-var _user$project$Update$initJson = '{\"owner_id\":\"201025\",\"event\":\"2017\",\"members\":{\"201076\":{\"completion_day_level\":{\"2\":{\"2\":{\"get_star_ts\":\"2017-12-05T10:17:24-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T09:53:14-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T02:26:43-0500\"},\"2\":{\"get_star_ts\":\"2017-12-05T09:29:03-0500\"}}},\"local_score\":7,\"name\":\"schod\",\"last_star_ts\":\"2017-12-05T10:17:24-0500\",\"id\":\"201076\",\"stars\":4,\"global_score\":0},\"201735\":{\"stars\":8,\"global_score\":0,\"completion_day_level\":{\"3\":{\"2\":{\"get_star_ts\":\"2017-12-03T13:48:26-0500\"},\"1\":{\"get_star_ts\":\"2017-12-03T11:13:04-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T15:07:25-0500\"},\"2\":{\"get_star_ts\":\"2017-12-01T15:25:55-0500\"}},\"2\":{\"2\":{\"get_star_ts\":\"2017-12-02T13:35:20-0500\"},\"1\":{\"get_star_ts\":\"2017-12-02T12:53:19-0500\"}},\"4\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:26:53-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T04:29:41-0500\"}}},\"local_score\":23,\"last_star_ts\":\"2017-12-04T04:29:41-0500\",\"name\":\"Jaroslav Bazala\",\"id\":\"201735\"},\"1114\":{\"stars\":10,\"global_score\":0,\"local_score\":46,\"completion_day_level\":{\"5\":{\"1\":{\"get_star_ts\":\"2017-12-05T00:18:25-0500\"},\"2\":{\"get_star_ts\":\"2017-12-05T00:20:50-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-03T00:50:52-0500\"},\"2\":{\"get_star_ts\":\"2017-12-03T01:33:07-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T00:17:23-0500\"},\"2\":{\"get_star_ts\":\"2017-12-01T00:30:53-0500\"}},\"4\":{\"1\":{\"get_star_ts\":\"2017-12-04T00:38:41-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T00:43:56-0500\"}},\"2\":{\"2\":{\"get_star_ts\":\"2017-12-02T00:26:01-0500\"},\"1\":{\"get_star_ts\":\"2017-12-02T00:10:38-0500\"}}},\"last_star_ts\":\"2017-12-05T00:20:50-0500\",\"id\":\"1114\",\"name\":\"Martin Janiczek\"},\"247429\":{\"stars\":10,\"global_score\":0,\"local_score\":25,\"completion_day_level\":{\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T00:18:38-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T00:15:57-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-04T05:58:16-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T05:58:37-0500\"}},\"1\":{\"2\":{\"get_star_ts\":\"2017-12-04T05:56:03-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T04:22:15-0500\"}},\"2\":{\"2\":{\"get_star_ts\":\"2017-12-04T04:48:28-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T04:36:47-0500\"}},\"4\":{\"2\":{\"get_star_ts\":\"2017-12-04T05:54:28-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T05:51:38-0500\"}}},\"last_star_ts\":\"2017-12-05T00:18:38-0500\",\"id\":\"247429\",\"name\":\"porubsky\"},\"201025\":{\"stars\":10,\"global_score\":0,\"local_score\":39,\"completion_day_level\":{\"4\":{\"2\":{\"get_star_ts\":\"2017-12-04T00:36:09-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T00:29:11-0500\"}},\"2\":{\"2\":{\"get_star_ts\":\"2017-12-02T12:15:29-0500\"},\"1\":{\"get_star_ts\":\"2017-12-02T11:11:56-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-03T10:04:18-0500\"},\"2\":{\"get_star_ts\":\"2017-12-03T10:50:54-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T01:50:50-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T01:45:35-0500\"}},\"1\":{\"2\":{\"get_star_ts\":\"2017-12-01T02:51:31-0500\"},\"1\":{\"get_star_ts\":\"2017-12-01T02:44:40-0500\"}}},\"name\":\"Martin Stříž\",\"last_star_ts\":\"2017-12-05T01:50:50-0500\",\"id\":\"201025\"}}}';
+var _user$project$Update$initJson = '{\"members\":{\"201076\":{\"stars\":8,\"global_score\":0,\"local_score\":11,\"id\":\"201076\",\"last_star_ts\":\"2017-12-07T01:26:24-0500\",\"name\":\"schod\",\"completion_day_level\":{\"4\":{\"1\":{\"get_star_ts\":\"2017-12-05T14:58:54-0500\"},\"2\":{\"get_star_ts\":\"2017-12-05T15:58:15-0500\"}},\"1\":{\"2\":{\"get_star_ts\":\"2017-12-05T09:29:03-0500\"},\"1\":{\"get_star_ts\":\"2017-12-01T02:26:43-0500\"}},\"5\":{\"1\":{\"get_star_ts\":\"2017-12-06T10:50:05-0500\"},\"2\":{\"get_star_ts\":\"2017-12-07T01:26:24-0500\"}},\"2\":{\"1\":{\"get_star_ts\":\"2017-12-05T09:53:14-0500\"},\"2\":{\"get_star_ts\":\"2017-12-05T10:17:24-0500\"}}}},\"201735\":{\"name\":\"Jaroslav Bazala\",\"completion_day_level\":{\"4\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:26:53-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T04:29:41-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-03T11:13:04-0500\"},\"2\":{\"get_star_ts\":\"2017-12-03T13:48:26-0500\"}},\"6\":{\"2\":{\"get_star_ts\":\"2017-12-06T04:33:33-0500\"},\"1\":{\"get_star_ts\":\"2017-12-06T04:31:16-0500\"}},\"2\":{\"1\":{\"get_star_ts\":\"2017-12-02T12:53:19-0500\"},\"2\":{\"get_star_ts\":\"2017-12-02T13:35:20-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T13:17:13-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T12:44:58-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T15:07:25-0500\"},\"2\":{\"get_star_ts\":\"2017-12-01T15:25:55-0500\"}}},\"id\":\"201735\",\"last_star_ts\":\"2017-12-06T04:33:33-0500\",\"local_score\":31,\"global_score\":0,\"stars\":12},\"1114\":{\"local_score\":60,\"global_score\":0,\"stars\":14,\"name\":\"Martin Janiczek\",\"completion_day_level\":{\"1\":{\"2\":{\"get_star_ts\":\"2017-12-01T00:30:53-0500\"},\"1\":{\"get_star_ts\":\"2017-12-01T00:17:23-0500\"}},\"2\":{\"2\":{\"get_star_ts\":\"2017-12-02T00:26:01-0500\"},\"1\":{\"get_star_ts\":\"2017-12-02T00:10:38-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T00:20:50-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T00:18:25-0500\"}},\"6\":{\"1\":{\"get_star_ts\":\"2017-12-06T00:43:30-0500\"},\"2\":{\"get_star_ts\":\"2017-12-06T00:51:49-0500\"}},\"3\":{\"2\":{\"get_star_ts\":\"2017-12-03T01:33:07-0500\"},\"1\":{\"get_star_ts\":\"2017-12-03T00:50:52-0500\"}},\"7\":{\"1\":{\"get_star_ts\":\"2017-12-07T00:31:35-0500\"},\"2\":{\"get_star_ts\":\"2017-12-07T01:12:00-0500\"}},\"4\":{\"2\":{\"get_star_ts\":\"2017-12-04T00:43:56-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T00:38:41-0500\"}}},\"id\":\"1114\",\"last_star_ts\":\"2017-12-07T01:12:00-0500\"},\"247429\":{\"name\":\"porubsky\",\"completion_day_level\":{\"6\":{\"1\":{\"get_star_ts\":\"2017-12-06T00:13:09-0500\"},\"2\":{\"get_star_ts\":\"2017-12-06T00:18:04-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-04T05:58:16-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T05:58:37-0500\"}},\"7\":{\"2\":{\"get_star_ts\":\"2017-12-07T01:26:42-0500\"},\"1\":{\"get_star_ts\":\"2017-12-07T00:39:51-0500\"}},\"4\":{\"2\":{\"get_star_ts\":\"2017-12-04T05:54:28-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T05:51:38-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:22:15-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T05:56:03-0500\"}},\"2\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:36:47-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T04:48:28-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T00:18:38-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T00:15:57-0500\"}}},\"id\":\"247429\",\"last_star_ts\":\"2017-12-07T01:26:42-0500\",\"local_score\":41,\"stars\":14,\"global_score\":0},\"201025\":{\"name\":\"Martin Stříž\",\"completion_day_level\":{\"2\":{\"1\":{\"get_star_ts\":\"2017-12-02T11:11:56-0500\"},\"2\":{\"get_star_ts\":\"2017-12-02T12:15:29-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T01:50:50-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T01:45:35-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T02:44:40-0500\"},\"2\":{\"get_star_ts\":\"2017-12-01T02:51:31-0500\"}},\"4\":{\"1\":{\"get_star_ts\":\"2017-12-04T00:29:11-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T00:36:09-0500\"}},\"3\":{\"2\":{\"get_star_ts\":\"2017-12-03T10:50:54-0500\"},\"1\":{\"get_star_ts\":\"2017-12-03T10:04:18-0500\"}},\"6\":{\"2\":{\"get_star_ts\":\"2017-12-06T00:20:48-0500\"},\"1\":{\"get_star_ts\":\"2017-12-06T00:15:21-0500\"}},\"7\":{\"1\":{\"get_star_ts\":\"2017-12-07T00:21:05-0500\"},\"2\":{\"get_star_ts\":\"2017-12-07T00:51:44-0500\"}}},\"id\":\"201025\",\"last_star_ts\":\"2017-12-07T00:51:44-0500\",\"local_score\":57,\"global_score\":0,\"stars\":14}},\"owner_id\":\"201025\",\"event\":\"2017\"}';
 var _user$project$Update$initModel = {
 	json: _user$project$Update$initJson,
 	data: _user$project$Update$decode(_user$project$Update$initJson),
@@ -14226,8 +14441,36 @@ var _user$project$View_DayStar$hintLabel = F2(
 				hover));
 	});
 
-var _user$project$View_Hint$hint = F3(
-	function (name, dayStarFloat, solutionDate) {
+var _user$project$View_Hint$formatPoints = function (awardedPoints) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		_elm_lang$html$Html$text(''),
+		A2(
+			_elm_lang$core$Maybe$map,
+			function (points) {
+				return A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'Earned ',
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$core$Basics$toString(points),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										' point',
+										_elm_lang$core$Native_Utils.eq(points, 1) ? '' : 's')))),
+						_1: {ctor: '[]'}
+					});
+			},
+			awardedPoints));
+};
+var _user$project$View_Hint$hint = F4(
+	function (name, dayStarFloat, solutionDate, awardedPoints) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -14267,7 +14510,11 @@ var _user$project$View_Hint$hint = F3(
 								_0: _user$project$View_Date$formatDateForHint(solutionDate),
 								_1: {ctor: '[]'}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: _user$project$View_Hint$formatPoints(awardedPoints),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			});
@@ -14355,8 +14602,8 @@ var _user$project$View_Dot$flashyTick = F3(
 			correctValue) ? _elm_lang$core$Maybe$Just(
 			_terezka$elm_plot$Plot$simpleTick(correctValue)) : _elm_lang$core$Maybe$Nothing;
 	});
-var _user$project$View_Dot$dot = F4(
-	function (hover, memberName, color, _p0) {
+var _user$project$View_Dot$dot = F5(
+	function (hover, memberName, color, _p0, awardedPoints) {
 		var _p1 = _p0;
 		var _p3 = _p1._1;
 		var _p2 = _p1._0;
@@ -14391,7 +14638,7 @@ var _user$project$View_Dot$dot = F4(
 				hover),
 			hint: A3(
 				_user$project$View_Dot$onHovering,
-				A3(_user$project$View_Hint$hint, memberName, _p3, _p2),
+				A4(_user$project$View_Hint$hint, memberName, _p3, _p2, awardedPoints),
 				hover,
 				_p2),
 			x: _p2,
@@ -14406,25 +14653,113 @@ var _user$project$View_Name$name = function (member) {
 		member.name);
 };
 
-var _user$project$View_OnePlot$makeDataPoints = F3(
-	function (hover, color, member) {
+var _user$project$View_OnePlot$points = function (data) {
+	return A2(
+		_elm_lang$core$Dict$map,
+		F2(
+			function (_p0, list) {
+				return A2(
+					_elm_lang$core$List$map,
+					function (_p1) {
+						var _p2 = _p1;
+						return {ctor: '_Tuple2', _0: _p2._0, _1: _p2._3};
+					},
+					list);
+			}),
+		A2(
+			_elm_community$dict_extra$Dict_Extra$groupBy,
+			function (_p3) {
+				var _p4 = _p3;
+				return {ctor: '_Tuple2', _0: _p4._1, _1: _p4._2};
+			},
+			A2(
+				_elm_lang$core$List$concatMap,
+				function (_p5) {
+					var _p6 = _p5;
+					return A2(
+						_elm_lang$core$List$map,
+						function (_p7) {
+							var _p8 = _p7;
+							return {ctor: '_Tuple4', _0: _p6._0, _1: _p8._0, _2: _p8._1, _3: _p8._2};
+						},
+						_p6._1);
+				},
+				A2(
+					_elm_lang$core$List$map,
+					function (member) {
+						return {
+							ctor: '_Tuple2',
+							_0: _user$project$View_Name$name(member),
+							_1: member.completionTimes
+						};
+					},
+					data))));
+};
+var _user$project$View_OnePlot$getPointFor = F3(
+	function (data, _p9, wantedName) {
+		var _p10 = _p9;
+		var maxSolutionPoints = _elm_lang$core$List$length(data);
+		var allSolutions = A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Dict$get,
+				{ctor: '_Tuple2', _0: _p10._0, _1: _p10._1},
+				_user$project$View_OnePlot$points(data)));
+		return A2(
+			_elm_lang$core$Maybe$map,
+			function (_p11) {
+				var _p12 = _p11;
+				return maxSolutionPoints - _p12._0;
+			},
+			_elm_lang$core$List$head(
+				A2(
+					_elm_lang$core$List$filter,
+					function (_p13) {
+						var _p14 = _p13;
+						return _elm_lang$core$Native_Utils.eq(_p14._1._0, wantedName);
+					},
+					A2(
+						_elm_lang$core$List$indexedMap,
+						F2(
+							function (v0, v1) {
+								return {ctor: '_Tuple2', _0: v0, _1: v1};
+							}),
+						A2(
+							_elm_lang$core$List$sortBy,
+							function (_p15) {
+								return _elm_lang$core$Date$toTime(
+									_elm_lang$core$Tuple$second(_p15));
+							},
+							allSolutions)))));
+	});
+var _user$project$View_OnePlot$makeDataPoints = F4(
+	function (hover, color, data, member) {
 		return A2(
 			_elm_lang$core$List$map,
-			function (_p0) {
-				var _p1 = _p0;
-				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p1._0, _p1._1);
-				var x = _elm_lang$core$Date$toTime(_p1._2);
-				return A4(
+			function (_p16) {
+				var _p17 = _p16;
+				var _p19 = _p17._1;
+				var _p18 = _p17._0;
+				var name = _user$project$View_Name$name(member);
+				var y = A2(_user$project$View_DayStar$dayStarToFloat, _p18, _p19);
+				var x = _elm_lang$core$Date$toTime(_p17._2);
+				return A5(
 					_user$project$View_Dot$dot,
 					hover,
-					_user$project$View_Name$name(member),
+					name,
 					color,
-					{ctor: '_Tuple2', _0: x, _1: y});
+					{ctor: '_Tuple2', _0: x, _1: y},
+					A3(
+						_user$project$View_OnePlot$getPointFor,
+						data,
+						{ctor: '_Tuple2', _0: _p18, _1: _p19},
+						name));
 			},
 			member.completionTimes);
 	});
-var _user$project$View_OnePlot$makeSeries = F3(
-	function (hover, color, member) {
+var _user$project$View_OnePlot$makeSeries = F4(
+	function (hover, color, data, member) {
 		return {
 			axis: A4(
 				_user$project$View_Axis$axis,
@@ -14432,9 +14767,9 @@ var _user$project$View_OnePlot$makeSeries = F3(
 				function (_) {
 					return _.y;
 				},
-				function (_p2) {
+				function (_p20) {
 					return _user$project$View_DayStar$formatDayStar(
-						_user$project$View_DayStar$dayStarFromFloat(_p2));
+						_user$project$View_DayStar$dayStarFromFloat(_p20));
 				},
 				A2(_terezka$elm_plot$Plot$interval, 0, 0.5)),
 			interpolation: A2(
@@ -14445,7 +14780,7 @@ var _user$project$View_OnePlot$makeSeries = F3(
 					_0: _elm_lang$svg$Svg_Attributes$stroke(color),
 					_1: {ctor: '[]'}
 				}),
-			toDataPoints: A2(_user$project$View_OnePlot$makeDataPoints, hover, color)
+			toDataPoints: A3(_user$project$View_OnePlot$makeDataPoints, hover, color, data)
 		};
 	});
 var _user$project$View_OnePlot$title = function (member) {
@@ -14512,9 +14847,9 @@ var _user$project$View_OnePlot$customizations = F4(
 					function (_) {
 						return _.x;
 					},
-					function (_p3) {
+					function (_p21) {
 						return _user$project$View_Date$formatDate(
-							_elm_lang$core$Date$fromTime(_p3));
+							_elm_lang$core$Date$fromTime(_p21));
 					},
 					_elm_lang$core$Basics$always(
 						_user$project$Day$findTicks(maxDate))),
@@ -14525,8 +14860,8 @@ var _user$project$View_OnePlot$customizations = F4(
 				toDomainHighest: _elm_lang$core$Basics$always(maxDayStar)
 			});
 	});
-var _user$project$View_OnePlot$onePlot = F5(
-	function (hover, maxDate, maxDayStar, color, member) {
+var _user$project$View_OnePlot$onePlot = F6(
+	function (hover, maxDate, maxDayStar, data, color, member) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -14541,7 +14876,7 @@ var _user$project$View_OnePlot$onePlot = F5(
 					A4(_user$project$View_OnePlot$customizations, member, maxDate, maxDayStar, hover),
 					{
 						ctor: '::',
-						_0: A3(_user$project$View_OnePlot$makeSeries, hover, color, member),
+						_0: A4(_user$project$View_OnePlot$makeSeries, hover, color, data, member),
 						_1: {ctor: '[]'}
 					},
 					member),
@@ -14590,7 +14925,7 @@ var _user$project$View_AllPlots$justAllPlots = F2(
 			},
 			A3(
 				_elm_lang$core$List$map2,
-				A3(_user$project$View_OnePlot$onePlot, hover, maxDate, maxDayStar),
+				A4(_user$project$View_OnePlot$onePlot, hover, maxDate, maxDayStar, data),
 				_user$project$Colors$colorsList(
 					_elm_lang$core$List$length(data)),
 				A2(

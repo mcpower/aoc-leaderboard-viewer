@@ -3,7 +3,9 @@ module View.OnePlot exposing (onePlot)
 import Html as H exposing (Html)
 import Html.Attributes as HA
 import View.TextStyle as Text
-import Date
+import Date exposing (Date)
+import Dict exposing (Dict)
+import Dict.Extra
 import Colors exposing (colors)
 import Day exposing (..)
 import Svg as S exposing (Svg)
@@ -30,13 +32,13 @@ import View.DayStar
 import View.Name as View
 
 
-onePlot : Maybe Point -> Float -> Float -> String -> Member -> Html Msg
-onePlot hover maxDate maxDayStar color member =
+onePlot : Maybe Point -> Float -> Float -> Data -> String -> Member -> Html Msg
+onePlot hover maxDate maxDayStar data color member =
     H.div
         [ HA.class "plot" ]
         [ P.viewSeriesCustom
             (customizations member maxDate maxDayStar hover)
-            [ makeSeries hover color member ]
+            [ makeSeries hover color data member ]
             member
         ]
 
@@ -87,16 +89,55 @@ title member =
         (View.name member ++ " (stars: " ++ toString member.stars ++ ", local score: " ++ toString member.localScore ++ ")")
 
 
-makeSeries : Maybe Point -> String -> Member -> Series Member Msg
-makeSeries hover color member =
+makeSeries : Maybe Point -> String -> Data -> Member -> Series Member Msg
+makeSeries hover color data member =
     { axis = axis hover .y (dayStarFromFloat >> formatDayStar) (P.interval 0 0.5)
     , interpolation = Linear Nothing [ SA.stroke color ]
-    , toDataPoints = makeDataPoints hover color
+    , toDataPoints = makeDataPoints hover color data
     }
 
 
-makeDataPoints : Maybe Point -> String -> Member -> List (DataPoint Msg)
-makeDataPoints hover color member =
+points : Data -> Dict ( Day, Star ) (List ( String, Date ))
+points data =
+    data
+        |> List.map (\member -> ( View.name member, member.completionTimes ))
+        |> List.concatMap
+            (\( name, times ) ->
+                List.map
+                    (\( day, star, date ) -> ( name, day, star, date ))
+                    times
+            )
+        |> Dict.Extra.groupBy (\( name, day, star, date ) -> ( day, star ))
+        |> Dict.map
+            (\_ list ->
+                List.map
+                    (\( name, day, star, date ) -> ( name, date ))
+                    list
+            )
+
+
+getPointFor : Data -> ( Day, Star ) -> String -> Maybe Int
+getPointFor data ( day, star ) wantedName =
+    let
+        allSolutions =
+            points data
+                |> Dict.get ( day, star )
+                |> Maybe.withDefault []
+
+        maxSolutionPoints =
+            List.length data
+    in
+        allSolutions
+            |> List.sortBy (Tuple.second >> Date.toTime)
+            |> List.indexedMap (,)
+            |> List.filter (\( i, ( name, date ) ) -> name == wantedName)
+            |> List.head
+            -- first one gets (length) points, second (length - 1), ...
+            |> Maybe.map (\( i, ( name, date ) ) -> maxSolutionPoints - i)
+
+
+makeDataPoints : Maybe Point -> String -> Data -> Member -> List (DataPoint Msg)
+makeDataPoints hover color data member =
     member.completionTimes
         |> List.map
             (\( day, star, date ) ->
@@ -106,10 +147,14 @@ makeDataPoints hover color member =
 
                     y =
                         dayStarToFloat day star
+
+                    name =
+                        View.name member
                 in
                     dot
                         hover
-                        (View.name member)
+                        name
                         color
                         ( x, y )
+                        (getPointFor data ( day, star ) name)
             )

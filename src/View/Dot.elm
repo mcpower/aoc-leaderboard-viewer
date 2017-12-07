@@ -15,14 +15,14 @@ import Svg.Events as SE
 import View.Hint exposing (hint)
 
 
-dot : Maybe Point -> String -> String -> ( Float, Float ) -> DataPoint Msg
-dot hover memberName color ( x, y ) =
+dot : Maybe Point -> String -> String -> ( Float, Float ) -> Maybe Int -> DataPoint Msg
+dot hover memberName color ( x, y ) awardedPoints =
     { view = Just (square memberName color x y)
     , xLine = hover |> Maybe.andThen (flashyLine x y)
     , yLine = hover |> Maybe.andThen (flashyLine x y)
     , xTick = hover |> Maybe.andThen (flashyTick x .x)
     , yTick = hover |> Maybe.andThen (flashyTick y .y)
-    , hint = onHovering (hint memberName y x) hover x
+    , hint = onHovering (hint memberName y x awardedPoints) hover x
     , x = x
     , y = y
     }
