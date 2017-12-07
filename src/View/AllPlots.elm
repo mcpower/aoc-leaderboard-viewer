@@ -1,7 +1,6 @@
 module View.AllPlots exposing (allPlots)
 
 import Colors exposing (..)
-import Date
 import Html as H exposing (Html)
 import Html.Attributes as HA
 import View.OnePlot exposing (onePlot)
@@ -9,14 +8,38 @@ import Plot as P exposing (Point)
 import Types exposing (..)
 import Day exposing (endOfAoC, comfortableRange)
 import View.DayStar exposing (dayStarToFloat)
+import Example
+import RemoteData exposing (RemoteData(..))
+import Http
 
 
 allPlots : Model -> Html Msg
-allPlots { data, hover } =
-    data
-        |> Result.map (justAllPlots hover)
-        |> Result.mapError (Debug.log "JSON decoding error")
-        |> Result.withDefault (H.text "Incorrect data!")
+allPlots ({ data, hover } as model) =
+    case data of
+        NotAsked ->
+            if Example.shouldShow model then
+                justAllPlots hover Example.data
+            else
+                H.text ""
+
+        Loading ->
+            viewLoading
+
+        Failure err ->
+            viewFailure err
+
+        Success realData ->
+            justAllPlots hover realData
+
+
+viewLoading : Html Msg
+viewLoading =
+    H.text "Loading from the AoC site..."
+
+
+viewFailure : Http.Error -> Html Msg
+viewFailure err =
+    H.text <| "Error: " ++ toString err
 
 
 justAllPlots : Maybe Point -> Data -> Html Msg
@@ -28,7 +51,7 @@ justAllPlots hover data =
 
         maxDate =
             allCompletions
-                |> List.map (\( _, _, date ) -> Date.toTime date)
+                |> List.map (\( _, _, time ) -> time)
                 |> List.maximum
                 |> Maybe.withDefault endOfAoC
                 |> comfortableRange

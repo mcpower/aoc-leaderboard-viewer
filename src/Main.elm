@@ -6,10 +6,11 @@ import Types exposing (..)
 import View exposing (..)
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    Html.beginnerProgram
-        { model = initModel
+    Html.programWithFlags
+        { init = init
         , update = update
         , view = view
+        , subscriptions = subscriptions
         }

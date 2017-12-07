@@ -7,6 +7,7 @@ import Date exposing (Date)
 import Dict exposing (Dict)
 import Dict.Extra
 import Colors exposing (colors)
+import Time exposing (Time)
 import Day exposing (..)
 import Svg as S exposing (Svg)
 import Svg.Attributes as SA
@@ -97,21 +98,21 @@ makeSeries hover color data member =
     }
 
 
-points : Data -> Dict ( Day, Star ) (List ( String, Date ))
+points : Data -> Dict ( Day, Star ) (List ( String, Time ))
 points data =
     data
         |> List.map (\member -> ( View.name member, member.completionTimes ))
         |> List.concatMap
             (\( name, times ) ->
                 List.map
-                    (\( day, star, date ) -> ( name, day, star, date ))
+                    (\( day, star, time ) -> ( name, day, star, time ))
                     times
             )
-        |> Dict.Extra.groupBy (\( name, day, star, date ) -> ( day, star ))
+        |> Dict.Extra.groupBy (\( name, day, star, time ) -> ( day, star ))
         |> Dict.map
             (\_ list ->
                 List.map
-                    (\( name, day, star, date ) -> ( name, date ))
+                    (\( name, day, star, time ) -> ( name, time ))
                     list
             )
 
@@ -128,7 +129,7 @@ getPointFor data ( day, star ) wantedName =
             List.length data
     in
         allSolutions
-            |> List.sortBy (Tuple.second >> Date.toTime)
+            |> List.sortBy Tuple.second
             |> List.indexedMap (,)
             |> List.filter (\( i, ( name, date ) ) -> name == wantedName)
             |> List.head
@@ -140,10 +141,10 @@ makeDataPoints : Maybe Point -> String -> Data -> Member -> List (DataPoint Msg)
 makeDataPoints hover color data member =
     member.completionTimes
         |> List.map
-            (\( day, star, date ) ->
+            (\( day, star, time ) ->
                 let
                     x =
-                        date |> Date.toTime
+                        time
 
                     y =
                         dayStarToFloat day star

@@ -10,14 +10,24 @@
         padding: 0;
         margin: 0;
     }
-    textarea {
-        background-color: #fdf6e3;
-        color: #93a1a1;
-        height: 100px;
-        width: 960px;
+    .inputs {
+        margin-top: 16px;
     }
-    textarea:focus {
-        color: #586e75;
+    .plot-area {
+        margin-top: 16px;
+    }
+    .example-data-note {
+        margin-bottom: 16px;
+    }
+    .fetch-date {
+        margin-left: 8px;
+    }
+    label {
+        display: inline-block;
+        width: 180px;
+    }
+    input {
+        width: 600px;
     }
     .plot {
         max-width: 960px;
@@ -30,7 +40,22 @@
 <body>
   <script src="elm.js"></script>
   <script>
-    var app = Elm.Main.fullscreen();
+    var storageKey = 'aoc-leaderboard-snapshot';
+
+    var time = +new Date();
+    var storedSnapshot = localStorage.getItem(storageKey);
+    var startingSnapshot = storedSnapshot ? JSON.parse(storedSnapshot) : null;
+    console.log(startingSnapshot);
+
+    var app = Elm.Main.fullscreen({
+        currentTime: time,
+        snapshot: startingSnapshot
+    });
+
+    app.ports.saveSnapshot.subscribe(function(snapshot){
+        console.log(snapshot);
+        localStorage.setItem(storageKey, JSON.stringify(snapshot));
+    });
   </script>
 </body>
 </html>

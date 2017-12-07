@@ -5,6 +5,10 @@ import Html.Attributes as HA
 import Html.Events as HE
 import View.AllPlots as View
 import Types exposing (..)
+import RemoteData exposing (RemoteData(..))
+import Example
+import Date
+import Date.Extra
 
 
 view : Model -> Html Msg
@@ -14,19 +18,63 @@ view model =
         [ H.div
             [ HA.id "top" ]
             [ H.h1 [] [ H.text "AoC private leaderboard viewer" ]
-            , H.div []
-                [ H.text "Go to some of your "
-                , H.a [ HA.href "https://adventofcode.com/2017/leaderboard/private" ] [ H.text "private leaderboard" ]
-                , H.text " URL + \".json\" and copy the result here!"
+            , H.div
+                [ HA.class "inputs" ]
+                [ H.label []
+                    [ H.text "Leaderboard JSON URL:"
+                    ]
+                , H.input
+                    [ HA.placeholder Example.url
+                    , HA.value model.url
+                    , HE.onInput SetUrl
+                    ]
+                    []
                 ]
-            , H.textarea
-                [ HA.placeholder "Paste https://adventofcode.com/2017/leaderboard/private/view/<LEADERBOARD-ID>.json here"
-                , HA.value model.json
-                , HE.onInput SetJson
-                ]
+            , H.div
                 []
+                [ H.label []
+                    [ H.text "Session cookie "
+                    , H.a
+                        [ HA.target "_blank"
+                        , HA.href "https://i.imgur.com/75BC9zU.png"
+                        ]
+                        [ H.text "(what?!)" ]
+                    , H.text ":"
+                    ]
+                , H.input
+                    [ HA.placeholder Example.cookie
+                    , HA.value model.cookie
+                    , HE.onInput SetCookie
+                    ]
+                    []
+                ]
+            , H.div []
+                [ H.button
+                    [ HE.onClick (Fetch model.url model.cookie)
+                    , HA.disabled (model.data == Loading)
+                    ]
+                    [ H.text "Fetch!" ]
+                , case model.data of
+                    Success _ ->
+                        H.span [ HA.class "fetch-date" ]
+                            [ H.text <|
+                                "Fetched at "
+                                    ++ (model.timeOfFetch
+                                            |> Date.fromTime
+                                            |> Date.Extra.toFormattedString "yyyy/MM/dd', 'HH:mm:ss"
+                                       )
+                            ]
+
+                    _ ->
+                        H.text ""
+                ]
             ]
         , H.div
-            [ HA.id "plot" ]
-            [ View.allPlots model ]
+            [ HA.class "plot-area" ]
+            [ if Example.shouldShow model then
+                H.div [ HA.class "example-data-note" ] [ H.em [] [ H.text "↓↓↓ This is just example data, paste your own URL and cookie." ] ]
+              else
+                H.text ""
+            , View.allPlots model
+            ]
         ]

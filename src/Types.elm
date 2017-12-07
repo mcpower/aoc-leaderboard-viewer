@@ -1,18 +1,37 @@
 module Types exposing (..)
 
-import Plot as P exposing (Point)
-import Date exposing (Date)
+import Plot exposing (Point)
+import RemoteData exposing (WebData)
+import Time exposing (Time)
+
+
+type alias Snapshot =
+    { url : String
+    , cookie : String
+    }
+
+
+type alias Flags =
+    { currentTime : Time
+    , snapshot : Maybe Snapshot
+    }
 
 
 type alias Model =
-    { json : String
-    , data : Result String Data
+    { url : String
+    , cookie : String
+    , data : WebData Data
+    , timeOfFetch : Time
     , hover : Maybe Point
     }
 
 
 type Msg
-    = SetJson String
+    = SetUrl String
+    | SetCookie String
+    | Fetch String String
+    | FetchResult (WebData Data)
+    | CurrentTime Time
     | Hover (Maybe Point)
 
 
@@ -26,7 +45,7 @@ type alias Member =
     , localScore : Int
     , globalScore : Int
     , stars : Int
-    , completionTimes : List ( Day, Star, Date )
+    , completionTimes : List ( Day, Star, Time )
     }
 
 
