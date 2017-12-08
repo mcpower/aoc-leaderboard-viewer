@@ -4,13 +4,13 @@ import Types exposing (..)
 import Html as H exposing (Html)
 import View.Plot.Series exposing (series)
 import Colors exposing (colorsList)
+import View.Plot.PlotCustomizations exposing (plotCustomizations)
 import Plot as P
     exposing
         ( Series
         , JunkCustomizations
         , PlotSummary
         )
-import View.Plot.PlotCustomizations exposing (plotCustomizations)
 
 
 allInOne : Model -> Data -> List (Html Msg)

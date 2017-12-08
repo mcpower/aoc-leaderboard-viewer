@@ -16552,6 +16552,24 @@ var _user$project$DayStar$toFloat = F2(
 	function (day, star) {
 		return _elm_lang$core$Basics$toFloat(day) + ((_elm_lang$core$Basics$toFloat(star) - 1) / 2);
 	});
+var _user$project$DayStar$max = function (data) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		25.5,
+		_elm_lang$core$List$maximum(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p0) {
+					var _p1 = _p0;
+					return A2(_user$project$DayStar$toFloat, _p1._0, _p1._1);
+				},
+				A2(
+					_elm_lang$core$List$concatMap,
+					function (_) {
+						return _.completionTimes;
+					},
+					data))));
+};
 
 var _user$project$Json$completionTimesDecoder = A2(
 	_elm_lang$core$Json_Decode$map,
@@ -17337,12 +17355,6 @@ var _user$project$View_Plot_Grid$gridAlignedOnMidnightEST = function (maxDate) {
 
 var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 	function (model, data, junk) {
-		var allCompletions = A2(
-			_elm_lang$core$List$concatMap,
-			function (_) {
-				return _.completionTimes;
-			},
-			data);
 		var maxDate = _elm_lang$core$Tuple$second(
 			_user$project$Day$comfortableRange(
 				A2(
@@ -17355,18 +17367,12 @@ var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 								var _p1 = _p0;
 								return _p1._2;
 							},
-							allCompletions)))));
-		var maxDayStar = A2(
-			_elm_lang$core$Maybe$withDefault,
-			25.5,
-			_elm_lang$core$List$maximum(
-				A2(
-					_elm_lang$core$List$map,
-					function (_p2) {
-						var _p3 = _p2;
-						return A2(_user$project$DayStar$toFloat, _p3._0, _p3._1);
-					},
-					allCompletions)));
+							A2(
+								_elm_lang$core$List$concatMap,
+								function (_) {
+									return _.completionTimes;
+								},
+								data))))));
 		return _elm_lang$core$Native_Utils.update(
 			_terezka$elm_plot$Plot$defaultSeriesPlotCustomizations,
 			{
@@ -17382,7 +17388,8 @@ var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 				toRangeLowest: _elm_lang$core$Basics$always(_user$project$Day$startOfAoC),
 				toRangeHighest: _elm_lang$core$Basics$always(maxDate),
 				toDomainLowest: _elm_lang$core$Basics$always(1.0),
-				toDomainHighest: _elm_lang$core$Basics$always(maxDayStar)
+				toDomainHighest: _elm_lang$core$Basics$always(
+					_user$project$DayStar$max(data))
 			});
 	});
 
@@ -17416,6 +17423,21 @@ var _user$project$View_Plot_Type_AllInOne$allInOne = F2(
 		};
 	});
 
+var _user$project$View_Plot_Junk_Title$svg = function (titleString) {
+	return A2(
+		_terezka$elm_plot$Plot$viewLabel,
+		{ctor: '::', _0: _user$project$View_Plot_Text$italic, _1: _user$project$View_Plot_Text$attributes},
+		titleString);
+};
+var _user$project$View_Plot_Junk_Title$title = F2(
+	function (titleString, y) {
+		return A3(
+			_terezka$elm_plot$Plot$junk,
+			_user$project$View_Plot_Junk_Title$svg(titleString),
+			_user$project$Day$startOfAoC + (_user$project$Day$day / 8),
+			y);
+	});
+
 var _user$project$View_Plot_Type_OneForEachMember$title = function (member) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
@@ -17434,9 +17456,57 @@ var _user$project$View_Plot_Type_OneForEachMember$title = function (member) {
 					_elm_lang$core$Basics$toString(member.localScore)),
 				')')));
 };
+var _user$project$View_Plot_Type_OneForEachMember$junk = F3(
+	function (data, member, _p0) {
+		return {
+			ctor: '::',
+			_0: A2(
+				_user$project$View_Plot_Junk_Title$title,
+				_user$project$View_Plot_Type_OneForEachMember$title(member),
+				_user$project$DayStar$max(data)),
+			_1: {ctor: '[]'}
+		};
+	});
+var _user$project$View_Plot_Type_OneForEachMember$seriesList = F4(
+	function (model, data, color, member) {
+		return A2(
+			_elm_lang$core$List$map,
+			A3(_user$project$View_Plot_Series$series, model, data, color),
+			A2(
+				_elm_lang$core$List$filter,
+				function (m) {
+					return _elm_lang$core$Native_Utils.eq(m.id, member.id);
+				},
+				data));
+	});
+var _user$project$View_Plot_Type_OneForEachMember$onePlot = F4(
+	function (model, data, color, member) {
+		return A3(
+			_terezka$elm_plot$Plot$viewSeriesCustom,
+			A3(
+				_user$project$View_Plot_PlotCustomizations$plotCustomizations,
+				model,
+				data,
+				A2(_user$project$View_Plot_Type_OneForEachMember$junk, data, member)),
+			A4(_user$project$View_Plot_Type_OneForEachMember$seriesList, model, data, color, member),
+			data);
+	});
 var _user$project$View_Plot_Type_OneForEachMember$oneForEachMember = F2(
 	function (model, data) {
-		return {ctor: '[]'};
+		return A3(
+			_elm_lang$core$List$map2,
+			A2(_user$project$View_Plot_Type_OneForEachMember$onePlot, model, data),
+			_user$project$Colors$colorsList(
+				_elm_lang$core$List$length(data)),
+			A2(
+				_elm_lang$core$List$sortBy,
+				function (_p1) {
+					return _elm_lang$core$Basics$negate(
+						function (_) {
+							return _.localScore;
+						}(_p1));
+				},
+				data));
 	});
 
 var _user$project$View_Plot$viewFailure = function (err) {

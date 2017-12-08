@@ -27,26 +27,15 @@ plotCustomizations :
     -> PlotCustomizations Msg
 plotCustomizations model data junk =
     let
-        allCompletions : List CompletionTime
-        allCompletions =
-            data
-                |> List.concatMap .completionTimes
-
         maxDate : Float
         maxDate =
-            allCompletions
+            data
+                |> List.concatMap .completionTimes
                 |> List.map (\( _, _, time ) -> time)
                 |> List.maximum
                 |> Maybe.withDefault endOfAoC
                 |> comfortableRange
                 |> Tuple.second
-
-        maxDayStar : Float
-        maxDayStar =
-            allCompletions
-                |> List.map (\( day, star, _ ) -> DayStar.toFloat day star)
-                |> List.maximum
-                |> Maybe.withDefault 25.5
     in
         { defaultSeriesPlotCustomizations
             | -- on-hover tooltip
@@ -89,5 +78,5 @@ plotCustomizations model data junk =
             , toRangeLowest = always startOfAoC
             , toRangeHighest = always maxDate
             , toDomainLowest = always 1.0
-            , toDomainHighest = always maxDayStar
+            , toDomainHighest = always (DayStar.max data)
         }
