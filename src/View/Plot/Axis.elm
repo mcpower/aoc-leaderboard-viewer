@@ -1,7 +1,15 @@
-module View.Axis exposing (axis)
+module View.Plot.Axis
+    exposing
+        ( horizontalAxis
+        , verticalAxis
+        )
 
 import Day exposing (..)
-import View.TextStyle as Text
+import DayStar
+import View.DayStar as DayStar
+import View.Plot.Text as Text
+import View.Date exposing (formatDate)
+import Date
 import Plot as P
     exposing
         ( Point
@@ -9,6 +17,24 @@ import Plot as P
         , AxisSummary
         , LabelCustomizations
         )
+
+
+horizontalAxis : Maybe Point -> Float -> Axis
+horizontalAxis hover maxDate =
+    axis
+        hover
+        .x
+        (Date.fromTime >> formatDate)
+        (always (findTicks maxDate))
+
+
+verticalAxis : Maybe Point -> Axis
+verticalAxis hover =
+    axis
+        hover
+        .y
+        (DayStar.fromFloat >> DayStar.format)
+        (P.interval 0 0.5)
 
 
 axis : Maybe Point -> (Point -> Float) -> (Float -> String) -> (AxisSummary -> List Float) -> Axis

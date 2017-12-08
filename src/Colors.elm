@@ -1,20 +1,25 @@
 module Colors exposing (..)
 
 
+seriesColors : List String
+seriesColors =
+    [ colors.red
+    , colors.blue
+    , colors.brown
+    , colors.green
+    , colors.darkRed
+    , colors.orange
+    , colors.violet
+    ]
+
+
 colorsList : Int -> List String
 colorsList count =
     let
-        possibilities =
-            [ colors.red
-            , colors.orange
-            , colors.green
-            , colors.blue
-            ]
-
         repeats =
-            ceiling (toFloat count / toFloat (List.length possibilities))
+            ceiling (toFloat count / toFloat (List.length seriesColors))
     in
-        possibilities
+        seriesColors
             |> List.repeat repeats
             |> List.concat
             |> List.take count
@@ -23,16 +28,22 @@ colorsList count =
 colors :
     { green : String
     , orange : String
+    , brown : String
     , red : String
+    , darkRed : String
     , blue : String
+    , violet : String
     , grey : String
     , darkGrey : String
     }
 colors =
-    { red = "#d53e4f"
-    , orange = "#fc8d59"
-    , green = "#99d594"
-    , blue = "#3288bd"
+    { red = "#ed5353"
+    , darkRed = "#7a0000"
+    , orange = "#f37329"
+    , brown = "#ad5f00"
+    , green = "#68b723"
+    , blue = "#3689e6"
+    , violet = "#7a36b1"
     , grey = "#e3e3e3"
     , darkGrey = "#a3a3a3"
     }

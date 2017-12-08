@@ -18,6 +18,7 @@ init { currentTime, snapshot } =
                 , data = NotAsked
                 , timeOfFetch = currentTime
                 , hover = Nothing
+                , plot = OneForEachMember
                 }
             )
         |> Maybe.withDefault
@@ -26,6 +27,7 @@ init { currentTime, snapshot } =
             , data = NotAsked
             , timeOfFetch = currentTime
             , hover = Nothing
+            , plot = OneForEachMember
             }
     , Cmd.none
     )
@@ -81,6 +83,11 @@ update msg model =
 
         Hover hover ->
             ( { model | hover = hover }
+            , Cmd.none
+            )
+
+        ShowPlot plot ->
+            ( { model | plot = plot }
             , Cmd.none
             )
 

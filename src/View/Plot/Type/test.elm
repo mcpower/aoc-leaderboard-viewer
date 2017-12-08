@@ -1,38 +1,3 @@
-module View.OnePlot exposing (onePlot)
-
-import Html as H exposing (Html)
-import Html.Attributes as HA
-import View.TextStyle as Text
-import Date exposing (Date)
-import Dict exposing (Dict)
-import Dict.Extra
-import Colors exposing (colors)
-import Time exposing (Time)
-import Day exposing (..)
-import Svg as S exposing (Svg)
-import Svg.Attributes as SA
-import Plot as P
-    exposing
-        ( Point
-        , Series
-        , Interpolation(..)
-        , PlotCustomizations
-        , DataPoint
-        , defaultSeriesPlotCustomizations
-        )
-import Types exposing (..)
-import View.Axis exposing (axis)
-import View.Dot exposing (dot, invisibleDot)
-import View.Date exposing (formatDate)
-import View.DayStar
-    exposing
-        ( dayStarToFloat
-        , dayStarFromFloat
-        , formatDayStar
-        )
-import View.Name as View
-
-
 onePlot : Maybe Point -> Float -> Float -> Data -> String -> Member -> Html Msg
 onePlot hover maxDate maxDayStar data color member =
     H.div
@@ -83,13 +48,6 @@ customizations member maxDate maxDayStar hover =
         , toDomainLowest = always 1.0
         , toDomainHighest = always maxDayStar
     }
-
-
-title : Member -> Svg msg
-title member =
-    P.viewLabel
-        (Text.italic :: Text.attributes)
-        (View.name member ++ " (stars: " ++ toString member.stars ++ ", local score: " ++ toString member.localScore ++ ")")
 
 
 makeSeries : Maybe Point -> String -> Data -> Member -> Series Member Msg
@@ -189,3 +147,47 @@ makeDataPoints hover color data member =
                         ( x, y )
                         (getPointFor data ( day, star ) name)
             )
+
+
+import Colors exposing (..)
+import Html as H exposing (Html)
+import Html.Attributes as HA
+import View.OnePlot exposing (onePlot)
+import Plot as P exposing (Point)
+import Types exposing (..)
+import Day exposing (endOfAoC, comfortableRange)
+import View.DayStar exposing (dayStarToFloat)
+import Example
+import RemoteData exposing (RemoteData(..))
+import Http
+
+
+
+justAllPlots : Maybe Point -> Data -> Html Msg
+justAllPlots hover data =
+    let
+        allCompletions =
+            data
+                |> List.concatMap .completionTimes
+
+        maxDate =
+            allCompletions
+                |> List.map (\( _, _, time ) -> time)
+                |> List.maximum
+                |> Maybe.withDefault endOfAoC
+                |> comfortableRange
+                |> Tuple.second
+
+        maxDayStar =
+            allCompletions
+                |> List.map (\( day, star, _ ) -> dayStarToFloat day star)
+                |> List.maximum
+                |> Maybe.withDefault 25.5
+    in
+        H.div
+            [ HA.class "plots" ]
+            (List.map2 (onePlot hover maxDate maxDayStar data)
+                (colorsList (List.length data))
+                (data |> List.sortBy (.localScore >> negate))
+            )
+

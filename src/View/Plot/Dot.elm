@@ -1,4 +1,4 @@
-module View.Dot exposing (dot, invisibleDot)
+module View.Plot.Dot exposing (dot, invisibleDot)
 
 import Plot as P
     exposing
@@ -12,17 +12,17 @@ import Types exposing (..)
 import Svg as S exposing (Svg)
 import Svg.Attributes as SA
 import Svg.Events as SE
-import View.Hint exposing (hint)
+import View.Plot.Hint exposing (hint)
 
 
-dot : Maybe Point -> String -> String -> ( Float, Float ) -> Maybe Int -> DataPoint Msg
-dot hover memberName color ( x, y ) awardedPoints =
+dot : Maybe Point -> String -> String -> ( Float, Float ) -> Maybe Int -> Int -> DataPoint Msg
+dot hover memberName color ( x, y ) maybeScore maxScore =
     { view = Just (square memberName color x y)
     , xLine = hover |> Maybe.andThen (flashyLine x y)
     , yLine = hover |> Maybe.andThen (flashyLine x y)
     , xTick = hover |> Maybe.andThen (flashyTick x .x)
     , yTick = hover |> Maybe.andThen (flashyTick y .y)
-    , hint = onHovering (hint memberName y x awardedPoints) hover x
+    , hint = onHovering (hint memberName y x maybeScore maxScore) hover x
     , x = x
     , y = y
     }

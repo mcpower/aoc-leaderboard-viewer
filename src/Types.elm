@@ -23,6 +23,7 @@ type alias Model =
     , data : WebData Data
     , timeOfFetch : Time
     , hover : Maybe Point
+    , plot : Plot
     }
 
 
@@ -33,6 +34,7 @@ type Msg
     | FetchResult (WebData Data)
     | CurrentTime Time
     | Hover (Maybe Point)
+    | ShowPlot Plot
 
 
 type alias Data =
@@ -45,8 +47,12 @@ type alias Member =
     , localScore : Int
     , globalScore : Int
     , stars : Int
-    , completionTimes : List ( Day, Star, Time )
+    , completionTimes : List CompletionTime
     }
+
+
+type alias CompletionTime =
+    ( Day, Star, Time )
 
 
 type alias Day =
@@ -55,3 +61,8 @@ type alias Day =
 
 type alias Star =
     Int
+
+
+type Plot
+    = OneForEachMember
+    | AllInOne

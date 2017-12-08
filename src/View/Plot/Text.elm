@@ -1,4 +1,4 @@
-module View.TextStyle exposing (attributes, italic)
+module View.Plot.Text exposing (attributes, italic)
 
 import Svg exposing (Attribute)
 import Svg.Attributes as SA
