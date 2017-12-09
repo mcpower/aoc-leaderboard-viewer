@@ -3,6 +3,7 @@ port module Update exposing (init, update, subscriptions)
 import Http
 import Json exposing (dataDecoder)
 import RemoteData exposing (RemoteData(..))
+import View.Plot as Plot
 import Task
 import Time
 import Types exposing (..)
@@ -11,15 +12,21 @@ import Types exposing (..)
 init : Flags -> ( Model, Cmd Msg )
 init { currentTime, snapshot } =
     ( snapshot
-        |> Maybe.map
-            (\{ url, cookie } ->
-                { url = url
-                , cookie = cookie
-                , data = NotAsked
-                , timeOfFetch = currentTime
-                , hover = Nothing
-                , plot = OneForEachMember
-                }
+        |> Maybe.andThen
+            (\{ url, cookie, plot } ->
+                plot
+                    |> Plot.fromString
+                    |> Result.toMaybe
+                    |> Maybe.map
+                        (\plot ->
+                            { url = url
+                            , cookie = cookie
+                            , data = NotAsked
+                            , timeOfFetch = currentTime
+                            , hover = Nothing
+                            , plot = plot
+                            }
+                        )
             )
         |> Maybe.withDefault
             { url = ""
@@ -48,6 +55,7 @@ update msg model =
                 , saveSnapshot
                     { url = url
                     , cookie = model.cookie
+                    , plot = Plot.toString model.plot
                     }
                 )
 
@@ -60,6 +68,7 @@ update msg model =
                 , saveSnapshot
                     { url = model.url
                     , cookie = cookie
+                    , plot = Plot.toString model.plot
                     }
                 )
 
@@ -87,9 +96,17 @@ update msg model =
             )
 
         ShowPlot plot ->
-            ( { model | plot = plot }
-            , Cmd.none
-            )
+            let
+                newModel =
+                    { model | plot = plot }
+            in
+                ( newModel
+                , saveSnapshot
+                    { url = model.url
+                    , cookie = model.cookie
+                    , plot = Plot.toString plot
+                    }
+                )
 
 
 getCurrentTime : Cmd Msg

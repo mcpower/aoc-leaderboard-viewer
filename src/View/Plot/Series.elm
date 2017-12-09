@@ -5,22 +5,27 @@ import Svg.Attributes as SA
 import DayStar
 import Score exposing (score, maxScore)
 import View.Plot.Axis exposing (verticalAxis)
-import View.Name as View
+import View.Date as Date
 import View.Plot.Dot exposing (dot)
+import View.Name as View
 import Plot as P
     exposing
         ( Series
-        , Point
         , DataPoint
+        , Point
         , Interpolation(..)
         )
 
 
-series : Model -> Data -> String -> Member -> Series Data Msg
-series model data color member =
-    { axis = verticalAxis model.hover
+series : Model -> Data -> DotOptions -> Bool -> String -> Member -> Series Data Msg
+series model data dotOptions hasAxis color member =
+    { axis =
+        if hasAxis then
+            verticalAxis dotOptions.yTick model.hover (Date.max data)
+        else
+            P.sometimesYouDoNotHaveAnAxis
     , interpolation = interpolation color
-    , toDataPoints = dataPoints model.hover color member
+    , toDataPoints = dataPoints model.hover color member dotOptions
     }
 
 
@@ -29,19 +34,33 @@ interpolation color =
     Linear Nothing [ SA.stroke color ]
 
 
-dataPoints : Maybe Point -> String -> Member -> Data -> List (DataPoint Msg)
-dataPoints hover color member data =
+dataPoints :
+    Maybe Point
+    -> String
+    -> Member
+    -> DotOptions
+    -> Data
+    -> List (DataPoint Msg)
+dataPoints hover color member dotOptions data =
     member.completionTimes
-        |> List.map (toDataPoint hover color member data)
+        |> List.map (toDataPoint hover color member data dotOptions)
 
 
-toDataPoint : Maybe Point -> String -> Member -> Data -> CompletionTime -> DataPoint Msg
-toDataPoint hover color member data (( day, star, time ) as completionTime) =
+toDataPoint :
+    Maybe Point
+    -> String
+    -> Member
+    -> Data
+    -> DotOptions
+    -> CompletionTime
+    -> DataPoint Msg
+toDataPoint hover color member data dotOptions (( day, star, time ) as completionTime) =
     let
         name =
             View.name member
     in
         dot
+            dotOptions
             hover
             name
             color
@@ -52,6 +71,6 @@ toDataPoint hover color member data (( day, star, time ) as completionTime) =
 
 toXY : CompletionTime -> ( Float, Float )
 toXY ( day, star, time ) =
-    ( time
-    , DayStar.toFloat day star
+    ( DayStar.toFloat day star
+    , time
     )

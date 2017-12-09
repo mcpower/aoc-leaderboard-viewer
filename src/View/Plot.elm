@@ -1,7 +1,6 @@
-module View.Plot exposing (plot)
+module View.Plot exposing (plot, toString, fromString)
 
 import Html as H exposing (Html)
-import Html.Attributes as HA
 import View.Plot.Type.AllInOne as View
 import View.Plot.Type.OneForEachMember as View
 import Types exposing (..)
@@ -10,9 +9,32 @@ import RemoteData exposing (RemoteData(..))
 import Http
 
 
+toString : Plot -> String
+toString plot =
+    case plot of
+        OneForEachMember ->
+            "OneForEachMember"
+
+        AllInOne ->
+            "AllInOne"
+
+
+fromString : String -> Result String Plot
+fromString string =
+    case string of
+        "OneForEachMember" ->
+            Ok OneForEachMember
+
+        "AllInOne" ->
+            Ok AllInOne
+
+        _ ->
+            Err <| "wrong plot type snapshot: " ++ string
+
+
 plot : Model -> Html Msg
 plot model =
-    H.div [ HA.class "plots" ]
+    H.div []
         (case model.data of
             NotAsked ->
                 if Example.shouldShow model then
@@ -52,4 +74,4 @@ viewLoading =
 
 viewFailure : Http.Error -> Html Msg
 viewFailure err =
-    H.text <| "Error: " ++ toString err
+    H.text <| "Error: " ++ Basics.toString err

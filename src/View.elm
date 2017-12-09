@@ -13,14 +13,12 @@ import Date.Extra
 
 view : Model -> Html Msg
 view model =
-    H.div [ HA.class "page" ]
-        [ H.div [ HA.class "top" ]
+    H.div [ HA.class "container" ]
+        [ H.div []
             [ heading
-            , inputs model
-            , fetchButton model
-            , radioButtons model
+            , form model
             ]
-        , H.div [ HA.class "content" ]
+        , H.div []
             [ exampleWarning model
             , plot model
             ]
@@ -29,15 +27,18 @@ view model =
 
 exampleWarningText : String
 exampleWarningText =
-    "↓↓↓ This is just example data, paste your own URL and cookie."
+    "This is just an example plot, paste your own URL and cookie."
 
 
 exampleWarning : Model -> Html Msg
 exampleWarning model =
+    -- TODO bootstrap warning box
     if Example.shouldShow model then
         H.div
-            [ HA.class "example-data-note" ]
-            [ H.em [] [ H.text exampleWarningText ] ]
+            [ HA.class "alert alert-info"
+            , HA.attribute "role" "alert"
+            ]
+            [ H.text exampleWarningText ]
     else
         H.text ""
 
@@ -45,19 +46,25 @@ exampleWarning model =
 plotButton : Plot -> Plot -> Html Msg
 plotButton plot currentlySelectedPlot =
     let
-        label =
-            plotLabel plot
+        isActive =
+            plot == currentlySelectedPlot
     in
-        H.label [ HA.class "plot-button" ]
+        H.label
+            [ HA.classList
+                [ ( "btn", True )
+                , ( "btn-secondary", True )
+                , ( "active", isActive )
+                ]
+            ]
             [ H.input
                 [ HA.type_ "radio"
-                , HA.name "type-of-plot"
-                , HA.value label
-                , HA.checked (plot == currentlySelectedPlot)
+                , HA.name "plot-type"
+                , HA.attribute "autocomplete" "off"
+                , HA.checked isActive
                 , HE.onClick (ShowPlot plot)
                 ]
                 []
-            , H.text label
+            , H.text (plotLabel plot)
             ]
 
 
@@ -73,38 +80,59 @@ plotLabel plot =
 
 heading : Html Msg
 heading =
-    H.h1 [] [ H.text "AoC private leaderboard viewer" ]
+    H.h1
+        [ HA.class "my-4" ]
+        [ H.text "AoC private leaderboard viewer" ]
 
 
-inputs : Model -> Html Msg
-inputs model =
+form : Model -> Html Msg
+form model =
+    H.div []
+        [ urlInput model
+        , cookieInput model
+        , fetchButton model
+        , warning
+        , radioButtons model
+        ]
+
+
+urlInput : Model -> Html Msg
+urlInput model =
     H.div
-        [ HA.class "inputs" ]
-        [ H.div []
-            [ H.label []
-                [ H.text "Leaderboard JSON URL:"
-                ]
-            , H.input
+        [ HA.class "form-group row" ]
+        [ H.label [ HA.class "col-lg-3 col-form-label" ]
+            [ H.text "Leaderboard JSON URL:"
+            ]
+        , H.div [ HA.class "col-lg-9" ]
+            [ H.input
                 [ HA.placeholder Example.url
                 , HA.value model.url
+                , HA.class "form-control"
                 , HE.onInput SetUrl
                 ]
                 []
             ]
-        , H.div
-            []
-            [ H.label []
-                [ H.text "Session cookie "
-                , H.a
-                    [ HA.target "_blank"
-                    , HA.href "https://i.imgur.com/75BC9zU.png"
-                    ]
-                    [ H.text "(what?!)" ]
-                , H.text ":"
+        ]
+
+
+cookieInput : Model -> Html Msg
+cookieInput model =
+    H.div
+        [ HA.class "form-group row" ]
+        [ H.label [ HA.class "col-lg-3 col-form-label" ]
+            [ H.text "Session cookie "
+            , H.a
+                [ HA.target "_blank"
+                , HA.href "https://i.imgur.com/75BC9zU.png"
                 ]
-            , H.input
+                [ H.text "(what?!)" ]
+            , H.text ":"
+            ]
+        , H.div [ HA.class "col-lg-9" ]
+            [ H.input
                 [ HA.placeholder Example.cookie
                 , HA.value model.cookie
+                , HA.class "form-control"
                 , HE.onInput SetCookie
                 ]
                 []
@@ -114,38 +142,61 @@ inputs model =
 
 fetchButton : Model -> Html Msg
 fetchButton model =
-    H.div []
-        [ H.button
-            [ HE.onClick (Fetch model.url model.cookie)
-            , HA.disabled (model.data == Loading)
-            ]
-            [ H.text "Fetch!" ]
-        , case model.data of
-            Success _ ->
-                if not (Example.shouldShow model) then
-                    H.span [ HA.class "fetch-date" ]
-                        [ H.text <|
-                            "Fetched at "
-                                ++ (model.timeOfFetch
-                                        |> Date.fromTime
-                                        |> Date.Extra.toFormattedString "yyyy/MM/dd', 'HH:mm:ss"
-                                   )
-                        ]
-                else
-                    H.text ""
+    H.div [ HA.class "form-group row" ]
+        [ H.div [ HA.class "col-lg-9" ]
+            [ H.button
+                [ HE.onClick (Fetch model.url model.cookie)
+                , HA.disabled (model.data == Loading)
+                , HA.class "btn btn-primary"
+                , HA.type_ "submit"
+                ]
+                [ H.text "Fetch! "
+                , case model.data of
+                    Success _ ->
+                        if not (Example.shouldShow model) then
+                            H.span [ HA.class "badge badge-light" ]
+                                [ H.text <|
+                                    "Last fetch at "
+                                        ++ (model.timeOfFetch
+                                                |> Date.fromTime
+                                                |> Date.Extra.toFormattedString "yyyy/MM/dd', 'HH:mm:ss"
+                                           )
+                                ]
+                        else
+                            H.text ""
 
-            _ ->
-                H.text ""
-        , H.div [ HA.class "note" ]
-            [ H.text "WARNING: clicking the \"Fetch!\" button sends your session cookie to my CORS proxy. I promise not to use it in any way, but... yeah, not ideal."
+                    _ ->
+                        H.text ""
+                ]
             ]
+        ]
+
+
+warning : Html Msg
+warning =
+    H.div
+        [ HA.class "alert alert-warning"
+        , HA.attribute "role" "alert"
+        ]
+        [ H.text "WARNING: clicking the \"Fetch!\" button sends your session cookie to my CORS proxy. I promise not to use it in any way, but... yeah, not ideal."
         ]
 
 
 radioButtons : Model -> Html Msg
 radioButtons model =
-    H.fieldset []
-        [ H.legend [] [ H.text "Show plot:" ]
-        , plotButton OneForEachMember model.plot
-        , plotButton AllInOne model.plot
+    H.div [ HA.class "form-group row" ]
+        [ H.label
+            [ HA.class "col-lg-3 col-form-label" ]
+            [ H.text "Show plot:" ]
+        , H.div [ HA.class "col-lg-9" ]
+            [ H.div
+                [ HA.class "btn-group"
+                , HA.attribute "data-toggle" "buttons"
+                , HA.attribute "role" "group"
+                , HA.attribute "aria-label" "Show plot"
+                ]
+                [ plotButton OneForEachMember model.plot
+                , plotButton AllInOne model.plot
+                ]
+            ]
         ]

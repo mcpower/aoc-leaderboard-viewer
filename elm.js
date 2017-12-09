@@ -11440,34 +11440,6 @@ var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$a
 var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
 var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
 
-var _elm_lang$svg$Svg_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
-var _elm_lang$svg$Svg_Events$simpleOn = F2(
-	function (name, msg) {
-		return A2(
-			_elm_lang$svg$Svg_Events$on,
-			name,
-			_elm_lang$core$Json_Decode$succeed(msg));
-	});
-var _elm_lang$svg$Svg_Events$onBegin = _elm_lang$svg$Svg_Events$simpleOn('begin');
-var _elm_lang$svg$Svg_Events$onEnd = _elm_lang$svg$Svg_Events$simpleOn('end');
-var _elm_lang$svg$Svg_Events$onRepeat = _elm_lang$svg$Svg_Events$simpleOn('repeat');
-var _elm_lang$svg$Svg_Events$onAbort = _elm_lang$svg$Svg_Events$simpleOn('abort');
-var _elm_lang$svg$Svg_Events$onError = _elm_lang$svg$Svg_Events$simpleOn('error');
-var _elm_lang$svg$Svg_Events$onResize = _elm_lang$svg$Svg_Events$simpleOn('resize');
-var _elm_lang$svg$Svg_Events$onScroll = _elm_lang$svg$Svg_Events$simpleOn('scroll');
-var _elm_lang$svg$Svg_Events$onLoad = _elm_lang$svg$Svg_Events$simpleOn('load');
-var _elm_lang$svg$Svg_Events$onUnload = _elm_lang$svg$Svg_Events$simpleOn('unload');
-var _elm_lang$svg$Svg_Events$onZoom = _elm_lang$svg$Svg_Events$simpleOn('zoom');
-var _elm_lang$svg$Svg_Events$onActivate = _elm_lang$svg$Svg_Events$simpleOn('activate');
-var _elm_lang$svg$Svg_Events$onClick = _elm_lang$svg$Svg_Events$simpleOn('click');
-var _elm_lang$svg$Svg_Events$onFocusIn = _elm_lang$svg$Svg_Events$simpleOn('focusin');
-var _elm_lang$svg$Svg_Events$onFocusOut = _elm_lang$svg$Svg_Events$simpleOn('focusout');
-var _elm_lang$svg$Svg_Events$onMouseDown = _elm_lang$svg$Svg_Events$simpleOn('mousedown');
-var _elm_lang$svg$Svg_Events$onMouseMove = _elm_lang$svg$Svg_Events$simpleOn('mousemove');
-var _elm_lang$svg$Svg_Events$onMouseOut = _elm_lang$svg$Svg_Events$simpleOn('mouseout');
-var _elm_lang$svg$Svg_Events$onMouseOver = _elm_lang$svg$Svg_Events$simpleOn('mouseover');
-var _elm_lang$svg$Svg_Events$onMouseUp = _elm_lang$svg$Svg_Events$simpleOn('mouseup');
-
 var _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerSecond = 1000;
 var _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerMinute = 60 * _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerSecond;
 var _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerHour = 60 * _justinmimbs$elm_date_extra$Date_Extra_Facts$msPerMinute;
@@ -16424,29 +16396,56 @@ var _terezka$elm_plot$Plot$axisAtMax = _terezka$elm_plot$Plot$customAxis(
 		};
 	});
 
-var _user$project$Colors$colors = {red: '#ed5353', darkRed: '#7a0000', orange: '#f37329', brown: '#ad5f00', green: '#68b723', blue: '#3689e6', violet: '#7a36b1', grey: '#e3e3e3', darkGrey: '#a3a3a3'};
+var _user$project$Colors$semitransparent = function (color) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'rgba(',
+		A2(_elm_lang$core$Basics_ops['++'], color, ',0.5)'));
+};
+var _user$project$Colors$colors = {
+	red: _user$project$Colors$semitransparent('255,146,112'),
+	yellowGreen: _user$project$Colors$semitransparent('161,188,0'),
+	azure: _user$project$Colors$semitransparent('0,197,197'),
+	darkBlue: _user$project$Colors$semitransparent('146,173,255'),
+	pink: _user$project$Colors$semitransparent('255,139,178'),
+	orange: _user$project$Colors$semitransparent('255,149,57'),
+	green: _user$project$Colors$semitransparent('0,205,50'),
+	blue: _user$project$Colors$semitransparent('0,191,245'),
+	violet: _user$project$Colors$semitransparent('233,140,255'),
+	grey: '#e3e3e3',
+	darkGrey: '#a3a3a3',
+	transparent: 'transparent'
+};
 var _user$project$Colors$seriesColors = {
 	ctor: '::',
 	_0: _user$project$Colors$colors.red,
 	_1: {
 		ctor: '::',
-		_0: _user$project$Colors$colors.blue,
+		_0: _user$project$Colors$colors.yellowGreen,
 		_1: {
 			ctor: '::',
-			_0: _user$project$Colors$colors.brown,
+			_0: _user$project$Colors$colors.azure,
 			_1: {
 				ctor: '::',
-				_0: _user$project$Colors$colors.green,
+				_0: _user$project$Colors$colors.darkBlue,
 				_1: {
 					ctor: '::',
-					_0: _user$project$Colors$colors.darkRed,
+					_0: _user$project$Colors$colors.pink,
 					_1: {
 						ctor: '::',
 						_0: _user$project$Colors$colors.orange,
 						_1: {
 							ctor: '::',
-							_0: _user$project$Colors$colors.violet,
-							_1: {ctor: '[]'}
+							_0: _user$project$Colors$colors.green,
+							_1: {
+								ctor: '::',
+								_0: _user$project$Colors$colors.blue,
+								_1: {
+									ctor: '::',
+									_0: _user$project$Colors$colors.violet,
+									_1: {ctor: '[]'}
+								}
+							}
 						}
 					}
 				}
@@ -16465,6 +16464,16 @@ var _user$project$Colors$colorsList = function (count) {
 			A2(_elm_lang$core$List$repeat, repeats, _user$project$Colors$seriesColors)));
 };
 
+var _user$project$Day$findTicks = F3(
+	function (min, max, delta) {
+		return A2(
+			_elm_community$list_extra$List_Extra$iterate,
+			function (val) {
+				var newVal = val + delta;
+				return (_elm_lang$core$Native_Utils.cmp(newVal, max + delta) < 0) ? _elm_lang$core$Maybe$Just(newVal) : _elm_lang$core$Maybe$Nothing;
+			},
+			min);
+	});
 var _user$project$Day$day = 86400000;
 var _user$project$Day$findComfortableRange = F2(
 	function (dataMax, current) {
@@ -16491,19 +16500,10 @@ var _user$project$Day$comfortableRange = function (dataMax) {
 		_1: A2(_user$project$Day$findComfortableRange, dataMax + _user$project$Day$day, _user$project$Day$startOfAoC)
 	};
 };
-var _user$project$Day$findTicks = function (dataMax) {
-	return A2(
-		_elm_community$list_extra$List_Extra$iterate,
-		function (time) {
-			var newTime = time + _user$project$Day$day;
-			return (_elm_lang$core$Native_Utils.cmp(newTime, dataMax + _user$project$Day$day) < 0) ? _elm_lang$core$Maybe$Just(newTime) : _elm_lang$core$Maybe$Nothing;
-		},
-		_user$project$Day$startOfAoC);
-};
 
-var _user$project$Types$Snapshot = F2(
-	function (a, b) {
-		return {url: a, cookie: b};
+var _user$project$Types$Snapshot = F3(
+	function (a, b, c) {
+		return {url: a, cookie: b, plot: c};
 	});
 var _user$project$Types$Flags = F2(
 	function (a, b) {
@@ -16516,6 +16516,10 @@ var _user$project$Types$Model = F6(
 var _user$project$Types$Member = F6(
 	function (a, b, c, d, e, f) {
 		return {name: a, id: b, localScore: c, globalScore: d, stars: e, completionTimes: f};
+	});
+var _user$project$Types$DotOptions = F5(
+	function (a, b, c, d, e) {
+		return {xLine: a, yLine: b, xTick: c, yTick: d, stripedHint: e};
 	});
 var _user$project$Types$ShowPlot = function (a) {
 	return {ctor: 'ShowPlot', _0: a};
@@ -16632,8 +16636,11 @@ var _user$project$Example$decode = function (json) {
 	return A2(_elm_lang$core$Json_Decode$decodeString, _user$project$Json$dataDecoder, json);
 };
 var _user$project$Example$json = '{\"members\":{\"201076\":{\"stars\":8,\"global_score\":0,\"local_score\":11,\"id\":\"201076\",\"last_star_ts\":\"2017-12-07T01:26:24-0500\",\"name\":\"schod\",\"completion_day_level\":{\"4\":{\"1\":{\"get_star_ts\":\"2017-12-05T14:58:54-0500\"},\"2\":{\"get_star_ts\":\"2017-12-05T15:58:15-0500\"}},\"1\":{\"2\":{\"get_star_ts\":\"2017-12-05T09:29:03-0500\"},\"1\":{\"get_star_ts\":\"2017-12-01T02:26:43-0500\"}},\"5\":{\"1\":{\"get_star_ts\":\"2017-12-06T10:50:05-0500\"},\"2\":{\"get_star_ts\":\"2017-12-07T01:26:24-0500\"}},\"2\":{\"1\":{\"get_star_ts\":\"2017-12-05T09:53:14-0500\"},\"2\":{\"get_star_ts\":\"2017-12-05T10:17:24-0500\"}}}},\"201735\":{\"name\":\"Jaroslav Bazala\",\"completion_day_level\":{\"4\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:26:53-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T04:29:41-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-03T11:13:04-0500\"},\"2\":{\"get_star_ts\":\"2017-12-03T13:48:26-0500\"}},\"6\":{\"2\":{\"get_star_ts\":\"2017-12-06T04:33:33-0500\"},\"1\":{\"get_star_ts\":\"2017-12-06T04:31:16-0500\"}},\"2\":{\"1\":{\"get_star_ts\":\"2017-12-02T12:53:19-0500\"},\"2\":{\"get_star_ts\":\"2017-12-02T13:35:20-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T13:17:13-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T12:44:58-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T15:07:25-0500\"},\"2\":{\"get_star_ts\":\"2017-12-01T15:25:55-0500\"}}},\"id\":\"201735\",\"last_star_ts\":\"2017-12-06T04:33:33-0500\",\"local_score\":31,\"global_score\":0,\"stars\":12},\"1114\":{\"local_score\":60,\"global_score\":0,\"stars\":14,\"name\":\"Martin Janiczek\",\"completion_day_level\":{\"1\":{\"2\":{\"get_star_ts\":\"2017-12-01T00:30:53-0500\"},\"1\":{\"get_star_ts\":\"2017-12-01T00:17:23-0500\"}},\"2\":{\"2\":{\"get_star_ts\":\"2017-12-02T00:26:01-0500\"},\"1\":{\"get_star_ts\":\"2017-12-02T00:10:38-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T00:20:50-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T00:18:25-0500\"}},\"6\":{\"1\":{\"get_star_ts\":\"2017-12-06T00:43:30-0500\"},\"2\":{\"get_star_ts\":\"2017-12-06T00:51:49-0500\"}},\"3\":{\"2\":{\"get_star_ts\":\"2017-12-03T01:33:07-0500\"},\"1\":{\"get_star_ts\":\"2017-12-03T00:50:52-0500\"}},\"7\":{\"1\":{\"get_star_ts\":\"2017-12-07T00:31:35-0500\"},\"2\":{\"get_star_ts\":\"2017-12-07T01:12:00-0500\"}},\"4\":{\"2\":{\"get_star_ts\":\"2017-12-04T00:43:56-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T00:38:41-0500\"}}},\"id\":\"1114\",\"last_star_ts\":\"2017-12-07T01:12:00-0500\"},\"247429\":{\"name\":\"porubsky\",\"completion_day_level\":{\"6\":{\"1\":{\"get_star_ts\":\"2017-12-06T00:13:09-0500\"},\"2\":{\"get_star_ts\":\"2017-12-06T00:18:04-0500\"}},\"3\":{\"1\":{\"get_star_ts\":\"2017-12-04T05:58:16-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T05:58:37-0500\"}},\"7\":{\"2\":{\"get_star_ts\":\"2017-12-07T01:26:42-0500\"},\"1\":{\"get_star_ts\":\"2017-12-07T00:39:51-0500\"}},\"4\":{\"2\":{\"get_star_ts\":\"2017-12-04T05:54:28-0500\"},\"1\":{\"get_star_ts\":\"2017-12-04T05:51:38-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:22:15-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T05:56:03-0500\"}},\"2\":{\"1\":{\"get_star_ts\":\"2017-12-04T04:36:47-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T04:48:28-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T00:18:38-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T00:15:57-0500\"}}},\"id\":\"247429\",\"last_star_ts\":\"2017-12-07T01:26:42-0500\",\"local_score\":41,\"stars\":14,\"global_score\":0},\"201025\":{\"name\":\"Martin Stříž\",\"completion_day_level\":{\"2\":{\"1\":{\"get_star_ts\":\"2017-12-02T11:11:56-0500\"},\"2\":{\"get_star_ts\":\"2017-12-02T12:15:29-0500\"}},\"5\":{\"2\":{\"get_star_ts\":\"2017-12-05T01:50:50-0500\"},\"1\":{\"get_star_ts\":\"2017-12-05T01:45:35-0500\"}},\"1\":{\"1\":{\"get_star_ts\":\"2017-12-01T02:44:40-0500\"},\"2\":{\"get_star_ts\":\"2017-12-01T02:51:31-0500\"}},\"4\":{\"1\":{\"get_star_ts\":\"2017-12-04T00:29:11-0500\"},\"2\":{\"get_star_ts\":\"2017-12-04T00:36:09-0500\"}},\"3\":{\"2\":{\"get_star_ts\":\"2017-12-03T10:50:54-0500\"},\"1\":{\"get_star_ts\":\"2017-12-03T10:04:18-0500\"}},\"6\":{\"2\":{\"get_star_ts\":\"2017-12-06T00:20:48-0500\"},\"1\":{\"get_star_ts\":\"2017-12-06T00:15:21-0500\"}},\"7\":{\"1\":{\"get_star_ts\":\"2017-12-07T00:21:05-0500\"},\"2\":{\"get_star_ts\":\"2017-12-07T00:51:44-0500\"}}},\"id\":\"201025\",\"last_star_ts\":\"2017-12-07T00:51:44-0500\",\"local_score\":57,\"global_score\":0,\"stars\":14}},\"owner_id\":\"201025\",\"event\":\"2017\"}';
-var _user$project$Example$cookie = '83a1ac74a8a48f8f208b18c4c2d027883c128a28dba4172cb814aa083382832a';
-var _user$project$Example$url = 'https://adventofcode.com/2017/leaderboard/private/view/201025.json';
+var _user$project$Example$somethingLike = function (string) {
+	return A2(_elm_lang$core$Basics_ops['++'], 'Something like: ', string);
+};
+var _user$project$Example$cookie = _user$project$Example$somethingLike('83a1ac74a8a48f8f208b18c4c2d027883c128a28dba4172cb814aa083382832a');
+var _user$project$Example$url = _user$project$Example$somethingLike('https://adventofcode.com/2017/leaderboard/private/view/201025.json');
 var _user$project$Example$data = function () {
 	var _p2 = _user$project$Example$decode(_user$project$Example$json);
 	if (_p2.ctor === 'Ok') {
@@ -16648,132 +16655,6 @@ var _user$project$Example$data = function () {
 			_p2)('should not happen!');
 	}
 }();
-
-var _user$project$Update$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
-};
-var _user$project$Update$proxyUrl = F2(
-	function (url, cookie) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			'https://aoc-leaderboard-json-proxy.herokuapp.com/',
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A2(_elm_lang$core$Basics_ops['++'], '?url=', url),
-				A2(_elm_lang$core$Basics_ops['++'], '&cookie=', cookie)));
-	});
-var _user$project$Update$getData = F2(
-	function (url, cookie) {
-		return A2(
-			_elm_lang$core$Platform_Cmd$map,
-			_user$project$Types$FetchResult,
-			_krisajenkins$remotedata$RemoteData$sendRequest(
-				A2(
-					_elm_lang$http$Http$get,
-					A2(_user$project$Update$proxyUrl, url, cookie),
-					_user$project$Json$dataDecoder)));
-	});
-var _user$project$Update$getCurrentTime = A2(_elm_lang$core$Task$perform, _user$project$Types$CurrentTime, _elm_lang$core$Time$now);
-var _user$project$Update$init = function (_p0) {
-	var _p1 = _p0;
-	var _p4 = _p1.currentTime;
-	return {
-		ctor: '_Tuple2',
-		_0: A2(
-			_elm_lang$core$Maybe$withDefault,
-			{url: '', cookie: '', data: _krisajenkins$remotedata$RemoteData$NotAsked, timeOfFetch: _p4, hover: _elm_lang$core$Maybe$Nothing, plot: _user$project$Types$OneForEachMember},
-			A2(
-				_elm_lang$core$Maybe$map,
-				function (_p2) {
-					var _p3 = _p2;
-					return {url: _p3.url, cookie: _p3.cookie, data: _krisajenkins$remotedata$RemoteData$NotAsked, timeOfFetch: _p4, hover: _elm_lang$core$Maybe$Nothing, plot: _user$project$Types$OneForEachMember};
-				},
-				_p1.snapshot)),
-		_1: _elm_lang$core$Platform_Cmd$none
-	};
-};
-var _user$project$Update$saveSnapshot = _elm_lang$core$Native_Platform.outgoingPort(
-	'saveSnapshot',
-	function (v) {
-		return {url: v.url, cookie: v.cookie};
-	});
-var _user$project$Update$update = F2(
-	function (msg, model) {
-		var _p5 = msg;
-		switch (_p5.ctor) {
-			case 'SetUrl':
-				var _p6 = _p5._0;
-				var newModel = _elm_lang$core$Native_Utils.update(
-					model,
-					{url: _p6});
-				return {
-					ctor: '_Tuple2',
-					_0: newModel,
-					_1: _user$project$Update$saveSnapshot(
-						{url: _p6, cookie: model.cookie})
-				};
-			case 'SetCookie':
-				var _p7 = _p5._0;
-				var newModel = _elm_lang$core$Native_Utils.update(
-					model,
-					{cookie: _p7});
-				return {
-					ctor: '_Tuple2',
-					_0: newModel,
-					_1: _user$project$Update$saveSnapshot(
-						{url: model.url, cookie: _p7})
-				};
-			case 'Fetch':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{data: _krisajenkins$remotedata$RemoteData$Loading}),
-					_1: _elm_lang$core$Platform_Cmd$batch(
-						{
-							ctor: '::',
-							_0: _user$project$Update$getCurrentTime,
-							_1: {
-								ctor: '::',
-								_0: A2(_user$project$Update$getData, model.url, model.cookie),
-								_1: {ctor: '[]'}
-							}
-						})
-				};
-			case 'FetchResult':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{data: _p5._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'CurrentTime':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{timeOfFetch: _p5._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Hover':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{hover: _p5._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{plot: _p5._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
 
 var _user$project$View_Name$name = function (member) {
 	return A2(
@@ -16860,7 +16741,12 @@ var _user$project$Score$score = F3(
 						A2(_elm_lang$core$List$sortBy, _elm_lang$core$Tuple$second, allSolutions)))));
 	});
 
-var _user$project$View_Plot_Text$italic = _elm_lang$svg$Svg_Attributes$style('font-style: italic;');
+var _user$project$View_Plot_Text$styles = function (styles) {
+	return _elm_lang$svg$Svg_Attributes$style(
+		A2(_elm_lang$core$String$join, ';', styles));
+};
+var _user$project$View_Plot_Text$alignRight = 'text-anchor: end';
+var _user$project$View_Plot_Text$italic = 'font-style: italic';
 var _user$project$View_Plot_Text$attributes = {
 	ctor: '::',
 	_0: _elm_lang$svg$Svg_Attributes$fill(_user$project$Colors$colors.darkGrey),
@@ -16875,14 +16761,11 @@ var _user$project$View_DayStar$format = function (_p0) {
 	var _p1 = _p0;
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		'Day ',
+		_elm_lang$core$Basics$toString(_p1._0),
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			_elm_lang$core$Basics$toString(_p1._0),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				' Star ',
-				_elm_lang$core$Basics$toString(_p1._1))));
+			'-',
+			_elm_lang$core$Basics$toString(_p1._1)));
 };
 var _user$project$View_DayStar$label = function (position) {
 	return {
@@ -16912,6 +16795,26 @@ var _user$project$View_DayStar$hintLabel = F2(
 				hover));
 	});
 
+var _user$project$View_Date$max = function (data) {
+	return _elm_lang$core$Tuple$second(
+		_user$project$Day$comfortableRange(
+			A2(
+				_elm_lang$core$Maybe$withDefault,
+				_user$project$Day$endOfAoC,
+				_elm_lang$core$List$maximum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_p0) {
+							var _p1 = _p0;
+							return _p1._2;
+						},
+						A2(
+							_elm_lang$core$List$concatMap,
+							function (_) {
+								return _.completionTimes;
+							},
+							data))))));
+};
 var _user$project$View_Date$parseDate = function (date) {
 	return {
 		day: _elm_lang$core$Basics$toString(
@@ -16927,14 +16830,20 @@ var _user$project$View_Date$parseDate = function (date) {
 			2,
 			_elm_lang$core$Native_Utils.chr('0'),
 			_elm_lang$core$Basics$toString(
-				_elm_lang$core$Date$minute(date)))
+				_elm_lang$core$Date$minute(date))),
+		second: A3(
+			_elm_lang$core$String$pad,
+			2,
+			_elm_lang$core$Native_Utils.chr('0'),
+			_elm_lang$core$Basics$toString(
+				_elm_lang$core$Date$second(date)))
 	};
 };
-var _user$project$View_Date$formatDate = function (date) {
-	var _p0 = _user$project$View_Date$parseDate(date);
-	var day = _p0.day;
-	var hour = _p0.hour;
-	var minute = _p0.minute;
+var _user$project$View_Date$format = function (date) {
+	var _p2 = _user$project$View_Date$parseDate(date);
+	var day = _p2.day;
+	var hour = _p2.hour;
+	var minute = _p2.minute;
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
 		'Dec ',
@@ -16949,26 +16858,31 @@ var _user$project$View_Date$formatDate = function (date) {
 					hour,
 					A2(_elm_lang$core$Basics_ops['++'], ':', minute)))));
 };
-var _user$project$View_Date$formatDateForHint = function (dateFloat) {
-	var _p1 = _user$project$View_Date$parseDate(
-		_elm_lang$core$Date$fromTime(dateFloat));
-	var day = _p1.day;
-	var hour = _p1.hour;
-	var minute = _p1.minute;
-	return _elm_lang$html$Html$text(
+var _user$project$View_Date$formatWithSeconds = function (date) {
+	var _p3 = _user$project$View_Date$parseDate(date);
+	var day = _p3.day;
+	var hour = _p3.hour;
+	var minute = _p3.minute;
+	var second = _p3.second;
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'Dec ',
 		A2(
 			_elm_lang$core$Basics_ops['++'],
-			'Solved on Dec ',
+			day,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				day,
+				', ',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					', ',
+					hour,
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						hour,
-						A2(_elm_lang$core$Basics_ops['++'], ':', minute))))));
+						':',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							minute,
+							A2(_elm_lang$core$Basics_ops['++'], ':', second)))))));
 };
 
 var _user$project$View_Plot_Axis$hoveredOrTicks = F4(
@@ -16988,8 +16902,9 @@ var _user$project$View_Plot_Axis$hoveredOrTicks = F4(
 				},
 				hover));
 	});
-var _user$project$View_Plot_Axis$axis = F4(
-	function (hover, toValue, makeString, toTicks) {
+var _user$project$View_Plot_Axis$axis = F6(
+	function (showOnlyOneOnHover, hover, _p0, toValue, makeString, toTicks) {
+		var _p1 = _p0;
 		return _terezka$elm_plot$Plot$customAxis(
 			function (summary) {
 				var makeLabel = function (position) {
@@ -17006,98 +16921,132 @@ var _user$project$View_Plot_Axis$axis = F4(
 					position: _terezka$elm_plot$Plot$closestToZero,
 					axisLine: _elm_lang$core$Maybe$Just(
 						{
-							attributes: {ctor: '[]'},
-							start: _user$project$Day$startOfAoC,
+							attributes: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$stroke(_user$project$Colors$colors.darkGrey),
+								_1: {ctor: '[]'}
+							},
+							start: _p1._0,
 							end: A2(
 								_elm_lang$core$Maybe$withDefault,
-								_user$project$Day$endOfAoC,
+								_p1._1,
 								_elm_lang$core$List$head(
 									_elm_lang$core$List$reverse(ticks)))
 						}),
-					ticks: A4(_user$project$View_Plot_Axis$hoveredOrTicks, hover, toValue, _terezka$elm_plot$Plot$simpleTick, ticks),
-					labels: A4(_user$project$View_Plot_Axis$hoveredOrTicks, hover, toValue, makeLabel, ticks),
+					ticks: showOnlyOneOnHover ? A4(_user$project$View_Plot_Axis$hoveredOrTicks, hover, toValue, _terezka$elm_plot$Plot$simpleTick, ticks) : A2(_elm_lang$core$List$map, _terezka$elm_plot$Plot$simpleTick, ticks),
+					labels: showOnlyOneOnHover ? A4(_user$project$View_Plot_Axis$hoveredOrTicks, hover, toValue, makeLabel, ticks) : A2(_elm_lang$core$List$map, makeLabel, ticks),
 					flipAnchor: false
 				};
 			});
 	});
-var _user$project$View_Plot_Axis$verticalAxis = function (hover) {
-	return A4(
-		_user$project$View_Plot_Axis$axis,
-		hover,
-		function (_) {
-			return _.y;
-		},
-		function (_p0) {
-			return _user$project$View_DayStar$format(
-				_user$project$DayStar$fromFloat(_p0));
-		},
-		A2(_terezka$elm_plot$Plot$interval, 0, 0.5));
-};
-var _user$project$View_Plot_Axis$horizontalAxis = F2(
-	function (hover, maxDate) {
-		return A4(
+var _user$project$View_Plot_Axis$verticalAxis = F3(
+	function (showOnlyOneOnHover, hover, maxDate) {
+		return A6(
 			_user$project$View_Plot_Axis$axis,
+			showOnlyOneOnHover,
 			hover,
+			{ctor: '_Tuple2', _0: _user$project$Day$startOfAoC, _1: maxDate},
+			function (_) {
+				return _.y;
+			},
+			function (_p2) {
+				return _user$project$View_Date$format(
+					_elm_lang$core$Date$fromTime(_p2));
+			},
+			_elm_lang$core$Basics$always(
+				A3(_user$project$Day$findTicks, _user$project$Day$startOfAoC, maxDate, _user$project$Day$day)));
+	});
+var _user$project$View_Plot_Axis$horizontalAxis = F2(
+	function (hover, maxDayStar) {
+		return A6(
+			_user$project$View_Plot_Axis$axis,
+			true,
+			hover,
+			{ctor: '_Tuple2', _0: 1.0, _1: maxDayStar},
 			function (_) {
 				return _.x;
 			},
-			function (_p1) {
-				return _user$project$View_Date$formatDate(
-					_elm_lang$core$Date$fromTime(_p1));
+			function (_p3) {
+				return _user$project$View_DayStar$format(
+					_user$project$DayStar$fromFloat(_p3));
 			},
 			_elm_lang$core$Basics$always(
-				_user$project$Day$findTicks(maxDate)));
+				A3(_user$project$Day$findTicks, 1.0, maxDayStar, 0.5)));
 	});
 
-var _user$project$View_Plot_Hint$formatScore = F2(
+var _user$project$View_Score$style = F3(
+	function (striped, maybeScore, maxScore) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (score) {
+					return {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'order',
+							_1: _elm_lang$core$Basics$toString(score)
+						},
+						_1: (striped && _elm_lang$core$Native_Utils.eq(
+							A2(_elm_lang$core$Basics_ops['%'], score, 2),
+							1)) ? {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'background-color', _1: 'rgba(0,0,0,.05)'},
+							_1: {ctor: '[]'}
+						} : {ctor: '[]'}
+					};
+				},
+				A2(
+					_elm_lang$core$Maybe$map,
+					function (score) {
+						return (maxScore - score) + 1;
+					},
+					maybeScore)));
+	});
+var _user$project$View_Score$format = F2(
 	function (maybeScore, maxScore) {
 		return A2(
 			_elm_lang$core$Maybe$withDefault,
-			_elm_lang$html$Html$text(''),
+			'',
 			A2(
 				_elm_lang$core$Maybe$map,
 				function (score) {
 					return A2(
-						_elm_lang$html$Html$div,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									'Earned ',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										_elm_lang$core$Basics$toString(score),
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											' out of ',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												_elm_lang$core$Basics$toString(maxScore),
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													' point',
-													_elm_lang$core$Native_Utils.eq(score, 1) ? '' : 's')))))),
-							_1: {ctor: '[]'}
-						});
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(score),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							' out of ',
+							_elm_lang$core$Basics$toString(maxScore)));
 				},
 				maybeScore));
 	});
-var _user$project$View_Plot_Hint$hint = F5(
-	function (name, dayStarFloat, solutionDate, maybeScore, maxScore) {
+
+var _user$project$View_Plot_Hint$hint = F6(
+	function (striped, name, solutionDate, dayStarFloat, maybeScore, maxScore) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('hint'),
-				_1: {ctor: '[]'}
+				_0: _elm_lang$html$Html_Attributes$class('row'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						A3(_user$project$View_Score$style, striped, maybeScore, maxScore)),
+					_1: {ctor: '[]'}
+				}
 			},
 			{
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$div,
-					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('col-sm col--member'),
+						_1: {ctor: '[]'}
+					},
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html$text(name),
@@ -17107,31 +17056,103 @@ var _user$project$View_Plot_Hint$hint = F5(
 					ctor: '::',
 					_0: A2(
 						_elm_lang$html$Html$div,
-						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('col-sm col--solved'),
+							_1: {ctor: '[]'}
+						},
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html$text(
-								_user$project$View_DayStar$format(
-									_user$project$DayStar$fromFloat(dayStarFloat))),
+								_user$project$View_Date$formatWithSeconds(
+									_elm_lang$core$Date$fromTime(solutionDate))),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
-							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _user$project$View_Date$formatDateForHint(solutionDate),
+								_0: _elm_lang$html$Html_Attributes$class('col-sm col--score'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									A2(_user$project$View_Score$format, maybeScore, maxScore)),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$View_Plot_Hint$containerInner = F2(
+	function (isLeft, hints) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('container hint'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('row row--header'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('col-sm col--member'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Member'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$View_Plot_Hint$formatScore, maybeScore, maxScore),
-							_1: {ctor: '[]'}
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('col-sm col--solved'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Solved'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('col-sm col--score'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Score'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
 						}
-					}
-				}
+					}),
+				_1: hints
 			});
 	});
 
@@ -17167,26 +17188,14 @@ var _user$project$View_Plot_Dot$square = F4(
 								_elm_lang$core$Basics$toString((0 - width) / 2)),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$svg$Svg_Attributes$stroke('transparent'),
+								_0: _elm_lang$svg$Svg_Attributes$stroke(_user$project$Colors$colors.transparent),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$svg$Svg_Attributes$strokeWidth('3px'),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$svg$Svg_Attributes$fill(color),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$svg$Svg_Events$onMouseOver(
-												_user$project$Types$Hover(
-													_elm_lang$core$Maybe$Just(
-														{x: x, y: y}))),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$svg$Svg_Events$onMouseOut(
-													_user$project$Types$Hover(_elm_lang$core$Maybe$Nothing)),
-												_1: {ctor: '[]'}
-											}
-										}
+										_1: {ctor: '[]'}
 									}
 								}
 							}
@@ -17202,10 +17211,10 @@ var _user$project$View_Plot_Dot$flashyLine = F3(
 			_terezka$elm_plot$Plot$fullLine(
 				{
 					ctor: '::',
-					_0: _elm_lang$svg$Svg_Attributes$stroke('#a3a3a3'),
+					_0: _elm_lang$svg$Svg_Attributes$stroke(_user$project$Colors$colors.darkGrey),
 					_1: {
 						ctor: '::',
-						_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('2, 10'),
+						_0: _elm_lang$svg$Svg_Attributes$strokeDasharray('3, 10'),
 						_1: {ctor: '[]'}
 					}
 				})) : _elm_lang$core$Maybe$Nothing;
@@ -17217,69 +17226,47 @@ var _user$project$View_Plot_Dot$flashyTick = F3(
 			correctValue) ? _elm_lang$core$Maybe$Just(
 			_terezka$elm_plot$Plot$simpleTick(correctValue)) : _elm_lang$core$Maybe$Nothing;
 	});
-var _user$project$View_Plot_Dot$invisibleDot = F2(
-	function (hover, _p0) {
+var _user$project$View_Plot_Dot$dot = F7(
+	function (dotOptions, hover, memberName, color, _p0, maybeScore, maxScore) {
 		var _p1 = _p0;
 		var _p3 = _p1._1;
 		var _p2 = _p1._0;
 		return {
-			view: _elm_lang$core$Maybe$Nothing,
-			xLine: A2(
-				_elm_lang$core$Maybe$andThen,
-				A2(_user$project$View_Plot_Dot$flashyLine, _p2, _p3),
-				hover),
-			yLine: A2(
-				_elm_lang$core$Maybe$andThen,
-				A2(_user$project$View_Plot_Dot$flashyLine, _p2, _p3),
-				hover),
-			xTick: _elm_lang$core$Maybe$Nothing,
-			yTick: _elm_lang$core$Maybe$Nothing,
-			hint: _elm_lang$core$Maybe$Nothing,
-			x: _p2,
-			y: _p3
-		};
-	});
-var _user$project$View_Plot_Dot$dot = F6(
-	function (hover, memberName, color, _p4, maybeScore, maxScore) {
-		var _p5 = _p4;
-		var _p7 = _p5._1;
-		var _p6 = _p5._0;
-		return {
 			view: _elm_lang$core$Maybe$Just(
-				A4(_user$project$View_Plot_Dot$square, memberName, color, _p6, _p7)),
-			xLine: A2(
+				A4(_user$project$View_Plot_Dot$square, memberName, color, _p2, _p3)),
+			xLine: dotOptions.xLine ? A2(
 				_elm_lang$core$Maybe$andThen,
-				A2(_user$project$View_Plot_Dot$flashyLine, _p6, _p7),
-				hover),
-			yLine: A2(
+				A2(_user$project$View_Plot_Dot$flashyLine, _p2, _p3),
+				hover) : _elm_lang$core$Maybe$Nothing,
+			yLine: dotOptions.yLine ? A2(
 				_elm_lang$core$Maybe$andThen,
-				A2(_user$project$View_Plot_Dot$flashyLine, _p6, _p7),
-				hover),
-			xTick: A2(
+				A2(_user$project$View_Plot_Dot$flashyLine, _p2, _p3),
+				hover) : _elm_lang$core$Maybe$Nothing,
+			xTick: dotOptions.xTick ? A2(
 				_elm_lang$core$Maybe$andThen,
 				A2(
 					_user$project$View_Plot_Dot$flashyTick,
-					_p6,
+					_p2,
 					function (_) {
 						return _.x;
 					}),
-				hover),
-			yTick: A2(
+				hover) : _elm_lang$core$Maybe$Nothing,
+			yTick: dotOptions.yTick ? A2(
 				_elm_lang$core$Maybe$andThen,
 				A2(
 					_user$project$View_Plot_Dot$flashyTick,
-					_p7,
+					_p3,
 					function (_) {
 						return _.y;
 					}),
-				hover),
+				hover) : _elm_lang$core$Maybe$Nothing,
 			hint: A3(
 				_user$project$View_Plot_Dot$onHovering,
-				A5(_user$project$View_Plot_Hint$hint, memberName, _p7, _p6, maybeScore, maxScore),
+				A6(_user$project$View_Plot_Hint$hint, dotOptions.stripedHint, memberName, _p3, _p2, maybeScore, maxScore),
 				hover,
-				_p6),
-			x: _p6,
-			y: _p7
+				_p2),
+			x: _p2,
+			y: _p3
 		};
 	});
 
@@ -17287,16 +17274,17 @@ var _user$project$View_Plot_Series$toXY = function (_p0) {
 	var _p1 = _p0;
 	return {
 		ctor: '_Tuple2',
-		_0: _p1._2,
-		_1: A2(_user$project$DayStar$toFloat, _p1._0, _p1._1)
+		_0: A2(_user$project$DayStar$toFloat, _p1._0, _p1._1),
+		_1: _p1._2
 	};
 };
-var _user$project$View_Plot_Series$toDataPoint = F5(
-	function (hover, color, member, data, _p2) {
+var _user$project$View_Plot_Series$toDataPoint = F6(
+	function (hover, color, member, data, dotOptions, _p2) {
 		var _p3 = _p2;
 		var name = _user$project$View_Name$name(member);
-		return A6(
+		return A7(
 			_user$project$View_Plot_Dot$dot,
+			dotOptions,
 			hover,
 			name,
 			color,
@@ -17308,11 +17296,11 @@ var _user$project$View_Plot_Series$toDataPoint = F5(
 				name),
 			_user$project$Score$maxScore(data));
 	});
-var _user$project$View_Plot_Series$dataPoints = F4(
-	function (hover, color, member, data) {
+var _user$project$View_Plot_Series$dataPoints = F5(
+	function (hover, color, member, dotOptions, data) {
 		return A2(
 			_elm_lang$core$List$map,
-			A4(_user$project$View_Plot_Series$toDataPoint, hover, color, member, data),
+			A5(_user$project$View_Plot_Series$toDataPoint, hover, color, member, data, dotOptions),
 			member.completionTimes);
 	});
 var _user$project$View_Plot_Series$interpolation = function (color) {
@@ -17325,82 +17313,157 @@ var _user$project$View_Plot_Series$interpolation = function (color) {
 			_1: {ctor: '[]'}
 		});
 };
-var _user$project$View_Plot_Series$series = F4(
-	function (model, data, color, member) {
+var _user$project$View_Plot_Series$series = F6(
+	function (model, data, dotOptions, hasAxis, color, member) {
 		return {
-			axis: _user$project$View_Plot_Axis$verticalAxis(model.hover),
+			axis: hasAxis ? A3(
+				_user$project$View_Plot_Axis$verticalAxis,
+				dotOptions.yTick,
+				model.hover,
+				_user$project$View_Date$max(data)) : _terezka$elm_plot$Plot$sometimesYouDoNotHaveAnAxis,
 			interpolation: _user$project$View_Plot_Series$interpolation(color),
-			toDataPoints: A3(_user$project$View_Plot_Series$dataPoints, model.hover, color, member)
+			toDataPoints: A4(_user$project$View_Plot_Series$dataPoints, model.hover, color, member, dotOptions)
 		};
 	});
 
-var _user$project$View_Plot_Grid$gridAlignedOnMidnightEST = function (maxDate) {
-	return _terezka$elm_plot$Plot$customGrid(
-		function (summary) {
-			return A2(
-				_elm_lang$core$List$map,
-				function (tick) {
-					return {
-						attributes: {
-							ctor: '::',
-							_0: _elm_lang$svg$Svg_Attributes$stroke(_user$project$Colors$colors.grey),
-							_1: {ctor: '[]'}
-						},
-						position: tick
-					};
+var _user$project$View_Plot_Grid$isHovering = F2(
+	function (tick, hover) {
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			false,
+			A2(
+				_elm_lang$core$Maybe$map,
+				function (_p0) {
+					var _p1 = _p0;
+					return _elm_lang$core$Native_Utils.eq(_p1.x, tick);
 				},
-				_user$project$Day$findTicks(maxDate - _user$project$Day$day));
-		});
+				hover));
+	});
+var _user$project$View_Plot_Grid$gridLineX = F2(
+	function (hover, tick) {
+		return {
+			attributes: {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$stroke(
+					A2(_user$project$View_Plot_Grid$isHovering, tick, hover) ? _user$project$Colors$colors.darkGrey : _user$project$Colors$colors.grey),
+				_1: {ctor: '[]'}
+			},
+			position: tick
+		};
+	});
+var _user$project$View_Plot_Grid$gridLineY = function (tick) {
+	return {
+		attributes: {
+			ctor: '::',
+			_0: _elm_lang$svg$Svg_Attributes$stroke(_user$project$Colors$colors.grey),
+			_1: {ctor: '[]'}
+		},
+		position: tick
+	};
+};
+var _user$project$View_Plot_Grid$grid = F4(
+	function (gridLineFn, min, max, delta) {
+		return _terezka$elm_plot$Plot$customGrid(
+			function (summary) {
+				return A2(
+					_elm_lang$core$List$map,
+					gridLineFn,
+					A3(_user$project$Day$findTicks, min, max, delta));
+			});
+	});
+var _user$project$View_Plot_Grid$gridY = F3(
+	function (min, max, delta) {
+		return A4(_user$project$View_Plot_Grid$grid, _user$project$View_Plot_Grid$gridLineY, min, max, delta);
+	});
+var _user$project$View_Plot_Grid$gridX = F4(
+	function (hover, min, max, delta) {
+		return A4(
+			_user$project$View_Plot_Grid$grid,
+			_user$project$View_Plot_Grid$gridLineX(hover),
+			min,
+			max,
+			delta);
+	});
+var _user$project$View_Plot_Grid$date = function (maxDate) {
+	return A3(_user$project$View_Plot_Grid$gridY, _user$project$Day$startOfAoC, maxDate, _user$project$Day$day);
+};
+var _user$project$View_Plot_Grid$dayStar = F2(
+	function (hover, maxDayStar) {
+		return A4(_user$project$View_Plot_Grid$gridX, hover, 1.0, maxDayStar, 0.5);
+	});
+
+var _user$project$View_Plot_Junk_LowerIsBetter$lowerIsBetter = function (summary) {
+	return A3(
+		_terezka$elm_plot$Plot$junk,
+		A2(
+			_terezka$elm_plot$Plot$viewLabel,
+			{
+				ctor: '::',
+				_0: _user$project$View_Plot_Text$styles(
+					{
+						ctor: '::',
+						_0: _user$project$View_Plot_Text$italic,
+						_1: {
+							ctor: '::',
+							_0: _user$project$View_Plot_Text$alignRight,
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: _user$project$View_Plot_Text$attributes
+			},
+			'lower is better (sooner)'),
+		summary.x.max - 5.0e-2,
+		summary.y.min + (_user$project$Day$day / 7));
 };
 
+var _user$project$View_Plot_PlotCustomizations$withGlobalJunk = F2(
+	function (customJunk, summary) {
+		return {
+			ctor: '::',
+			_0: _user$project$View_Plot_Junk_LowerIsBetter$lowerIsBetter(summary),
+			_1: customJunk(summary)
+		};
+	});
 var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 	function (model, data, junk) {
-		var maxDate = _elm_lang$core$Tuple$second(
-			_user$project$Day$comfortableRange(
-				A2(
-					_elm_lang$core$Maybe$withDefault,
-					_user$project$Day$endOfAoC,
-					_elm_lang$core$List$maximum(
-						A2(
-							_elm_lang$core$List$map,
-							function (_p0) {
-								var _p1 = _p0;
-								return _p1._2;
-							},
-							A2(
-								_elm_lang$core$List$concatMap,
-								function (_) {
-									return _.completionTimes;
-								},
-								data))))));
+		var maxDayStar = _user$project$DayStar$max(data);
+		var maxDate = _user$project$View_Date$max(data);
 		return _elm_lang$core$Native_Utils.update(
 			_terezka$elm_plot$Plot$defaultSeriesPlotCustomizations,
 			{
-				hintContainer: A2(_terezka$elm_plot$Plot$flyingHintContainer, _terezka$elm_plot$Plot$normalHintContainerInner, model.hover),
-				height: 200,
-				junk: junk,
+				hintContainer: A2(_terezka$elm_plot$Plot$flyingHintContainer, _user$project$View_Plot_Hint$containerInner, model.hover),
+				height: 300,
+				junk: _user$project$View_Plot_PlotCustomizations$withGlobalJunk(junk),
 				grid: {
-					horizontal: _terezka$elm_plot$Plot$decentGrid,
-					vertical: _user$project$View_Plot_Grid$gridAlignedOnMidnightEST(maxDate)
+					horizontal: _user$project$View_Plot_Grid$date(maxDate),
+					vertical: A2(_user$project$View_Plot_Grid$dayStar, model.hover, maxDayStar)
 				},
-				horizontalAxis: A2(_user$project$View_Plot_Axis$horizontalAxis, model.hover, maxDate),
-				margin: {top: 10, bottom: 30, left: 60, right: 30},
-				toRangeLowest: _elm_lang$core$Basics$always(_user$project$Day$startOfAoC),
-				toRangeHighest: _elm_lang$core$Basics$always(maxDate),
-				toDomainLowest: _elm_lang$core$Basics$always(1.0),
-				toDomainHighest: _elm_lang$core$Basics$always(
-					_user$project$DayStar$max(data))
+				horizontalAxis: A2(_user$project$View_Plot_Axis$horizontalAxis, model.hover, maxDayStar),
+				margin: {top: 10, bottom: 30, left: 80, right: 10},
+				toRangeLowest: _elm_lang$core$Basics$always(1.0 - 0.2),
+				toRangeHighest: _elm_lang$core$Basics$always(maxDayStar),
+				toDomainLowest: _elm_lang$core$Basics$always(_user$project$Day$startOfAoC - (_user$project$Day$day / 2)),
+				toDomainHighest: _elm_lang$core$Basics$always(maxDate),
+				onHover: _elm_lang$core$Maybe$Just(_user$project$Types$Hover)
 			});
 	});
 
+var _user$project$View_Plot_Type_AllInOne$dotOptions = {xLine: true, yLine: false, xTick: true, yTick: false, stripedHint: true};
 var _user$project$View_Plot_Type_AllInOne$junk = function (_p0) {
 	return {ctor: '[]'};
 };
 var _user$project$View_Plot_Type_AllInOne$seriesList = F2(
 	function (model, data) {
-		return A3(
-			_elm_lang$core$List$map2,
-			A2(_user$project$View_Plot_Series$series, model, data),
+		return A4(
+			_elm_lang$core$List$map3,
+			A3(_user$project$View_Plot_Series$series, model, data, _user$project$View_Plot_Type_AllInOne$dotOptions),
+			A2(
+				_elm_lang$core$List$indexedMap,
+				F2(
+					function (i, _p1) {
+						return _elm_lang$core$Native_Utils.eq(i, 0);
+					}),
+				data),
 			_user$project$Colors$colorsList(
 				_elm_lang$core$List$length(data)),
 			A2(
@@ -17426,7 +17489,16 @@ var _user$project$View_Plot_Type_AllInOne$allInOne = F2(
 var _user$project$View_Plot_Junk_Title$svg = function (titleString) {
 	return A2(
 		_terezka$elm_plot$Plot$viewLabel,
-		{ctor: '::', _0: _user$project$View_Plot_Text$italic, _1: _user$project$View_Plot_Text$attributes},
+		{
+			ctor: '::',
+			_0: _user$project$View_Plot_Text$styles(
+				{
+					ctor: '::',
+					_0: _user$project$View_Plot_Text$italic,
+					_1: {ctor: '[]'}
+				}),
+			_1: _user$project$View_Plot_Text$attributes
+		},
 		titleString);
 };
 var _user$project$View_Plot_Junk_Title$title = F2(
@@ -17434,10 +17506,11 @@ var _user$project$View_Plot_Junk_Title$title = F2(
 		return A3(
 			_terezka$elm_plot$Plot$junk,
 			_user$project$View_Plot_Junk_Title$svg(titleString),
-			_user$project$Day$startOfAoC + (_user$project$Day$day / 8),
-			y);
+			1.1,
+			y - (0.4 * _user$project$Day$day));
 	});
 
+var _user$project$View_Plot_Type_OneForEachMember$dotOptions = {xLine: true, yLine: true, xTick: true, yTick: true, stripedHint: false};
 var _user$project$View_Plot_Type_OneForEachMember$title = function (member) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
@@ -17463,7 +17536,7 @@ var _user$project$View_Plot_Type_OneForEachMember$junk = F3(
 			_0: A2(
 				_user$project$View_Plot_Junk_Title$title,
 				_user$project$View_Plot_Type_OneForEachMember$title(member),
-				_user$project$DayStar$max(data)),
+				_user$project$View_Date$max(data)),
 			_1: {ctor: '[]'}
 		};
 	});
@@ -17471,7 +17544,7 @@ var _user$project$View_Plot_Type_OneForEachMember$seriesList = F4(
 	function (model, data, color, member) {
 		return A2(
 			_elm_lang$core$List$map,
-			A3(_user$project$View_Plot_Series$series, model, data, color),
+			A5(_user$project$View_Plot_Series$series, model, data, _user$project$View_Plot_Type_OneForEachMember$dotOptions, true, color),
 			A2(
 				_elm_lang$core$List$filter,
 				function (m) {
@@ -17529,11 +17602,7 @@ var _user$project$View_Plot$plotView = F2(
 var _user$project$View_Plot$plot = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('plots'),
-			_1: {ctor: '[]'}
-		},
+		{ctor: '[]'},
 		function () {
 			var _p1 = model.data;
 			switch (_p1.ctor) {
@@ -17567,102 +17636,383 @@ var _user$project$View_Plot$plot = function (model) {
 			}
 		}());
 };
+var _user$project$View_Plot$fromString = function (string) {
+	var _p2 = string;
+	switch (_p2) {
+		case 'OneForEachMember':
+			return _elm_lang$core$Result$Ok(_user$project$Types$OneForEachMember);
+		case 'AllInOne':
+			return _elm_lang$core$Result$Ok(_user$project$Types$AllInOne);
+		default:
+			return _elm_lang$core$Result$Err(
+				A2(_elm_lang$core$Basics_ops['++'], 'wrong plot type snapshot: ', string));
+	}
+};
+var _user$project$View_Plot$toString = function (plot) {
+	var _p3 = plot;
+	if (_p3.ctor === 'OneForEachMember') {
+		return 'OneForEachMember';
+	} else {
+		return 'AllInOne';
+	}
+};
 
+var _user$project$Update$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _user$project$Update$proxyUrl = F2(
+	function (url, cookie) {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			'https://aoc-leaderboard-json-proxy.herokuapp.com/',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(_elm_lang$core$Basics_ops['++'], '?url=', url),
+				A2(_elm_lang$core$Basics_ops['++'], '&cookie=', cookie)));
+	});
+var _user$project$Update$getData = F2(
+	function (url, cookie) {
+		return A2(
+			_elm_lang$core$Platform_Cmd$map,
+			_user$project$Types$FetchResult,
+			_krisajenkins$remotedata$RemoteData$sendRequest(
+				A2(
+					_elm_lang$http$Http$get,
+					A2(_user$project$Update$proxyUrl, url, cookie),
+					_user$project$Json$dataDecoder)));
+	});
+var _user$project$Update$getCurrentTime = A2(_elm_lang$core$Task$perform, _user$project$Types$CurrentTime, _elm_lang$core$Time$now);
+var _user$project$Update$init = function (_p0) {
+	var _p1 = _p0;
+	var _p4 = _p1.currentTime;
+	return {
+		ctor: '_Tuple2',
+		_0: A2(
+			_elm_lang$core$Maybe$withDefault,
+			{url: '', cookie: '', data: _krisajenkins$remotedata$RemoteData$NotAsked, timeOfFetch: _p4, hover: _elm_lang$core$Maybe$Nothing, plot: _user$project$Types$OneForEachMember},
+			A2(
+				_elm_lang$core$Maybe$andThen,
+				function (_p2) {
+					var _p3 = _p2;
+					return A2(
+						_elm_lang$core$Maybe$map,
+						function (plot) {
+							return {url: _p3.url, cookie: _p3.cookie, data: _krisajenkins$remotedata$RemoteData$NotAsked, timeOfFetch: _p4, hover: _elm_lang$core$Maybe$Nothing, plot: plot};
+						},
+						_elm_lang$core$Result$toMaybe(
+							_user$project$View_Plot$fromString(_p3.plot)));
+				},
+				_p1.snapshot)),
+		_1: _elm_lang$core$Platform_Cmd$none
+	};
+};
+var _user$project$Update$saveSnapshot = _elm_lang$core$Native_Platform.outgoingPort(
+	'saveSnapshot',
+	function (v) {
+		return {url: v.url, cookie: v.cookie, plot: v.plot};
+	});
+var _user$project$Update$update = F2(
+	function (msg, model) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
+			case 'SetUrl':
+				var _p6 = _p5._0;
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{url: _p6});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Update$saveSnapshot(
+						{
+							url: _p6,
+							cookie: model.cookie,
+							plot: _user$project$View_Plot$toString(model.plot)
+						})
+				};
+			case 'SetCookie':
+				var _p7 = _p5._0;
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{cookie: _p7});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Update$saveSnapshot(
+						{
+							url: model.url,
+							cookie: _p7,
+							plot: _user$project$View_Plot$toString(model.plot)
+						})
+				};
+			case 'Fetch':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{data: _krisajenkins$remotedata$RemoteData$Loading}),
+					_1: _elm_lang$core$Platform_Cmd$batch(
+						{
+							ctor: '::',
+							_0: _user$project$Update$getCurrentTime,
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$Update$getData, model.url, model.cookie),
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			case 'FetchResult':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{data: _p5._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'CurrentTime':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{timeOfFetch: _p5._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Hover':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{hover: _p5._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var _p8 = _p5._0;
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{plot: _p8});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Update$saveSnapshot(
+						{
+							url: model.url,
+							cookie: model.cookie,
+							plot: _user$project$View_Plot$toString(_p8)
+						})
+				};
+		}
+	});
+
+var _user$project$View$warning = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('alert alert-warning'),
+		_1: {
+			ctor: '::',
+			_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'alert'),
+			_1: {ctor: '[]'}
+		}
+	},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html$text('WARNING: clicking the \"Fetch!\" button sends your session cookie to my CORS proxy. I promise not to use it in any way, but... yeah, not ideal.'),
+		_1: {ctor: '[]'}
+	});
 var _user$project$View$fetchButton = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$button,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Events$onClick(
-						A2(_user$project$Types$Fetch, model.url, model.cookie)),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$disabled(
-							_elm_lang$core$Native_Utils.eq(model.data, _krisajenkins$remotedata$RemoteData$Loading)),
-						_1: {ctor: '[]'}
-					}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Fetch!'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: function () {
-					var _p0 = model.data;
-					if (_p0.ctor === 'Success') {
-						return (!_user$project$Example$shouldShow(model)) ? A2(
-							_elm_lang$html$Html$span,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('fetch-date'),
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										'Fetched at ',
-										A2(
-											_justinmimbs$elm_date_extra$Date_Extra$toFormattedString,
-											'yyyy/MM/dd\', \'HH:mm:ss',
-											_elm_lang$core$Date$fromTime(model.timeOfFetch)))),
-								_1: {ctor: '[]'}
-							}) : _elm_lang$html$Html$text('');
-					} else {
-						return _elm_lang$html$Html$text('');
-					}
-				}(),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('note'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('WARNING: clicking the \"Fetch!\" button sends your session cookie to my CORS proxy. I promise not to use it in any way, but... yeah, not ideal.'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				}
-			}
-		});
-};
-var _user$project$View$inputs = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('inputs'),
+			_0: _elm_lang$html$Html_Attributes$class('form-group row'),
 			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$div,
-				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('col-lg-9'),
+					_1: {ctor: '[]'}
+				},
 				{
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$label,
-						{ctor: '[]'},
+						_elm_lang$html$Html$button,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text('Leaderboard JSON URL:'),
-							_1: {ctor: '[]'}
+							_0: _elm_lang$html$Html_Events$onClick(
+								A2(_user$project$Types$Fetch, model.url, model.cookie)),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$disabled(
+									_elm_lang$core$Native_Utils.eq(model.data, _krisajenkins$remotedata$RemoteData$Loading)),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('btn btn-primary'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$type_('submit'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Fetch! '),
+							_1: {
+								ctor: '::',
+								_0: function () {
+									var _p0 = model.data;
+									if (_p0.ctor === 'Success') {
+										return (!_user$project$Example$shouldShow(model)) ? A2(
+											_elm_lang$html$Html$span,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('badge badge-light'),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text(
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														'Last fetch at ',
+														A2(
+															_justinmimbs$elm_date_extra$Date_Extra$toFormattedString,
+															'yyyy/MM/dd\', \'HH:mm:ss',
+															_elm_lang$core$Date$fromTime(model.timeOfFetch)))),
+												_1: {ctor: '[]'}
+											}) : _elm_lang$html$Html$text('');
+									} else {
+										return _elm_lang$html$Html$text('');
+									}
+								}(),
+								_1: {ctor: '[]'}
+							}
 						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$View$cookieInput = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-group row'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('col-lg-3 col-form-label'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Session cookie '),
 					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$a,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$target('_blank'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$href('https://i.imgur.com/75BC9zU.png'),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('(what?!)'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(':'),
+							_1: {ctor: '[]'}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('col-lg-9'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$placeholder(_user$project$Example$cookie),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$value(model.cookie),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('form-control'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onInput(_user$project$Types$SetCookie),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$View$urlInput = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-group row'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('col-lg-3 col-form-label'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Leaderboard JSON URL:'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('col-lg-9'),
+						_1: {ctor: '[]'}
+					},
+					{
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$input,
@@ -17674,73 +18024,17 @@ var _user$project$View$inputs = function (model) {
 									_0: _elm_lang$html$Html_Attributes$value(model.url),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onInput(_user$project$Types$SetUrl),
-										_1: {ctor: '[]'}
+										_0: _elm_lang$html$Html_Attributes$class('form-control'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onInput(_user$project$Types$SetUrl),
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							},
 							{ctor: '[]'}),
 						_1: {ctor: '[]'}
-					}
-				}),
-			_1: {
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$label,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text('Session cookie '),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$a,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$target('_blank'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$href('https://i.imgur.com/75BC9zU.png'),
-												_1: {ctor: '[]'}
-											}
-										},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('(what?!)'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(':'),
-										_1: {ctor: '[]'}
-									}
-								}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$input,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$placeholder(_user$project$Example$cookie),
-									_1: {
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$value(model.cookie),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onInput(_user$project$Types$SetCookie),
-											_1: {ctor: '[]'}
-										}
-									}
-								},
-								{ctor: '[]'}),
-							_1: {ctor: '[]'}
-						}
 					}),
 				_1: {ctor: '[]'}
 			}
@@ -17748,7 +18042,11 @@ var _user$project$View$inputs = function (model) {
 };
 var _user$project$View$heading = A2(
 	_elm_lang$html$Html$h1,
-	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('my-4'),
+		_1: {ctor: '[]'}
+	},
 	{
 		ctor: '::',
 		_0: _elm_lang$html$Html$text('AoC private leaderboard viewer'),
@@ -17764,12 +18062,25 @@ var _user$project$View$plotLabel = function (plot) {
 };
 var _user$project$View$plotButton = F2(
 	function (plot, currentlySelectedPlot) {
-		var label = _user$project$View$plotLabel(plot);
+		var isActive = _elm_lang$core$Native_Utils.eq(plot, currentlySelectedPlot);
 		return A2(
 			_elm_lang$html$Html$label,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('plot-button'),
+				_0: _elm_lang$html$Html_Attributes$classList(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'btn', _1: true},
+						_1: {
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'btn-secondary', _1: true},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'active', _1: isActive},
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -17781,14 +18092,13 @@ var _user$project$View$plotButton = F2(
 						_0: _elm_lang$html$Html_Attributes$type_('radio'),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$name('type-of-plot'),
+							_0: _elm_lang$html$Html_Attributes$name('plot-type'),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$value(label),
+								_0: A2(_elm_lang$html$Html_Attributes$attribute, 'autocomplete', 'off'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$checked(
-										_elm_lang$core$Native_Utils.eq(plot, currentlySelectedPlot)),
+									_0: _elm_lang$html$Html_Attributes$checked(isActive),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Events$onClick(
@@ -17802,20 +18112,29 @@ var _user$project$View$plotButton = F2(
 					{ctor: '[]'}),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$html$Html$text(label),
+					_0: _elm_lang$html$Html$text(
+						_user$project$View$plotLabel(plot)),
 					_1: {ctor: '[]'}
 				}
 			});
 	});
 var _user$project$View$radioButtons = function (model) {
 	return A2(
-		_elm_lang$html$Html$fieldset,
-		{ctor: '[]'},
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('form-group row'),
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$legend,
-				{ctor: '[]'},
+				_elm_lang$html$Html$label,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('col-lg-3 col-form-label'),
+					_1: {ctor: '[]'}
+				},
 				{
 					ctor: '::',
 					_0: _elm_lang$html$Html$text('Show plot:'),
@@ -17823,34 +18142,91 @@ var _user$project$View$radioButtons = function (model) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: A2(_user$project$View$plotButton, _user$project$Types$OneForEachMember, model.plot),
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('col-lg-9'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('btn-group'),
+								_1: {
+									ctor: '::',
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-toggle', 'buttons'),
+									_1: {
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'group'),
+										_1: {
+											ctor: '::',
+											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'aria-label', 'Show plot'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(_user$project$View$plotButton, _user$project$Types$OneForEachMember, model.plot),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$View$plotButton, _user$project$Types$AllInOne, model.plot),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$View$form = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _user$project$View$urlInput(model),
+			_1: {
+				ctor: '::',
+				_0: _user$project$View$cookieInput(model),
 				_1: {
 					ctor: '::',
-					_0: A2(_user$project$View$plotButton, _user$project$Types$AllInOne, model.plot),
-					_1: {ctor: '[]'}
+					_0: _user$project$View$fetchButton(model),
+					_1: {
+						ctor: '::',
+						_0: _user$project$View$warning,
+						_1: {
+							ctor: '::',
+							_0: _user$project$View$radioButtons(model),
+							_1: {ctor: '[]'}
+						}
+					}
 				}
 			}
 		});
 };
-var _user$project$View$exampleWarningText = '↓↓↓ This is just example data, paste your own URL and cookie.';
+var _user$project$View$exampleWarningText = 'This is just an example plot, paste your own URL and cookie.';
 var _user$project$View$exampleWarning = function (model) {
 	return _user$project$Example$shouldShow(model) ? A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('example-data-note'),
-			_1: {ctor: '[]'}
+			_0: _elm_lang$html$Html_Attributes$class('alert alert-info'),
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$html$Html_Attributes$attribute, 'role', 'alert'),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$em,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(_user$project$View$exampleWarningText),
-					_1: {ctor: '[]'}
-				}),
+			_0: _elm_lang$html$Html$text(_user$project$View$exampleWarningText),
 			_1: {ctor: '[]'}
 		}) : _elm_lang$html$Html$text('');
 };
@@ -17859,44 +18235,28 @@ var _user$project$View$view = function (model) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('page'),
+			_0: _elm_lang$html$Html_Attributes$class('container'),
 			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('top'),
-					_1: {ctor: '[]'}
-				},
+				{ctor: '[]'},
 				{
 					ctor: '::',
 					_0: _user$project$View$heading,
 					_1: {
 						ctor: '::',
-						_0: _user$project$View$inputs(model),
-						_1: {
-							ctor: '::',
-							_0: _user$project$View$fetchButton(model),
-							_1: {
-								ctor: '::',
-								_0: _user$project$View$radioButtons(model),
-								_1: {ctor: '[]'}
-							}
-						}
+						_0: _user$project$View$form(model),
+						_1: {ctor: '[]'}
 					}
 				}),
 			_1: {
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('content'),
-						_1: {ctor: '[]'}
-					},
+					{ctor: '[]'},
 					{
 						ctor: '::',
 						_0: _user$project$View$exampleWarning(model),
@@ -17939,11 +18299,16 @@ var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
 										function (cookie) {
 											return A2(
 												_elm_lang$core$Json_Decode$andThen,
-												function (url) {
-													return _elm_lang$core$Json_Decode$succeed(
-														{cookie: cookie, url: url});
+												function (plot) {
+													return A2(
+														_elm_lang$core$Json_Decode$andThen,
+														function (url) {
+															return _elm_lang$core$Json_Decode$succeed(
+																{cookie: cookie, plot: plot, url: url});
+														},
+														A2(_elm_lang$core$Json_Decode$field, 'url', _elm_lang$core$Json_Decode$string));
 												},
-												A2(_elm_lang$core$Json_Decode$field, 'url', _elm_lang$core$Json_Decode$string));
+												A2(_elm_lang$core$Json_Decode$field, 'plot', _elm_lang$core$Json_Decode$string));
 										},
 										A2(_elm_lang$core$Json_Decode$field, 'cookie', _elm_lang$core$Json_Decode$string))),
 								_1: {ctor: '[]'}

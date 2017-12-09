@@ -40,17 +40,17 @@ findComfortableRange dataMax current =
             current
 
 
-findTicks : Float -> List Float
-findTicks dataMax =
+findTicks : Float -> Float -> Float -> List Float
+findTicks min max delta =
     List.Extra.iterate
-        (\time ->
+        (\val ->
             let
-                newTime =
-                    time + day
+                newVal =
+                    val + delta
             in
-                if newTime < (dataMax + day) then
-                    Just newTime
+                if newVal < (max + delta) then
+                    Just newVal
                 else
                     Nothing
         )
-        startOfAoC
+        min

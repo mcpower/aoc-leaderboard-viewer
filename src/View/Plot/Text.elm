@@ -1,4 +1,4 @@
-module View.Plot.Text exposing (attributes, italic)
+module View.Plot.Text exposing (..)
 
 import Svg exposing (Attribute)
 import Svg.Attributes as SA
@@ -12,6 +12,18 @@ attributes =
     ]
 
 
-italic : Attribute msg
+italic : String
 italic =
-    SA.style "font-style: italic;"
+    "font-style: italic"
+
+
+alignRight : String
+alignRight =
+    "text-anchor: end"
+
+
+styles : List String -> Attribute msg
+styles styles =
+    styles
+        |> String.join ";"
+        |> SA.style

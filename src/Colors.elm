@@ -4,11 +4,13 @@ module Colors exposing (..)
 seriesColors : List String
 seriesColors =
     [ colors.red
-    , colors.blue
-    , colors.brown
-    , colors.green
-    , colors.darkRed
+    , colors.yellowGreen
+    , colors.azure
+    , colors.darkBlue
+    , colors.pink
     , colors.orange
+    , colors.green
+    , colors.blue
     , colors.violet
     ]
 
@@ -26,24 +28,35 @@ colorsList count =
 
 
 colors :
-    { green : String
+    { red : String
+    , yellowGreen : String
+    , azure : String
+    , darkBlue : String
+    , pink : String
     , orange : String
-    , brown : String
-    , red : String
-    , darkRed : String
+    , green : String
     , blue : String
     , violet : String
     , grey : String
     , darkGrey : String
+    , transparent : String
     }
 colors =
-    { red = "#ed5353"
-    , darkRed = "#7a0000"
-    , orange = "#f37329"
-    , brown = "#ad5f00"
-    , green = "#68b723"
-    , blue = "#3689e6"
-    , violet = "#7a36b1"
+    { red = semitransparent "255,146,112"
+    , yellowGreen = semitransparent "161,188,0"
+    , azure = semitransparent "0,197,197"
+    , darkBlue = semitransparent "146,173,255"
+    , pink = semitransparent "255,139,178"
+    , orange = semitransparent "255,149,57"
+    , green = semitransparent "0,205,50"
+    , blue = semitransparent "0,191,245"
+    , violet = semitransparent "233,140,255"
     , grey = "#e3e3e3"
     , darkGrey = "#a3a3a3"
+    , transparent = "transparent"
     }
+
+
+semitransparent : String -> String
+semitransparent color =
+    "rgba(" ++ color ++ ",0.5)"

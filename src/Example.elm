@@ -18,13 +18,18 @@ data =
 
 url : String
 url =
-    "https://adventofcode.com/2017/leaderboard/private/view/201025.json"
+    somethingLike "https://adventofcode.com/2017/leaderboard/private/view/201025.json"
 
 
 cookie : String
 cookie =
     -- bogus
-    "83a1ac74a8a48f8f208b18c4c2d027883c128a28dba4172cb814aa083382832a"
+    somethingLike "83a1ac74a8a48f8f208b18c4c2d027883c128a28dba4172cb814aa083382832a"
+
+
+somethingLike : String -> String
+somethingLike string =
+    "Something like: " ++ string
 
 
 json : String

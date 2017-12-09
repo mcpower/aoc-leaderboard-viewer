@@ -35,4 +35,4 @@ hintLabel hover toValue =
 
 format : ( Day, Star ) -> String
 format ( day, star ) =
-    "Day " ++ toString day ++ " Star " ++ toString star
+    toString day ++ "-" ++ toString star

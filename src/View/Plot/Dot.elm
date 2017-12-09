@@ -1,4 +1,4 @@
-module View.Plot.Dot exposing (dot, invisibleDot)
+module View.Plot.Dot exposing (dot)
 
 import Plot as P
     exposing
@@ -9,33 +9,55 @@ import Plot as P
         , TickCustomizations
         )
 import Types exposing (..)
+import Colors exposing (colors)
 import Svg as S exposing (Svg)
 import Svg.Attributes as SA
-import Svg.Events as SE
 import View.Plot.Hint exposing (hint)
 
 
-dot : Maybe Point -> String -> String -> ( Float, Float ) -> Maybe Int -> Int -> DataPoint Msg
-dot hover memberName color ( x, y ) maybeScore maxScore =
+dot :
+    DotOptions
+    -> Maybe Point
+    -> String
+    -> String
+    -> ( Float, Float )
+    -> Maybe Int
+    -> Int
+    -> DataPoint Msg
+dot dotOptions hover memberName color ( x, y ) maybeScore maxScore =
     { view = Just (square memberName color x y)
-    , xLine = hover |> Maybe.andThen (flashyLine x y)
-    , yLine = hover |> Maybe.andThen (flashyLine x y)
-    , xTick = hover |> Maybe.andThen (flashyTick x .x)
-    , yTick = hover |> Maybe.andThen (flashyTick y .y)
-    , hint = onHovering (hint memberName y x maybeScore maxScore) hover x
-    , x = x
-    , y = y
-    }
-
-
-invisibleDot : Maybe Point -> ( Float, Float ) -> DataPoint Msg
-invisibleDot hover ( x, y ) =
-    { view = Nothing
-    , xLine = hover |> Maybe.andThen (flashyLine x y)
-    , yLine = hover |> Maybe.andThen (flashyLine x y)
-    , xTick = Nothing
-    , yTick = Nothing
-    , hint = Nothing
+    , xLine =
+        if dotOptions.xLine then
+            hover |> Maybe.andThen (flashyLine x y)
+        else
+            Nothing
+    , yLine =
+        if dotOptions.yLine then
+            hover |> Maybe.andThen (flashyLine x y)
+        else
+            Nothing
+    , xTick =
+        if dotOptions.xTick then
+            hover |> Maybe.andThen (flashyTick x .x)
+        else
+            Nothing
+    , yTick =
+        if dotOptions.yTick then
+            hover |> Maybe.andThen (flashyTick y .y)
+        else
+            Nothing
+    , hint =
+        onHovering
+            (hint
+                dotOptions.stripedHint
+                memberName
+                y
+                x
+                maybeScore
+                maxScore
+            )
+            hover
+            x
     , x = x
     , y = y
     }
@@ -54,8 +76,8 @@ flashyLine x y hover =
     if hover.x == x && hover.y == y then
         Just
             (P.fullLine
-                [ SA.stroke "#a3a3a3"
-                , SA.strokeDasharray "2, 10"
+                [ SA.stroke colors.darkGrey
+                , SA.strokeDasharray "3, 10"
                 ]
             )
     else
@@ -73,11 +95,9 @@ square memberName color x y =
             , SA.height (toString width)
             , SA.x (toString (-width / 2))
             , SA.y (toString (-width / 2))
-            , SA.stroke "transparent"
+            , SA.stroke colors.transparent
             , SA.strokeWidth "3px"
             , SA.fill color
-            , SE.onMouseOver (Hover (Just { x = x, y = y }))
-            , SE.onMouseOut (Hover Nothing)
             ]
             []
 

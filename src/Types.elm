@@ -1,6 +1,10 @@
 module Types exposing (..)
 
-import Plot exposing (Point)
+import Plot
+    exposing
+        ( Point
+        , DataPoint
+        )
 import RemoteData exposing (WebData)
 import Time exposing (Time)
 
@@ -8,6 +12,7 @@ import Time exposing (Time)
 type alias Snapshot =
     { url : String
     , cookie : String
+    , plot : String
     }
 
 
@@ -66,3 +71,12 @@ type alias Star =
 type Plot
     = OneForEachMember
     | AllInOne
+
+
+type alias DotOptions =
+    { xLine : Bool
+    , yLine : Bool
+    , xTick : Bool
+    , yTick : Bool
+    , stripedHint : Bool
+    }

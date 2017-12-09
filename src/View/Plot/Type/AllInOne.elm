@@ -10,6 +10,7 @@ import Plot as P
         ( Series
         , JunkCustomizations
         , PlotSummary
+        , DataPoint
         )
 
 
@@ -24,12 +25,22 @@ allInOne model data =
 
 seriesList : Model -> Data -> List (Series Data Msg)
 seriesList model data =
-    List.map2 (series model data)
+    List.map3 (series model data dotOptions)
+        (data |> List.indexedMap (\i _ -> i == 0))
         (colorsList (List.length data))
-        -- smallest first ↓ so that the best scores are most visible
         (data |> List.sortBy .localScore)
 
 
 junk : PlotSummary -> List (JunkCustomizations Msg)
 junk _ =
     []
+
+
+dotOptions : DotOptions
+dotOptions =
+    { xLine = True
+    , yLine = False
+    , xTick = True
+    , yTick = False
+    , stripedHint = True
+    }
