@@ -22,6 +22,16 @@ alignRight =
     "text-anchor: end"
 
 
+color : String -> String
+color colorString =
+    "fill: " ++ colorString
+
+
+yOffset : Float -> Attribute msg
+yOffset offset =
+    SA.y (toString offset ++ "px")
+
+
 styles : List String -> Attribute msg
 styles styles =
     styles

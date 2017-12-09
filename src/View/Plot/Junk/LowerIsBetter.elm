@@ -15,7 +15,7 @@ lowerIsBetter summary =
     P.junk
         (P.viewLabel
             (Text.styles [ Text.italic, Text.alignRight ] :: Text.attributes)
-            "lower is better (sooner)"
+            "lower is better (puzzle done sooner)"
         )
         (summary.x.max - 0.05)
         (summary.y.min + day / 7)

@@ -2,12 +2,12 @@ module View.Plot.Type.OneForEachMember exposing (oneForEachMember)
 
 import Types exposing (..)
 import Html as H exposing (Html)
-import View.Name as View
 import Colors exposing (colorsList)
 import View.Date as Date
 import View.Plot.Series exposing (series)
 import View.Plot.PlotCustomizations exposing (plotCustomizations)
 import View.Plot.Junk.Title as Junk
+import View.Member as Member
 import Plot as P
     exposing
         ( Series
@@ -41,15 +41,7 @@ seriesList model data color member =
 
 junk : Data -> Member -> PlotSummary -> List (JunkCustomizations Msg)
 junk data member _ =
-    [ Junk.title (title member) (Date.max data) ]
-
-
-title : Member -> String
-title member =
-    View.name member
-        ++ (" (stars: " ++ toString member.stars)
-        ++ (", local score: " ++ toString member.localScore)
-        ++ ")"
+    [ Junk.title (Member.description member) (Date.max data) ]
 
 
 dotOptions : DotOptions

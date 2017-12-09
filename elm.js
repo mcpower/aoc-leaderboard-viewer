@@ -16745,6 +16745,16 @@ var _user$project$View_Plot_Text$styles = function (styles) {
 	return _elm_lang$svg$Svg_Attributes$style(
 		A2(_elm_lang$core$String$join, ';', styles));
 };
+var _user$project$View_Plot_Text$yOffset = function (offset) {
+	return _elm_lang$svg$Svg_Attributes$y(
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(offset),
+			'px'));
+};
+var _user$project$View_Plot_Text$color = function (colorString) {
+	return A2(_elm_lang$core$Basics_ops['++'], 'fill: ', colorString);
+};
 var _user$project$View_Plot_Text$alignRight = 'text-anchor: end';
 var _user$project$View_Plot_Text$italic = 'font-style: italic';
 var _user$project$View_Plot_Text$attributes = {
@@ -17411,7 +17421,7 @@ var _user$project$View_Plot_Junk_LowerIsBetter$lowerIsBetter = function (summary
 					}),
 				_1: _user$project$View_Plot_Text$attributes
 			},
-			'lower is better (sooner)'),
+			'lower is better (puzzle done sooner)'),
 		summary.x.max - 5.0e-2,
 		summary.y.min + (_user$project$Day$day / 7));
 };
@@ -17448,10 +17458,91 @@ var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 			});
 	});
 
-var _user$project$View_Plot_Type_AllInOne$dotOptions = {xLine: true, yLine: false, xTick: true, yTick: false, stripedHint: true};
-var _user$project$View_Plot_Type_AllInOne$junk = function (_p0) {
-	return {ctor: '[]'};
+var _user$project$View_Member$description = function (member) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_user$project$View_Name$name(member),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				' (stars: ',
+				_elm_lang$core$Basics$toString(member.stars)),
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					', local score: ',
+					_elm_lang$core$Basics$toString(member.localScore)),
+				')')));
 };
+
+var _user$project$View_Plot_Junk_Legend$memberSvg = F3(
+	function (memberString, yOffset, color) {
+		return A2(
+			_terezka$elm_plot$Plot$viewLabel,
+			{
+				ctor: '::',
+				_0: _user$project$View_Plot_Text$styles(
+					{
+						ctor: '::',
+						_0: _user$project$View_Plot_Text$italic,
+						_1: {
+							ctor: '::',
+							_0: _user$project$View_Plot_Text$color(color),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$View_Plot_Text$yOffset(yOffset),
+					_1: _user$project$View_Plot_Text$attributes
+				}
+			},
+			memberString);
+	});
+var _user$project$View_Plot_Junk_Legend$yOffset = F2(
+	function (position, _p0) {
+		return _elm_lang$core$Basics$toFloat(position) * 12;
+	});
+var _user$project$View_Plot_Junk_Legend$svg = function (data) {
+	var sortedData = A2(
+		_elm_lang$core$List$sortBy,
+		function (_p1) {
+			return _elm_lang$core$Basics$negate(
+				function (_) {
+					return _.localScore;
+				}(_p1));
+		},
+		data);
+	return A2(
+		_elm_lang$svg$Svg$g,
+		{ctor: '[]'},
+		A4(
+			_elm_lang$core$List$map3,
+			_user$project$View_Plot_Junk_Legend$memberSvg,
+			A2(_elm_lang$core$List$map, _user$project$View_Member$description, sortedData),
+			A2(_elm_lang$core$List$indexedMap, _user$project$View_Plot_Junk_Legend$yOffset, sortedData),
+			_user$project$Colors$colorsList(
+				_elm_lang$core$List$length(data))));
+};
+var _user$project$View_Plot_Junk_Legend$legend = function (data) {
+	return A3(
+		_terezka$elm_plot$Plot$junk,
+		_user$project$View_Plot_Junk_Legend$svg(data),
+		1.1,
+		_user$project$View_Date$max(data) - (0.4 * _user$project$Day$day));
+};
+
+var _user$project$View_Plot_Type_AllInOne$dotOptions = {xLine: true, yLine: false, xTick: true, yTick: false, stripedHint: true};
+var _user$project$View_Plot_Type_AllInOne$junk = F2(
+	function (data, _p0) {
+		return {
+			ctor: '::',
+			_0: _user$project$View_Plot_Junk_Legend$legend(data),
+			_1: {ctor: '[]'}
+		};
+	});
 var _user$project$View_Plot_Type_AllInOne$seriesList = F2(
 	function (model, data) {
 		return A4(
@@ -17468,8 +17559,11 @@ var _user$project$View_Plot_Type_AllInOne$seriesList = F2(
 				_elm_lang$core$List$length(data)),
 			A2(
 				_elm_lang$core$List$sortBy,
-				function (_) {
-					return _.localScore;
+				function (_p2) {
+					return _elm_lang$core$Basics$negate(
+						function (_) {
+							return _.localScore;
+						}(_p2));
 				},
 				data));
 	});
@@ -17479,7 +17573,11 @@ var _user$project$View_Plot_Type_AllInOne$allInOne = F2(
 			ctor: '::',
 			_0: A3(
 				_terezka$elm_plot$Plot$viewSeriesCustom,
-				A3(_user$project$View_Plot_PlotCustomizations$plotCustomizations, model, data, _user$project$View_Plot_Type_AllInOne$junk),
+				A3(
+					_user$project$View_Plot_PlotCustomizations$plotCustomizations,
+					model,
+					data,
+					_user$project$View_Plot_Type_AllInOne$junk(data)),
 				A2(_user$project$View_Plot_Type_AllInOne$seriesList, model, data),
 				data),
 			_1: {ctor: '[]'}
@@ -17511,31 +17609,13 @@ var _user$project$View_Plot_Junk_Title$title = F2(
 	});
 
 var _user$project$View_Plot_Type_OneForEachMember$dotOptions = {xLine: true, yLine: true, xTick: true, yTick: true, stripedHint: false};
-var _user$project$View_Plot_Type_OneForEachMember$title = function (member) {
-	return A2(
-		_elm_lang$core$Basics_ops['++'],
-		_user$project$View_Name$name(member),
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				' (stars: ',
-				_elm_lang$core$Basics$toString(member.stars)),
-			A2(
-				_elm_lang$core$Basics_ops['++'],
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					', local score: ',
-					_elm_lang$core$Basics$toString(member.localScore)),
-				')')));
-};
 var _user$project$View_Plot_Type_OneForEachMember$junk = F3(
 	function (data, member, _p0) {
 		return {
 			ctor: '::',
 			_0: A2(
 				_user$project$View_Plot_Junk_Title$title,
-				_user$project$View_Plot_Type_OneForEachMember$title(member),
+				_user$project$View_Member$description(member),
 				_user$project$View_Date$max(data)),
 			_1: {ctor: '[]'}
 		};
