@@ -15,7 +15,7 @@
     var startingSnapshot = storedSnapshot ? JSON.parse(storedSnapshot) : null;
 
     // migration
-    if (!startingSnapshot.plot) {
+    if (startingSnapshot && !startingSnapshot.plot) {
         startingSnapshot.plot = 'AllInOne';
     }
 
