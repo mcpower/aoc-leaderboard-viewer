@@ -7,7 +7,7 @@ format maybeScore maxScore =
         |> Maybe.map
             (\score ->
                 toString score
-                    ++ " out of "
+                    ++ " pts out of "
                     ++ toString maxScore
             )
         |> Maybe.withDefault ""

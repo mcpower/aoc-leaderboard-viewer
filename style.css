@@ -3,7 +3,7 @@ body {
 }
 
 .hint {
-  width: 28rem;
+  width: 32rem;
   border: 1px solid #e9ecef;
   background-color: #fff;
   display: flex;
@@ -17,11 +17,11 @@ body {
 }
 
 .col--member {
-  flex: 4;
+  flex: 8;
 }
 .col--solved {
-  flex: 4;
+  flex: 6;
 }
 .col--score {
-  flex: 3;
+  flex: 6;
 }

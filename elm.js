@@ -17028,7 +17028,7 @@ var _user$project$View_Score$format = F2(
 						_elm_lang$core$Basics$toString(score),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							' out of ',
+							' pts out of ',
 							_elm_lang$core$Basics$toString(maxScore)));
 				},
 				maybeScore));
