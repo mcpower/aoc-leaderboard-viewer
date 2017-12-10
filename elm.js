@@ -16622,11 +16622,21 @@ var _user$project$Json$memberDecoder = A7(
 	A2(_elm_lang$core$Json_Decode$field, 'completion_day_level', _user$project$Json$completionTimesDecoder));
 var _user$project$Json$dataDecoder = A2(
 	_elm_lang$core$Json_Decode$map,
-	_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
+	function (data) {
+		return A2(
+			_elm_lang$core$List$filter,
+			function (member) {
+				return _elm_lang$core$Native_Utils.cmp(member.stars, 0) > 0;
+			},
+			data);
+	},
 	A2(
-		_elm_lang$core$Json_Decode$field,
-		'members',
-		_elm_lang$core$Json_Decode$keyValuePairs(_user$project$Json$memberDecoder)));
+		_elm_lang$core$Json_Decode$map,
+		_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'members',
+			_elm_lang$core$Json_Decode$keyValuePairs(_user$project$Json$memberDecoder))));
 
 var _user$project$Example$shouldShow = function (_p0) {
 	var _p1 = _p0;
@@ -17015,6 +17025,9 @@ var _user$project$View_Score$style = F3(
 					},
 					maybeScore)));
 	});
+var _user$project$View_Score$pts = function (score) {
+	return (_elm_lang$core$Native_Utils.cmp(score, 1) > 0) ? 'pts' : 'pt';
+};
 var _user$project$View_Score$format = F2(
 	function (maybeScore, maxScore) {
 		return A2(
@@ -17028,8 +17041,14 @@ var _user$project$View_Score$format = F2(
 						_elm_lang$core$Basics$toString(score),
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							' pts out of ',
-							_elm_lang$core$Basics$toString(maxScore)));
+							' ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_user$project$View_Score$pts(score),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									' out of ',
+									_elm_lang$core$Basics$toString(maxScore)))));
 				},
 				maybeScore));
 	});

@@ -7,10 +7,20 @@ format maybeScore maxScore =
         |> Maybe.map
             (\score ->
                 toString score
-                    ++ " pts out of "
+                    ++ " "
+                    ++ pts score
+                    ++ " out of "
                     ++ toString maxScore
             )
         |> Maybe.withDefault ""
+
+
+pts : Int -> String
+pts score =
+    if score > 1 then
+        "pts"
+    else
+        "pt"
 
 
 style : Bool -> Maybe Int -> Int -> List ( String, String )

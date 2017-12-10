@@ -11,6 +11,7 @@ dataDecoder : Decoder Data
 dataDecoder =
     JD.field "members" (JD.keyValuePairs memberDecoder)
         |> JD.map (List.map Tuple.second)
+        |> JD.map (\data -> data |> List.filter (\member -> member.stars > 0))
 
 
 memberDecoder : Decoder Member
