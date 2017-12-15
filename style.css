@@ -25,3 +25,7 @@ body {
 .col--score {
   flex: 6;
 }
+
+button[type=submit] .badge {
+  margin-left: 8px;
+}
