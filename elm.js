@@ -16991,7 +16991,7 @@ var _user$project$View_Plot_Axis$horizontalAxis = F2(
 					_user$project$DayStar$fromFloat(_p3));
 			},
 			_elm_lang$core$Basics$always(
-				A3(_user$project$Day$findTicks, 1.0, maxDayStar, 0.5)));
+				A3(_user$project$Day$findTicks, 1.0, maxDayStar, 1.0)));
 	});
 
 var _user$project$View_Score$style = F3(

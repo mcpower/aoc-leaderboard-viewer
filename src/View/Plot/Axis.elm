@@ -29,7 +29,7 @@ horizontalAxis hover maxDayStar =
         ( 1.0, maxDayStar )
         .x
         (DayStar.fromFloat >> DayStar.format)
-        (always (findTicks 1.0 maxDayStar 0.5))
+        (always (findTicks 1.0 maxDayStar 1.0))
 
 
 verticalAxis : Bool -> Maybe Point -> Float -> Axis
