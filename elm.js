@@ -16467,12 +16467,19 @@ var _user$project$Colors$colorsList = function (count) {
 var _user$project$Day$findTicks = F3(
 	function (min, max, delta) {
 		return A2(
-			_elm_community$list_extra$List_Extra$iterate,
-			function (val) {
-				var newVal = val + delta;
-				return (_elm_lang$core$Native_Utils.cmp(newVal, max + delta) < 0) ? _elm_lang$core$Maybe$Just(newVal) : _elm_lang$core$Maybe$Nothing;
-			},
-			min);
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_community$list_extra$List_Extra$iterate,
+				function (val) {
+					var newVal = val + delta;
+					return (_elm_lang$core$Native_Utils.cmp(newVal, max) < 0) ? _elm_lang$core$Maybe$Just(newVal) : _elm_lang$core$Maybe$Nothing;
+				},
+				min),
+			{
+				ctor: '::',
+				_0: max,
+				_1: {ctor: '[]'}
+			});
 	});
 var _user$project$Day$day = 86400000;
 var _user$project$Day$findComfortableRange = F2(
@@ -16974,7 +16981,7 @@ var _user$project$View_Plot_Axis$verticalAxis = F3(
 					_elm_lang$core$Date$fromTime(_p2));
 			},
 			_elm_lang$core$Basics$always(
-				A3(_user$project$Day$findTicks, _user$project$Day$startOfAoC, maxDate, _user$project$Day$day)));
+				A3(_user$project$Day$findTicks, _user$project$Day$startOfAoC, maxDate, 2 * _user$project$Day$day)));
 	});
 var _user$project$View_Plot_Axis$horizontalAxis = F2(
 	function (hover, maxDayStar) {
@@ -17421,37 +17428,9 @@ var _user$project$View_Plot_Grid$dayStar = F2(
 		return A4(_user$project$View_Plot_Grid$gridX, hover, 1.0, maxDayStar, 0.5);
 	});
 
-var _user$project$View_Plot_Junk_LowerIsBetter$lowerIsBetter = function (summary) {
-	return A3(
-		_terezka$elm_plot$Plot$junk,
-		A2(
-			_terezka$elm_plot$Plot$viewLabel,
-			{
-				ctor: '::',
-				_0: _user$project$View_Plot_Text$styles(
-					{
-						ctor: '::',
-						_0: _user$project$View_Plot_Text$italic,
-						_1: {
-							ctor: '::',
-							_0: _user$project$View_Plot_Text$alignRight,
-							_1: {ctor: '[]'}
-						}
-					}),
-				_1: _user$project$View_Plot_Text$attributes
-			},
-			'lower is better (puzzle done sooner)'),
-		summary.x.max - 5.0e-2,
-		summary.y.min + (_user$project$Day$day / 7));
-};
-
 var _user$project$View_Plot_PlotCustomizations$withGlobalJunk = F2(
 	function (customJunk, summary) {
-		return {
-			ctor: '::',
-			_0: _user$project$View_Plot_Junk_LowerIsBetter$lowerIsBetter(summary),
-			_1: customJunk(summary)
-		};
+		return customJunk(summary);
 	});
 var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 	function (model, data, junk) {
@@ -17468,7 +17447,7 @@ var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 					vertical: A2(_user$project$View_Plot_Grid$dayStar, model.hover, maxDayStar)
 				},
 				horizontalAxis: A2(_user$project$View_Plot_Axis$horizontalAxis, model.hover, maxDayStar),
-				margin: {top: 10, bottom: 30, left: 80, right: 10},
+				margin: {top: 20, bottom: 30, left: 80, right: 30},
 				toRangeLowest: _elm_lang$core$Basics$always(1.0 - 0.2),
 				toRangeHighest: _elm_lang$core$Basics$always(maxDayStar),
 				toDomainLowest: _elm_lang$core$Basics$always(_user$project$Day$startOfAoC - (_user$project$Day$day / 2)),
@@ -17522,7 +17501,7 @@ var _user$project$View_Plot_Junk_Legend$memberSvg = F3(
 	});
 var _user$project$View_Plot_Junk_Legend$yOffset = F2(
 	function (position, _p0) {
-		return _elm_lang$core$Basics$toFloat(position) * 12;
+		return _elm_lang$core$Basics$toFloat(position) * 13.5;
 	});
 var _user$project$View_Plot_Junk_Legend$svg = function (data) {
 	var sortedData = A2(
@@ -17550,10 +17529,10 @@ var _user$project$View_Plot_Junk_Legend$legend = function (data) {
 		_terezka$elm_plot$Plot$junk,
 		_user$project$View_Plot_Junk_Legend$svg(data),
 		1.1,
-		_user$project$View_Date$max(data) - (0.4 * _user$project$Day$day));
+		_user$project$View_Date$max(data) - (0.76 * _user$project$Day$day));
 };
 
-var _user$project$View_Plot_Type_AllInOne$dotOptions = {xLine: true, yLine: false, xTick: true, yTick: false, stripedHint: true};
+var _user$project$View_Plot_Type_AllInOne$dotOptions = {xLine: true, yLine: true, xTick: true, yTick: true, stripedHint: true};
 var _user$project$View_Plot_Type_AllInOne$junk = F2(
 	function (data, _p0) {
 		return {
@@ -17624,7 +17603,7 @@ var _user$project$View_Plot_Junk_Title$title = F2(
 			_terezka$elm_plot$Plot$junk,
 			_user$project$View_Plot_Junk_Title$svg(titleString),
 			1.1,
-			y - (0.4 * _user$project$Day$day));
+			y + (0.3 * _user$project$Day$day));
 	});
 
 var _user$project$View_Plot_Type_OneForEachMember$dotOptions = {xLine: true, yLine: true, xTick: true, yTick: true, stripedHint: false};

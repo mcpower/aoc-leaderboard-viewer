@@ -40,8 +40,8 @@ junk data _ =
 dotOptions : DotOptions
 dotOptions =
     { xLine = True
-    , yLine = False
+    , yLine = True
     , xTick = True
-    , yTick = False
+    , yTick = True
     , stripedHint = True
     }

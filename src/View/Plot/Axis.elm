@@ -40,7 +40,7 @@ verticalAxis showOnlyOneOnHover hover maxDate =
         ( startOfAoC, maxDate )
         .y
         (Date.fromTime >> Date.format)
-        (always (findTicks startOfAoC maxDate day))
+        (always (findTicks startOfAoC maxDate (2 * day)))
 
 
 axis : Bool -> Maybe Point -> ( Float, Float ) -> (Point -> Float) -> (Float -> String) -> (AxisSummary -> List Float) -> Axis

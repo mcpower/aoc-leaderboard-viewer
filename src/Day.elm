@@ -42,15 +42,17 @@ findComfortableRange dataMax current =
 
 findTicks : Float -> Float -> Float -> List Float
 findTicks min max delta =
-    List.Extra.iterate
+    (List.Extra.iterate
         (\val ->
             let
                 newVal =
                     val + delta
             in
-                if newVal < (max + delta) then
+                if newVal < max then
                     Just newVal
                 else
                     Nothing
         )
         min
+    )
+        ++ [ max ]

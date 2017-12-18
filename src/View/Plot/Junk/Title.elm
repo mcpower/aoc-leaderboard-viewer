@@ -12,7 +12,7 @@ title titleString y =
     P.junk
         (svg titleString)
         1.1
-        (y - 0.4 * day)
+        (y + 0.3 * day)
 
 
 svg : String -> Svg msg

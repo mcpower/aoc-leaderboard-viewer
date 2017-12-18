@@ -12,7 +12,6 @@ import DayStar
 import View.Plot.Axis exposing (horizontalAxis)
 import View.Plot.Grid as Grid
 import View.Plot.Hint as Hint
-import View.Plot.Junk.LowerIsBetter exposing (lowerIsBetter)
 import View.Date as Date
 import Plot as P
     exposing
@@ -63,10 +62,10 @@ plotCustomizations model data junk =
 
             -- if something clips, look here
             , margin =
-                { top = 10
+                { top = 20
                 , bottom = 30
                 , left = 80
-                , right = 10
+                , right = 30
                 }
 
             -- zoom parameters for the plot
@@ -86,5 +85,4 @@ withGlobalJunk :
     -> PlotSummary
     -> List (JunkCustomizations Msg)
 withGlobalJunk customJunk summary =
-    lowerIsBetter summary
-        :: customJunk summary
+    customJunk summary

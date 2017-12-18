@@ -15,7 +15,7 @@ legend data =
     P.junk
         (svg data)
         1.1
-        (Date.max data - 0.4 * day)
+        (Date.max data - 0.76 * day)
 
 
 svg : Data -> Svg msg
@@ -34,7 +34,7 @@ svg data =
 
 yOffset : Int -> Member -> Float
 yOffset position _ =
-    toFloat position * 12
+    toFloat position * 13.5
 
 
 memberSvg : String -> Float -> String -> Svg msg
