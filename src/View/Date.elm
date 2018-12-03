@@ -45,6 +45,6 @@ max data =
         |> List.concatMap .completionTimes
         |> List.map (\( _, _, time ) -> time)
         |> List.maximum
-        |> Maybe.withDefault endOfAoC
-        |> comfortableRange
+        |> Maybe.withDefault (endOfAoC data)
+        |> comfortableRange data
         |> Tuple.second

@@ -19,6 +19,7 @@ import Plot as P
         , AxisSummary
         , LabelCustomizations
         )
+import Types exposing (..)
 
 
 horizontalAxis : Maybe Point -> Float -> Axis
@@ -32,15 +33,18 @@ horizontalAxis hover maxDayStar =
         (always (findTicks 1.0 maxDayStar 1.0))
 
 
-verticalAxis : Bool -> Maybe Point -> Float -> Axis
-verticalAxis showOnlyOneOnHover hover maxDate =
-    axis
-        showOnlyOneOnHover
-        hover
-        ( startOfAoC, maxDate )
-        .y
-        (Date.fromTime >> Date.format)
-        (always (findTicks startOfAoC maxDate (2 * day)))
+verticalAxis : Data -> Bool -> Maybe Point -> Float -> Axis
+verticalAxis data showOnlyOneOnHover hover maxDate =
+    let
+        start = startOfAoC data
+    in
+        axis
+            showOnlyOneOnHover
+            hover
+            ( start, maxDate )
+            .y
+            (Date.fromTime >> Date.format)
+            (always (findTicks start maxDate (2 * day)))
 
 
 axis : Bool -> Maybe Point -> ( Float, Float ) -> (Point -> Float) -> (Float -> String) -> (AxisSummary -> List Float) -> Axis

@@ -21,7 +21,7 @@ series : Model -> Data -> DotOptions -> Bool -> String -> Member -> Series Data 
 series model data dotOptions hasAxis color member =
     { axis =
         if hasAxis then
-            verticalAxis dotOptions.yTick model.hover (Date.max data)
+            verticalAxis data dotOptions.yTick model.hover (Date.max data)
         else
             P.sometimesYouDoNotHaveAnAxis
     , interpolation = interpolation color

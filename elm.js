@@ -16581,50 +16581,6 @@ var _user$project$Colors$colorsList = function (count) {
 			A2(_elm_lang$core$List$repeat, repeats, _user$project$Colors$seriesColors)));
 };
 
-var _user$project$Day$findTicks = F3(
-	function (min, max, delta) {
-		return A2(
-			_elm_lang$core$Basics_ops['++'],
-			A2(
-				_elm_community$list_extra$List_Extra$iterate,
-				function (val) {
-					var newVal = val + delta;
-					return (_elm_lang$core$Native_Utils.cmp(newVal, max) < 0) ? _elm_lang$core$Maybe$Just(newVal) : _elm_lang$core$Maybe$Nothing;
-				},
-				min),
-			{
-				ctor: '::',
-				_0: max,
-				_1: {ctor: '[]'}
-			});
-	});
-var _user$project$Day$day = 86400000;
-var _user$project$Day$findComfortableRange = F2(
-	function (dataMax, current) {
-		findComfortableRange:
-		while (true) {
-			var newTime = current + _user$project$Day$day;
-			if (_elm_lang$core$Native_Utils.cmp(newTime, dataMax) < 0) {
-				var _v0 = dataMax,
-					_v1 = newTime;
-				dataMax = _v0;
-				current = _v1;
-				continue findComfortableRange;
-			} else {
-				return current;
-			}
-		}
-	});
-var _user$project$Day$startOfAoC = 1512104400000;
-var _user$project$Day$endOfAoC = _user$project$Day$startOfAoC + (_user$project$Day$day * 26);
-var _user$project$Day$comfortableRange = function (dataMax) {
-	return {
-		ctor: '_Tuple2',
-		_0: _user$project$Day$startOfAoC,
-		_1: A2(_user$project$Day$findComfortableRange, dataMax + _user$project$Day$day, _user$project$Day$startOfAoC)
-	};
-};
-
 var _user$project$Types$Snapshot = F3(
 	function (a, b, c) {
 		return {url: a, cookie: b, plot: c};
@@ -16672,6 +16628,80 @@ var _user$project$Types$SetUrl = function (a) {
 };
 var _user$project$Types$AllInOne = {ctor: 'AllInOne'};
 var _user$project$Types$OneForEachMember = {ctor: 'OneForEachMember'};
+
+var _user$project$Day$findTicks = F3(
+	function (min, max, delta) {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_community$list_extra$List_Extra$iterate,
+				function (val) {
+					var newVal = val + delta;
+					return (_elm_lang$core$Native_Utils.cmp(newVal, max) < 0) ? _elm_lang$core$Maybe$Just(newVal) : _elm_lang$core$Maybe$Nothing;
+				},
+				min),
+			{
+				ctor: '::',
+				_0: max,
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Day$day = 86400000;
+var _user$project$Day$findComfortableRange = F2(
+	function (dataMax, current) {
+		findComfortableRange:
+		while (true) {
+			var newTime = current + _user$project$Day$day;
+			if (_elm_lang$core$Native_Utils.cmp(newTime, dataMax) < 0) {
+				var _v0 = dataMax,
+					_v1 = newTime;
+				dataMax = _v0;
+				current = _v1;
+				continue findComfortableRange;
+			} else {
+				return current;
+			}
+		}
+	});
+var _user$project$Day$startOfAoC = function (data) {
+	return _elm_lang$core$Date$toTime(
+		function (year) {
+			return A3(
+				_justinmimbs$elm_date_extra$Date_Extra$fromSpec,
+				_justinmimbs$elm_date_extra$Date_Extra$utc,
+				A4(_justinmimbs$elm_date_extra$Date_Extra$atTime, 5, 0, 0, 0),
+				A3(_justinmimbs$elm_date_extra$Date_Extra$calendarDate, year, _elm_lang$core$Date$Dec, 1));
+		}(
+			A2(
+				_elm_lang$core$Maybe$withDefault,
+				2017,
+				_elm_lang$core$List$minimum(
+					A2(
+						_elm_lang$core$List$map,
+						function (_p0) {
+							var _p1 = _p0;
+							return _elm_lang$core$Date$year(
+								_elm_lang$core$Date$fromTime(_p1._2));
+						},
+						A2(
+							_elm_lang$core$List$concatMap,
+							function (_) {
+								return _.completionTimes;
+							},
+							data))))));
+};
+var _user$project$Day$endOfAoC = function (data) {
+	return _user$project$Day$startOfAoC(data) + (_user$project$Day$day * 26);
+};
+var _user$project$Day$comfortableRange = F2(
+	function (members, dataMax) {
+		var start = _user$project$Day$startOfAoC(members);
+		return {
+			ctor: '_Tuple2',
+			_0: start,
+			_1: A2(_user$project$Day$findComfortableRange, dataMax + _user$project$Day$day, start)
+		};
+	});
 
 var _user$project$DayStar$fromFloat = function ($float) {
 	var day = _elm_lang$core$Basics$floor($float);
@@ -16940,10 +16970,12 @@ var _user$project$View_DayStar$hintLabel = F2(
 
 var _user$project$View_Date$max = function (data) {
 	return _elm_lang$core$Tuple$second(
-		_user$project$Day$comfortableRange(
+		A2(
+			_user$project$Day$comfortableRange,
+			data,
 			A2(
 				_elm_lang$core$Maybe$withDefault,
-				_user$project$Day$endOfAoC,
+				_user$project$Day$endOfAoC(data),
 				_elm_lang$core$List$maximum(
 					A2(
 						_elm_lang$core$List$map,
@@ -17082,13 +17114,14 @@ var _user$project$View_Plot_Axis$axis = F6(
 				};
 			});
 	});
-var _user$project$View_Plot_Axis$verticalAxis = F3(
-	function (showOnlyOneOnHover, hover, maxDate) {
+var _user$project$View_Plot_Axis$verticalAxis = F4(
+	function (data, showOnlyOneOnHover, hover, maxDate) {
+		var start = _user$project$Day$startOfAoC(data);
 		return A6(
 			_user$project$View_Plot_Axis$axis,
 			showOnlyOneOnHover,
 			hover,
-			{ctor: '_Tuple2', _0: _user$project$Day$startOfAoC, _1: maxDate},
+			{ctor: '_Tuple2', _0: start, _1: maxDate},
 			function (_) {
 				return _.y;
 			},
@@ -17097,7 +17130,7 @@ var _user$project$View_Plot_Axis$verticalAxis = F3(
 					_elm_lang$core$Date$fromTime(_p2));
 			},
 			_elm_lang$core$Basics$always(
-				A3(_user$project$Day$findTicks, _user$project$Day$startOfAoC, maxDate, 2 * _user$project$Day$day)));
+				A3(_user$project$Day$findTicks, start, maxDate, 2 * _user$project$Day$day)));
 	});
 var _user$project$View_Plot_Axis$horizontalAxis = F2(
 	function (hover, maxDayStar) {
@@ -17468,8 +17501,9 @@ var _user$project$View_Plot_Series$interpolation = function (color) {
 var _user$project$View_Plot_Series$series = F6(
 	function (model, data, dotOptions, hasAxis, color, member) {
 		return {
-			axis: hasAxis ? A3(
+			axis: hasAxis ? A4(
 				_user$project$View_Plot_Axis$verticalAxis,
+				data,
 				dotOptions.yTick,
 				model.hover,
 				_user$project$View_Date$max(data)) : _Bractlet$elm_plot$Plot$sometimesYouDoNotHaveAnAxis,
@@ -17536,9 +17570,14 @@ var _user$project$View_Plot_Grid$gridX = F4(
 			max,
 			delta);
 	});
-var _user$project$View_Plot_Grid$date = function (maxDate) {
-	return A3(_user$project$View_Plot_Grid$gridY, _user$project$Day$startOfAoC, maxDate, _user$project$Day$day);
-};
+var _user$project$View_Plot_Grid$date = F2(
+	function (data, maxDate) {
+		return A3(
+			_user$project$View_Plot_Grid$gridY,
+			_user$project$Day$startOfAoC(data),
+			maxDate,
+			_user$project$Day$day);
+	});
 var _user$project$View_Plot_Grid$dayStar = F2(
 	function (hover, maxDayStar) {
 		return A4(_user$project$View_Plot_Grid$gridX, hover, 1.0, maxDayStar, 0.5);
@@ -17559,14 +17598,15 @@ var _user$project$View_Plot_PlotCustomizations$plotCustomizations = F3(
 				height: 300,
 				junk: _user$project$View_Plot_PlotCustomizations$withGlobalJunk(junk),
 				grid: {
-					horizontal: _user$project$View_Plot_Grid$date(maxDate),
+					horizontal: A2(_user$project$View_Plot_Grid$date, data, maxDate),
 					vertical: A2(_user$project$View_Plot_Grid$dayStar, model.hover, maxDayStar)
 				},
 				horizontalAxis: A2(_user$project$View_Plot_Axis$horizontalAxis, model.hover, maxDayStar),
 				margin: {top: 20, bottom: 30, left: 80, right: 30},
 				toRangeLowest: _elm_lang$core$Basics$always(1.0 - 0.2),
 				toRangeHighest: _elm_lang$core$Basics$always(maxDayStar),
-				toDomainLowest: _elm_lang$core$Basics$always(_user$project$Day$startOfAoC - (_user$project$Day$day / 2)),
+				toDomainLowest: _elm_lang$core$Basics$always(
+					_user$project$Day$startOfAoC(data) - (_user$project$Day$day / 2)),
 				toDomainHighest: _elm_lang$core$Basics$always(maxDate),
 				onHover: _elm_lang$core$Maybe$Just(_user$project$Types$Hover)
 			});

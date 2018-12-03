@@ -1,5 +1,6 @@
 module View.Plot.Grid exposing (date, dayStar)
 
+import Types exposing (..)
 import Colors exposing (colors)
 import Day exposing (startOfAoC, day)
 import Svg.Attributes as SA
@@ -16,9 +17,9 @@ dayStar hover maxDayStar =
     gridX hover 1.0 maxDayStar 0.5
 
 
-date : Float -> Grid
-date maxDate =
-    gridY startOfAoC maxDate day
+date : Data -> Float -> Grid
+date data maxDate =
+    gridY (startOfAoC data) maxDate day
 
 
 gridX :

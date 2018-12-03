@@ -48,7 +48,7 @@ plotCustomizations model data junk =
             -- vertical and horizontal grid
             , grid =
                 -- on every star
-                { horizontal = Grid.date maxDate
+                { horizontal = Grid.date data maxDate
 
                 -- we want the gridlines to show everyday midnight EST == 05:00 GMT
                 -- (problem release time)
@@ -72,7 +72,7 @@ plotCustomizations model data junk =
             -- the "minus something" are for a padding between plot and axis
             , toRangeLowest = always (1.0 - 0.2)
             , toRangeHighest = always maxDayStar
-            , toDomainLowest = always (startOfAoC - (day / 2))
+            , toDomainLowest = always ((startOfAoC data) - (day / 2))
             , toDomainHighest = always maxDate
 
             -- turn on hover on the whole vertical lines

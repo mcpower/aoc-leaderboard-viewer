@@ -1,18 +1,33 @@
 module Day exposing (..)
 
+import Date
+import Date.Extra as DE
 import List.Extra
+import Types exposing (..)
+
+-- 2017/12/01, 05:00 GMT
+-- in milliseconds
+-- 1512104400000
+-- TODO: rewrite Data to keep track of the event name
+startOfAoC : Data -> Float
+startOfAoC data =
+    List.concatMap (.completionTimes) data
+        |> List.map (\(x, y, time) -> time |> Date.fromTime |> Date.year)
+        |> List.minimum
+        |> Maybe.withDefault 2017
+        |>
+            (\year -> DE.fromSpec
+                DE.utc
+                (DE.atTime 5 0 0 0)
+                (DE.calendarDate year Date.Dec 1)
+            )
+        |> Date.toTime
+            
 
 
-startOfAoC : Float
-startOfAoC =
-    -- 2017/12/01, 05:00 GMT
-    -- in milliseconds
-    1512104400000
-
-
-endOfAoC : Float
-endOfAoC =
-    startOfAoC + day * 26
+endOfAoC : Data -> Float
+endOfAoC data =
+    startOfAoC data + day * 26
 
 
 day : Float
@@ -21,11 +36,14 @@ day =
     86400000
 
 
-comfortableRange : Float -> ( Float, Float )
-comfortableRange dataMax =
-    ( startOfAoC
-    , findComfortableRange (dataMax + day) startOfAoC
-    )
+comfortableRange : Data -> Float -> ( Float, Float )
+comfortableRange members dataMax =
+    let
+        start = startOfAoC members
+    in
+        ( start
+        , findComfortableRange (dataMax + day) start
+        )
 
 
 findComfortableRange : Float -> Float -> Float
