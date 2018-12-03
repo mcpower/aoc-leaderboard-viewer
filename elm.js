@@ -16593,6 +16593,10 @@ var _user$project$Types$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {url: a, cookie: b, data: c, timeOfFetch: d, hover: e, plot: f};
 	});
+var _user$project$Types$Data = F2(
+	function (a, b) {
+		return {members: a, event: b};
+	});
 var _user$project$Types$Member = F6(
 	function (a, b, c, d, e, f) {
 		return {name: a, id: b, localScore: c, globalScore: d, stars: e, completionTimes: f};
@@ -16664,31 +16668,32 @@ var _user$project$Day$findComfortableRange = F2(
 		}
 	});
 var _user$project$Day$startOfAoC = function (data) {
-	return _elm_lang$core$Date$toTime(
-		function (year) {
-			return A3(
-				_justinmimbs$elm_date_extra$Date_Extra$fromSpec,
-				_justinmimbs$elm_date_extra$Date_Extra$utc,
-				A4(_justinmimbs$elm_date_extra$Date_Extra$atTime, 5, 0, 0, 0),
-				A3(_justinmimbs$elm_date_extra$Date_Extra$calendarDate, year, _elm_lang$core$Date$Dec, 1));
-		}(
+	var minYear = _elm_lang$core$List$minimum(
+		A2(
+			_elm_lang$core$List$map,
+			function (_p0) {
+				var _p1 = _p0;
+				return _elm_lang$core$Date$year(
+					_elm_lang$core$Date$fromTime(_p1._2));
+			},
 			A2(
-				_elm_lang$core$Maybe$withDefault,
-				2017,
-				_elm_lang$core$List$minimum(
-					A2(
-						_elm_lang$core$List$map,
-						function (_p0) {
-							var _p1 = _p0;
-							return _elm_lang$core$Date$year(
-								_elm_lang$core$Date$fromTime(_p1._2));
-						},
-						A2(
-							_elm_lang$core$List$concatMap,
-							function (_) {
-								return _.completionTimes;
-							},
-							data))))));
+				_elm_lang$core$List$concatMap,
+				function (_) {
+					return _.completionTimes;
+				},
+				data.members)));
+	var eventYear = _elm_lang$core$Result$toMaybe(
+		_elm_lang$core$String$toInt(data.event));
+	var year = A2(
+		_elm_lang$core$Maybe$withDefault,
+		A2(_elm_lang$core$Maybe$withDefault, 2018, minYear),
+		eventYear);
+	return _elm_lang$core$Date$toTime(
+		A3(
+			_justinmimbs$elm_date_extra$Date_Extra$fromSpec,
+			_justinmimbs$elm_date_extra$Date_Extra$utc,
+			A4(_justinmimbs$elm_date_extra$Date_Extra$atTime, 5, 0, 0, 0),
+			A3(_justinmimbs$elm_date_extra$Date_Extra$calendarDate, year, _elm_lang$core$Date$Dec, 1)));
 };
 var _user$project$Day$endOfAoC = function (data) {
 	return _user$project$Day$startOfAoC(data) + (_user$project$Day$day * 26);
@@ -16729,7 +16734,7 @@ var _user$project$DayStar$max = function (data) {
 					function (_) {
 						return _.completionTimes;
 					},
-					data))));
+					data.members))));
 };
 
 var _user$project$Json$oldCompletionTimesDecoder = A2(
@@ -16808,23 +16813,27 @@ var _user$project$Json$memberDecoder = A7(
 	A2(_elm_lang$core$Json_Decode$field, 'global_score', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'stars', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'completion_day_level', _user$project$Json$completionTimesDecoder));
-var _user$project$Json$dataDecoder = A2(
-	_elm_lang$core$Json_Decode$map,
-	function (data) {
-		return A2(
-			_elm_lang$core$List$filter,
-			function (member) {
-				return _elm_lang$core$Native_Utils.cmp(member.stars, 0) > 0;
-			},
-			data);
-	},
+var _user$project$Json$dataDecoder = A3(
+	_elm_lang$core$Json_Decode$map2,
+	_user$project$Types$Data,
 	A2(
 		_elm_lang$core$Json_Decode$map,
-		_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
+		function (data) {
+			return A2(
+				_elm_lang$core$List$filter,
+				function (member) {
+					return _elm_lang$core$Native_Utils.cmp(member.stars, 0) > 0;
+				},
+				data);
+		},
 		A2(
-			_elm_lang$core$Json_Decode$field,
-			'members',
-			_elm_lang$core$Json_Decode$keyValuePairs(_user$project$Json$memberDecoder))));
+			_elm_lang$core$Json_Decode$map,
+			_elm_lang$core$List$map(_elm_lang$core$Tuple$second),
+			A2(
+				_elm_lang$core$Json_Decode$field,
+				'members',
+				_elm_lang$core$Json_Decode$keyValuePairs(_user$project$Json$memberDecoder)))),
+	A2(_elm_lang$core$Json_Decode$field, 'event', _elm_lang$core$Json_Decode$string));
 
 var _user$project$Example$shouldShow = function (_p0) {
 	var _p1 = _p0;
@@ -16902,15 +16911,15 @@ var _user$project$Score$groupedTimes = function (data) {
 							_1: member.completionTimes
 						};
 					},
-					data))));
+					data.members))));
 };
 var _user$project$Score$maxScore = function (data) {
-	return _elm_lang$core$List$length(data);
+	return _elm_lang$core$List$length(data.members);
 };
 var _user$project$Score$score = F3(
 	function (data, _p9, wantedName) {
 		var _p10 = _p9;
-		var maxSolutionPoints = _elm_lang$core$List$length(data);
+		var maxSolutionPoints = _user$project$Score$maxScore(data);
 		var allSolutions = A2(
 			_elm_lang$core$Maybe$withDefault,
 			{ctor: '[]'},
@@ -17024,7 +17033,7 @@ var _user$project$View_Date$max = function (data) {
 							function (_) {
 								return _.completionTimes;
 							},
-							data))))));
+							data.members))))));
 };
 var _user$project$View_Date$parseDate = function (date) {
 	return {
@@ -17704,7 +17713,7 @@ var _user$project$View_Plot_Junk_Legend$svg = function (data) {
 					return _.localScore;
 				}(_p1));
 		},
-		data);
+		data.members);
 	return A2(
 		_elm_lang$svg$Svg$g,
 		{ctor: '[]'},
@@ -17714,7 +17723,7 @@ var _user$project$View_Plot_Junk_Legend$svg = function (data) {
 			A2(_elm_lang$core$List$map, _user$project$View_Member$description, sortedData),
 			A2(_elm_lang$core$List$indexedMap, _user$project$View_Plot_Junk_Legend$yOffset, sortedData),
 			_user$project$Colors$colorsList(
-				_elm_lang$core$List$length(data))));
+				_elm_lang$core$List$length(data.members))));
 };
 var _user$project$View_Plot_Junk_Legend$legend = function (data) {
 	return A3(
@@ -17744,9 +17753,9 @@ var _user$project$View_Plot_Type_AllInOne$seriesList = F2(
 					function (i, _p1) {
 						return _elm_lang$core$Native_Utils.eq(i, 0);
 					}),
-				data),
+				data.members),
 			_user$project$Colors$colorsList(
-				_elm_lang$core$List$length(data)),
+				_elm_lang$core$List$length(data.members)),
 			A2(
 				_elm_lang$core$List$sortBy,
 				function (_p2) {
@@ -17755,7 +17764,7 @@ var _user$project$View_Plot_Type_AllInOne$seriesList = F2(
 							return _.localScore;
 						}(_p2));
 				},
-				data));
+				data.members));
 	});
 var _user$project$View_Plot_Type_AllInOne$allInOne = F2(
 	function (model, data) {
@@ -17820,7 +17829,7 @@ var _user$project$View_Plot_Type_OneForEachMember$seriesList = F4(
 				function (m) {
 					return _elm_lang$core$Native_Utils.eq(m.id, member.id);
 				},
-				data));
+				data.members));
 	});
 var _user$project$View_Plot_Type_OneForEachMember$onePlot = F4(
 	function (model, data, color, member) {
@@ -17840,7 +17849,7 @@ var _user$project$View_Plot_Type_OneForEachMember$oneForEachMember = F2(
 			_elm_lang$core$List$map2,
 			A2(_user$project$View_Plot_Type_OneForEachMember$onePlot, model, data),
 			_user$project$Colors$colorsList(
-				_elm_lang$core$List$length(data)),
+				_elm_lang$core$List$length(data.members)),
 			A2(
 				_elm_lang$core$List$sortBy,
 				function (_p1) {
@@ -17849,7 +17858,7 @@ var _user$project$View_Plot_Type_OneForEachMember$oneForEachMember = F2(
 							return _.localScore;
 						}(_p1));
 				},
-				data));
+				data.members));
 	});
 
 var _user$project$View_Plot$viewFailure = function (err) {

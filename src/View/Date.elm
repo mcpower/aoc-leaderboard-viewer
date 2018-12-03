@@ -41,7 +41,7 @@ formatWithSeconds date =
 
 max : Data -> Float
 max data =
-    data
+    data.members
         |> List.concatMap .completionTimes
         |> List.map (\( _, _, time ) -> time)
         |> List.maximum

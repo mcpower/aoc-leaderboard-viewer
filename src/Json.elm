@@ -10,9 +10,12 @@ import Types exposing (..)
 
 dataDecoder : Decoder Data
 dataDecoder =
-    JD.field "members" (JD.keyValuePairs memberDecoder)
-        |> JD.map (List.map Tuple.second)
-        |> JD.map (\data -> data |> List.filter (\member -> member.stars > 0))
+    JD.map2 Data
+        (JD.field "members" (JD.keyValuePairs memberDecoder)
+            |> JD.map (List.map Tuple.second)
+            |> JD.map (\data -> data |> List.filter (\member -> member.stars > 0))
+        )
+        (JD.field "event" JD.string)
 
 
 memberDecoder : Decoder Member

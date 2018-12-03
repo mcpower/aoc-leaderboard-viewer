@@ -44,7 +44,9 @@ type Msg
 
 
 type alias Data =
-    List Member
+    { members : List Member
+    , event : String
+    }
 
 
 type alias Member =

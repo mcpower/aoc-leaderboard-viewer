@@ -27,9 +27,9 @@ allInOne model data =
 seriesList : Model -> Data -> List (Series Data Msg)
 seriesList model data =
     List.map3 (series model data dotOptions)
-        (data |> List.indexedMap (\i _ -> i == 0))
-        (colorsList (List.length data))
-        (data |> List.sortBy (.localScore >> negate))
+        (data.members |> List.indexedMap (\i _ -> i == 0))
+        (colorsList (List.length data.members))
+        (data.members |> List.sortBy (.localScore >> negate))
 
 
 junk : Data -> PlotSummary -> List (JunkCustomizations Msg)

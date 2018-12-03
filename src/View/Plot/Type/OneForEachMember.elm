@@ -20,8 +20,8 @@ oneForEachMember : Model -> Data -> List (Html Msg)
 oneForEachMember model data =
     List.map2
         (onePlot model data)
-        (colorsList (List.length data))
-        (data |> List.sortBy (.localScore >> negate))
+        (colorsList (List.length data.members))
+        (data.members |> List.sortBy (.localScore >> negate))
 
 
 onePlot : Model -> Data -> String -> Member -> Html Msg
@@ -34,7 +34,7 @@ onePlot model data color member =
 
 seriesList : Model -> Data -> String -> Member -> List (Series Data Msg)
 seriesList model data color member =
-    data
+    data.members
         |> List.filter (\m -> m.id == member.id)
         |> List.map (series model data dotOptions True color)
 

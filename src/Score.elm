@@ -16,7 +16,7 @@ score data ( day, star ) wantedName =
                 |> Maybe.withDefault []
 
         maxSolutionPoints =
-            List.length data
+            maxScore data
     in
         allSolutions
             |> List.sortBy Tuple.second
@@ -29,13 +29,13 @@ score data ( day, star ) wantedName =
 
 maxScore : Data -> Int
 maxScore data =
-    List.length data
+    List.length data.members
 
 
 groupedTimes : Data -> Dict ( Day, Star ) (List ( String, Time ))
 groupedTimes data =
     -- TODO refactor
-    data
+    data.members
         |> List.map (\member -> ( View.name member, member.completionTimes ))
         |> List.concatMap
             (\( name, times ) ->

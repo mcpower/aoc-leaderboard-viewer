@@ -167,7 +167,7 @@ justAllPlots : Maybe Point -> Data -> Html Msg
 justAllPlots hover data =
     let
         allCompletions =
-            data
+            data.members
                 |> List.concatMap .completionTimes
 
         maxDate =
@@ -187,7 +187,7 @@ justAllPlots hover data =
         H.div
             [ HA.class "plots" ]
             (List.map2 (onePlot hover maxDate maxDayStar data)
-                (colorsList (List.length data))
-                (data |> List.sortBy (.localScore >> negate))
+                (colorsList (List.length data.members))
+                (data.members |> List.sortBy (.localScore >> negate))
             )
 

@@ -22,7 +22,7 @@ fromFloat float =
 
 max : Data -> Float
 max data =
-    data
+    data.members
         |> List.concatMap .completionTimes
         |> List.map (\( day, star, _ ) -> toFloat day star)
         |> List.maximum

@@ -8,20 +8,17 @@ import Types exposing (..)
 -- 2017/12/01, 05:00 GMT
 -- in milliseconds
 -- 1512104400000
--- TODO: rewrite Data to keep track of the event name
 startOfAoC : Data -> Float
 startOfAoC data =
-    List.concatMap (.completionTimes) data
-        |> List.map (\(x, y, time) -> time |> Date.fromTime |> Date.year)
-        |> List.minimum
-        |> Maybe.withDefault 2017
-        |>
-            (\year -> DE.fromSpec
-                DE.utc
-                (DE.atTime 5 0 0 0)
-                (DE.calendarDate year Date.Dec 1)
-            )
-        |> Date.toTime
+    let
+        eventYear = String.toInt data.event |> Result.toMaybe
+        minYear = List.concatMap (.completionTimes) data.members
+            |> List.map (\(x, y, time) -> time |> Date.fromTime |> Date.year)
+            |> List.minimum
+        year = Maybe.withDefault (Maybe.withDefault 2018 minYear) eventYear
+    in
+        DE.fromSpec DE.utc (DE.atTime 5 0 0 0) (DE.calendarDate year Date.Dec 1)
+            |> Date.toTime
             
 
 
