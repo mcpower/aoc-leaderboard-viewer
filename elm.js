@@ -16714,19 +16714,15 @@ var _user$project$Json$completionTimesDecoder = A2(
 					function (_p2) {
 						var _p3 = _p2;
 						return _elm_lang$core$Result$toMaybe(
-							A3(
-								_elm_lang$core$Result$map2,
-								F2(
-									function (d, s) {
-										return {
-											ctor: '_Tuple3',
-											_0: d,
-											_1: s,
-											_2: _elm_lang$core$Date$toTime(_p3._1)
-										};
+							A4(
+								_elm_lang$core$Result$map3,
+								F3(
+									function (d, s, date) {
+										return {ctor: '_Tuple3', _0: d, _1: s, _2: date * _elm_lang$core$Time$second};
 									}),
 								_elm_lang$core$String$toInt(_p1._0),
-								_elm_lang$core$String$toInt(_p3._0)));
+								_elm_lang$core$String$toInt(_p3._0),
+								_elm_lang$core$String$toFloat(_p3._1)));
 					},
 					_p1._1);
 			},
@@ -16734,7 +16730,7 @@ var _user$project$Json$completionTimesDecoder = A2(
 	},
 	_elm_lang$core$Json_Decode$keyValuePairs(
 		_elm_lang$core$Json_Decode$keyValuePairs(
-			A2(_elm_lang$core$Json_Decode$field, 'get_star_ts', _elm_community$json_extra$Json_Decode_Extra$date))));
+			A2(_elm_lang$core$Json_Decode$field, 'get_star_ts', _elm_lang$core$Json_Decode$string))));
 var _user$project$Json$memberDecoder = A7(
 	_elm_lang$core$Json_Decode$map6,
 	_user$project$Types$Member,

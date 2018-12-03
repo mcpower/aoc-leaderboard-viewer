@@ -3,7 +3,7 @@ module Json exposing (dataDecoder)
 import Json.Decode as JD exposing (Decoder)
 import Json.Decode.Extra as JDE
 import Time exposing (Time)
-import Date
+import String
 import Types exposing (..)
 
 
@@ -27,7 +27,7 @@ memberDecoder =
 
 completionTimesDecoder : Decoder (List ( Day, Star, Time ))
 completionTimesDecoder =
-    JD.keyValuePairs (JD.keyValuePairs (JD.field "get_star_ts" JDE.date))
+    JD.keyValuePairs (JD.keyValuePairs (JD.field "get_star_ts" JD.string))
         |> JD.map
             (\days ->
                 days
@@ -35,9 +35,10 @@ completionTimesDecoder =
                         (\( day, stars ) ->
                             List.filterMap
                                 (\( star, date ) ->
-                                    Result.map2 (\d s -> ( d, s, date |> Date.toTime ))
+                                    Result.map3 (\d s date -> ( d, s, date * Time.second ))
                                         (String.toInt day)
                                         (String.toInt star)
+                                        (String.toFloat date)
                                         |> Result.toMaybe
                                 )
                                 stars
