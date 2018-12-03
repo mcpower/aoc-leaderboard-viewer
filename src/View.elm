@@ -92,7 +92,27 @@ form model =
         , cookieInput model
         , fetchButton model
         , warning
+        , jsonInput model
         , radioButtons model
+        ]
+
+
+jsonInput : Model -> Html Msg
+jsonInput model =
+    H.div
+        [ HA.class "form-group row" ]
+        [ H.label [ HA.class "col-lg-3 col-form-label" ]
+            [ H.text "JSON override:"
+            ]
+        , H.div [ HA.class "col-lg-9" ]
+            [ H.input
+                [ HA.placeholder Example.json
+                -- , HA.value model.url
+                , HA.class "form-control"
+                , HE.onInput SetJson
+                ]
+                []
+            ]
         ]
 
 

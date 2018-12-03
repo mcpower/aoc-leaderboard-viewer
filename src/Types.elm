@@ -36,6 +36,7 @@ type Msg
     = SetUrl String
     | SetCookie String
     | Fetch String String
+    | SetJson String
     | FetchResult (WebData Data)
     | CurrentTime Time
     | Hover (Maybe Point)

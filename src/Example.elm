@@ -1,4 +1,4 @@
-module Example exposing (data, url, cookie, shouldShow)
+module Example exposing (data, url, json, cookie, shouldShow)
 
 import Types exposing (..)
 import Json.Decode as JD

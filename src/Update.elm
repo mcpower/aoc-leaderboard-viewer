@@ -1,7 +1,9 @@
 port module Update exposing (init, update, subscriptions)
 
+import Dict
 import Http
 import Json exposing (dataDecoder)
+import Json.Decode exposing (decodeString)
 import RemoteData exposing (RemoteData(..))
 import View.Plot as Plot
 import Task
@@ -80,6 +82,25 @@ update msg model =
                 ]
             )
 
+        SetJson json ->
+            let
+                newData =
+                    case decodeString dataDecoder json of
+                        Ok data -> Success data
+                        Err err -> Failure (Http.BadPayload err
+                            { url = "localjson"
+                            , status =
+                                { code = 400
+                                , message= ""
+                                }
+                            , headers = Dict.empty
+                            , body = json
+                            })
+            in
+            ( { model | data = newData }
+            , getCurrentTime
+            )
+        
         FetchResult data ->
             ( { model | data = data }
             , Cmd.none
