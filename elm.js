@@ -16732,35 +16732,70 @@ var _user$project$DayStar$max = function (data) {
 					data))));
 };
 
-var _user$project$Json$completionTimesDecoder = A2(
+var _user$project$Json$oldCompletionTimesDecoder = A2(
 	_elm_lang$core$Json_Decode$map,
-	function (days) {
-		return A2(
-			_elm_lang$core$List$concatMap,
-			function (_p0) {
-				var _p1 = _p0;
-				return A2(
-					_elm_lang$core$List$filterMap,
-					function (_p2) {
-						var _p3 = _p2;
-						return _elm_lang$core$Result$toMaybe(
-							A4(
-								_elm_lang$core$Result$map3,
-								F3(
-									function (d, s, date) {
-										return {ctor: '_Tuple3', _0: d, _1: s, _2: date * _elm_lang$core$Time$second};
-									}),
-								_elm_lang$core$String$toInt(_p1._0),
-								_elm_lang$core$String$toInt(_p3._0),
-								_elm_lang$core$String$toFloat(_p3._1)));
-					},
-					_p1._1);
-			},
-			days);
-	},
+	_elm_lang$core$List$concatMap(
+		function (_p0) {
+			var _p1 = _p0;
+			return A2(
+				_elm_lang$core$List$filterMap,
+				function (_p2) {
+					var _p3 = _p2;
+					return _elm_lang$core$Result$toMaybe(
+						A3(
+							_elm_lang$core$Result$map2,
+							F2(
+								function (d, s) {
+									return {
+										ctor: '_Tuple3',
+										_0: d,
+										_1: s,
+										_2: _elm_lang$core$Date$toTime(_p3._1)
+									};
+								}),
+							_elm_lang$core$String$toInt(_p1._0),
+							_elm_lang$core$String$toInt(_p3._0)));
+				},
+				_p1._1);
+		}),
+	_elm_lang$core$Json_Decode$keyValuePairs(
+		_elm_lang$core$Json_Decode$keyValuePairs(
+			A2(_elm_lang$core$Json_Decode$field, 'get_star_ts', _elm_community$json_extra$Json_Decode_Extra$date))));
+var _user$project$Json$newCompletionTimesDecoder = A2(
+	_elm_lang$core$Json_Decode$map,
+	_elm_lang$core$List$concatMap(
+		function (_p4) {
+			var _p5 = _p4;
+			return A2(
+				_elm_lang$core$List$filterMap,
+				function (_p6) {
+					var _p7 = _p6;
+					return _elm_lang$core$Result$toMaybe(
+						A4(
+							_elm_lang$core$Result$map3,
+							F3(
+								function (d, s, date) {
+									return {ctor: '_Tuple3', _0: d, _1: s, _2: date * _elm_lang$core$Time$second};
+								}),
+							_elm_lang$core$String$toInt(_p5._0),
+							_elm_lang$core$String$toInt(_p7._0),
+							_elm_lang$core$String$toFloat(_p7._1)));
+				},
+				_p5._1);
+		}),
 	_elm_lang$core$Json_Decode$keyValuePairs(
 		_elm_lang$core$Json_Decode$keyValuePairs(
 			A2(_elm_lang$core$Json_Decode$field, 'get_star_ts', _elm_lang$core$Json_Decode$string))));
+var _user$project$Json$completionTimesDecoder = _elm_lang$core$Json_Decode$oneOf(
+	{
+		ctor: '::',
+		_0: _user$project$Json$oldCompletionTimesDecoder,
+		_1: {
+			ctor: '::',
+			_0: _user$project$Json$newCompletionTimesDecoder,
+			_1: {ctor: '[]'}
+		}
+	});
 var _user$project$Json$memberDecoder = A7(
 	_elm_lang$core$Json_Decode$map6,
 	_user$project$Types$Member,
