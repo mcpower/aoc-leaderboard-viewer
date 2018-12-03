@@ -16837,6 +16837,7 @@ var _user$project$Example$json = '{\"members\":{\"201076\":{\"stars\":8,\"global
 var _user$project$Example$somethingLike = function (string) {
 	return A2(_elm_lang$core$Basics_ops['++'], 'Something like: ', string);
 };
+var _user$project$Example$exampleJson = _user$project$Example$somethingLike(_user$project$Example$json);
 var _user$project$Example$cookie = _user$project$Example$somethingLike('83a1ac74a8a48f8f208b18c4c2d027883c128a28dba4172cb814aa083382832a');
 var _user$project$Example$url = _user$project$Example$somethingLike('https://adventofcode.com/2017/leaderboard/private/view/201025.json');
 var _user$project$Example$data = function () {
@@ -18354,7 +18355,7 @@ var _user$project$View$jsonInput = function (model) {
 				},
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html$text('JSON override:'),
+					_0: _elm_lang$html$Html$text('JSON:'),
 					_1: {ctor: '[]'}
 				}),
 			_1: {
@@ -18372,7 +18373,7 @@ var _user$project$View$jsonInput = function (model) {
 							_elm_lang$html$Html$input,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder(_user$project$Example$json),
+								_0: _elm_lang$html$Html_Attributes$placeholder(_user$project$Example$exampleJson),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$class('form-control'),
@@ -18541,31 +18542,15 @@ var _user$project$View$form = function (model) {
 		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: _user$project$View$urlInput(model),
+			_0: _user$project$View$jsonInput(model),
 			_1: {
 				ctor: '::',
-				_0: _user$project$View$cookieInput(model),
-				_1: {
-					ctor: '::',
-					_0: _user$project$View$fetchButton(model),
-					_1: {
-						ctor: '::',
-						_0: _user$project$View$warning,
-						_1: {
-							ctor: '::',
-							_0: _user$project$View$jsonInput(model),
-							_1: {
-								ctor: '::',
-								_0: _user$project$View$radioButtons(model),
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				}
+				_0: _user$project$View$radioButtons(model),
+				_1: {ctor: '[]'}
 			}
 		});
 };
-var _user$project$View$exampleWarningText = 'This is just an example plot, paste your own URL and cookie.';
+var _user$project$View$exampleWarningText = 'This is just an example plot, paste your own JSON.';
 var _user$project$View$exampleWarning = function (model) {
 	return _user$project$Example$shouldShow(model) ? A2(
 		_elm_lang$html$Html$div,

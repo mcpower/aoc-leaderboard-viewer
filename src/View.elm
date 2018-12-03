@@ -27,7 +27,7 @@ view model =
 
 exampleWarningText : String
 exampleWarningText =
-    "This is just an example plot, paste your own URL and cookie."
+    "This is just an example plot, paste your own JSON."
 
 
 exampleWarning : Model -> Html Msg
@@ -88,11 +88,7 @@ heading =
 form : Model -> Html Msg
 form model =
     H.div []
-        [ urlInput model
-        , cookieInput model
-        , fetchButton model
-        , warning
-        , jsonInput model
+        [ jsonInput model
         , radioButtons model
         ]
 
@@ -102,12 +98,11 @@ jsonInput model =
     H.div
         [ HA.class "form-group row" ]
         [ H.label [ HA.class "col-lg-3 col-form-label" ]
-            [ H.text "JSON override:"
+            [ H.text "JSON:"
             ]
         , H.div [ HA.class "col-lg-9" ]
             [ H.input
-                [ HA.placeholder Example.json
-                -- , HA.value model.url
+                [ HA.placeholder Example.exampleJson
                 , HA.class "form-control"
                 , HE.onInput SetJson
                 ]
